@@ -384,9 +384,12 @@ letter-spacing:-1px;
 
 ======================================== */
 .cta-section{
-max-width:1200px;
-margin:90px auto 300px auto;/* topo | lados | rodapé */
-padding:0 20px;
+  max-width:1200px;
+  margin-top: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 250px; /* Altere este valor para a distância que desejar */
+  padding:0 20px;
 }
 
 
