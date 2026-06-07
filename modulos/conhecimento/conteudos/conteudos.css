@@ -46,7 +46,7 @@ body{
     min-width: 260px;
     background: #22c55e;
     border-radius: 16px;
-    border: 1px solid #bbf7d0;
+    border: 1px solid #16a34a;
     box-shadow: var(--shadow-md);
     overflow: hidden;
     z-index: 1000;
@@ -68,7 +68,7 @@ body{
 }
 
 .dropdown-content a:hover{
-    background: #16a34a;
+    background: #bbf7d0;
     color: #14532d;
 
     padding-left: 24px;
