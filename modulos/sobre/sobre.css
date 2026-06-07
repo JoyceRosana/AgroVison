@@ -288,7 +288,69 @@ CONTAINER
 .logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
-.logo-ministerio{ font-size: 0.55rem; padding: 4px; border-left: 4px solid #005ca9; color: #334155; }
+/* ========================================
+   LOGO ESTILO MINISTÉRIO DA AGRICULTURA
+======================================== */
+.logo-mapa-moderno {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 6px;
+    width: 100px;
+    height: 55px;
+    flex-shrink: 0;
+}
+
+/* Símbolo Gráfico da Logo */
+.brand-symbol {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 12px;
+}
+
+.brand-symbol span {
+    display: block;
+    height: 4px;
+    border-radius: 2px;
+}
+
+/* Cores Oficiais da Identidade Visual */
+.stripe-blue { background-color: #133ced; width: 12px; }
+.stripe-green { background-color: #00b11c; width: 10px; }
+.stripe-yellow { background-color: #ffcc00; width: 7px; }
+
+/* Bloco de Texto da Logo */
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.brand-gov {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #1e293b;
+    font-family: sans-serif;
+    letter-spacing: -0.5px;
+}
+
+.brand-gov span {
+    color: #005ca9;
+}
+
+.brand-dept {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+}
 
 .ref-info h4 {
     font-size: 0.9rem;
