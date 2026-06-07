@@ -1,0 +1,320 @@
+/* artigo.css */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Poppins', sans-serif;
+    background:#f5f5f5;
+    color:#1d1d1d;
+    line-height:1.7;
+}
+
+/* HERO */
+
+.hero{
+    width:100%;
+    height:560px;
+
+    background:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1600&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    align-items:center;
+
+    position:relative;
+}
+
+.hero-content{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:0 60px;
+}
+
+.hero-text{
+    max-width:600px;
+}
+
+.line{
+    width:70px;
+    height:5px;
+    background:#1d8a39;
+    margin-bottom:30px;
+    border-radius:10px;
+}
+
+/* TIPOGRAFIA HERO AJUSTADA */
+
+.hero h1{
+    font-size:56px;
+    line-height:1.1;
+    font-weight:800;
+    color:#0b3d1f;
+    margin-bottom:25px;
+}
+
+.hero p{
+    font-size:20px;
+    color:#333;
+    font-weight:400;
+}
+
+/* CONTAINER */
+
+.container{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:70px 40px;
+}
+
+/* SECTIONS */
+
+.section{
+    margin-bottom:80px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.title-line{
+    width:55px;
+    height:4px;
+    background:#1d8a39;
+    border-radius:10px;
+}
+
+.section-title h2{
+    font-size:32px;
+    color:#0b3d1f;
+    font-weight:700;
+}
+
+.section h3{
+    margin-bottom:20px;
+    color:#145c2b;
+    font-size:22px;
+}
+
+.section p{
+    margin-bottom:25px;
+    font-size:16px;
+    color:#333;
+
+    max-width:900px;
+}
+
+.section ul{
+    padding-left:25px;
+}
+
+.section li{
+    margin-bottom:12px;
+    font-size:16px;
+}
+
+/* QUOTE */
+
+.quote-box{
+    width:100%;
+    border:2px solid #9ad0aa;
+    border-left:8px solid #1d8a39;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-top:40px;
+
+    display:flex;
+    align-items:center;
+    gap:20px;
+
+    background:#f8fffa;
+}
+
+.quote-box span{
+    font-size:70px;
+    color:#1d8a39;
+    font-weight:700;
+}
+
+.quote-box p{
+    margin:0;
+    font-size:22px;
+    font-weight:600;
+    color:#145c2b;
+}
+
+/* BENEFITS */
+
+.benefits{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:25px;
+    margin-top:40px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:35px 25px;
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.05);
+
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.icon{
+    font-size:50px;
+    margin-bottom:20px;
+}
+
+.card h4{
+    color:#145c2b;
+    margin-bottom:15px;
+    font-size:20px;
+}
+
+.card p{
+    font-size:15px;
+    margin:0;
+}
+
+/* GRID */
+
+.grid-section{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.grid-image{
+    width:100%;
+    height:350px;
+
+    border-radius:25px;
+
+    background:
+    url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?q=80&w=1400&auto=format&fit=crop');
+
+    background-size:cover;
+    background-position:center;
+
+    box-shadow:0 15px 30px rgba(0,0,0,0.12);
+}
+
+/* CONCLUSION */
+
+.conclusion-box{
+    border:2px solid #a4d7b4;
+    border-left:8px solid #1d8a39;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    display:flex;
+    gap:25px;
+    align-items:flex-start;
+
+    background:#fbfffc;
+}
+
+.conclusion-box span{
+    font-size:70px;
+    color:#1d8a39;
+    font-weight:700;
+}
+
+.conclusion-box h2{
+    color:#145c2b;
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.conclusion-box p{
+    font-size:16px;
+    margin-bottom:15px;
+    max-width:900px;
+}
+
+.conclusion-box strong{
+    color:#145c2b;
+    font-size:17px;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:900px){
+
+    .hero{
+        height:auto;
+        padding:100px 0;
+    }
+
+    .hero h1{
+        font-size:40px;
+    }
+
+    .hero p{
+        font-size:18px;
+    }
+
+    .grid-section{
+        grid-template-columns:1fr;
+    }
+
+    .section-title h2{
+        font-size:26px;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero-content{
+        padding:0 25px;
+    }
+
+    .container{
+        padding:50px 20px;
+    }
+
+    .hero h1{
+        font-size:32px;
+    }
+
+    .section-title h2{
+        font-size:22px;
+    }
+
+    .quote-box p{
+        font-size:18px;
+    }
+
+    .conclusion-box{
+        flex-direction:column;
+    }
+
+}
