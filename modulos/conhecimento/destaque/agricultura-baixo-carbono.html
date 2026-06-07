@@ -1,131 +1,313 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agricultura de Baixo Carbono (ABC)</title>
-    <!-- Mantém a vinculação com o seu arquivo de estilo externo -->
+
     <link rel="stylesheet" href="artigo.css">
-    
-    <!-- Fontes e Ícones para os elementos visuais -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="artigos.css">
+    <link rel="stylesheet" href="/css/global.css">
+
+    <script src="/js/global.js"></script>
 </head>
+
 <body>
 
-    <div class="main-canvas">
-        <!-- Topo Infográfico (Fundo Branco + Imagem à Direita) -->
-        <header class="header-infografico">
-            <div class="header-left">
-                <h1>Agricultura de<br><span class="accent-title">Baixo Carbono (ABC)</span></h1>
-                <p class="tagline">Produção Agrícola Sustentável e Redução das Emissões no Campo</p>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container nav">
+            <div class="logo">
+                🌾 AgroVision
             </div>
-            <div class="header-right">
-                <!-- Imagem atualizada para representar plantio sustentável de larga escala -->
-                <img src="https://unsplash.com" alt="Agricultura de Baixo Carbono">
-            </div>
-        </header>
 
-        <!-- Seção 1: Introdução -->
-        <section class="secao-infografico">
-            <h2 class="titulo-pontilhado">Introdução</h2>
-            <div class="bloco-texto">
-                <p>As mudanças climáticas deixaram de ser apenas uma discussão ambiental e passaram a influenciar diretamente a economia global, o comércio internacional e a competitividade do agronegócio. O setor agrícola ocupa posição central nesse debate porque, ao mesmo tempo em que sofre os impactos climáticos, também participa das emissões de gases de efeito estufa (GEE).</p>
-                <p>Nesse contexto, surge a Agricultura de Baixo Carbono (ABC), um modelo produtivo que busca aumentar a eficiência agrícola reduzindo impactos ambientais e emissões atmosféricas.</p>
-            </div>
-        </section>
+            <nav>
+                <ul>
+                    <li><a href="../../index.html">Início</a></li>
 
-        <!-- Bloco de Destaque / Citação -->
-        <div class="box-citacao">
-            <div class="icone-aspa">66</div>
-            <div class="texto-citacao">
-                A proposta da agricultura ABC não é reduzir produção, mas produzir mais utilizando técnicas sustentáveis capazes de conservar recursos naturais, recuperar áreas degradadas e melhorar o balanço de carbono no sistema produtivo.
+                    <li class="dropdown">
+                        <a href="#" id="menuConhecimento">
+                            Conteúdos <span id="seta">▼</span>
+                        </a>
+
+                        <div class="dropdown-content" id="dropdownMenu">
+                            <a href="../conhecimento.html">Base de Conhecimento</a>
+                            <a href="/modulos/conhecimento/conteudos/irrigacao.html">Irrigação</a>
+                            <a href="/modulos/conhecimento/conteudos/solo.html">Solo</a>
+                            <a href="/modulos/conhecimento/conteudos/clima.html">Clima</a>
+                            <a href="/modulos/conhecimento/conteudos/sustentabilidade.html">Sustentabilidade</a>
+                            <a href="/modulos/conhecimento/conteudos/tecnologia.html">Tecnologia</a>
+                            <a href="/modulos/conhecimento/conteudos/pragas.html">Pragas</a>
+                            <a href="/modulos/conhecimento/destaque/bioinsumos-controle-biologico.html">Bioinsumos e Controle Biológico</a>
+                            <a href="/modulos/conhecimento/destaque/agricultura-baixo-carbono.html">Agricultura de Baixo Carbono</a>
+                            <a href="/modulos/conhecimento/destaque/rastreabilidade-compliance.html">Rastreabilidade e Compliance</a>
+                        </div>
+                    </li>
+
+                    <li><a href="sobre.html">Sobre o AgroVision</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="line"></div>
+
+                <h1>
+                    Agricultura de <br>
+                    Baixo Carbono (ABC)
+                </h1>
+
+                <p>
+                    Produção Agrícola Sustentável e Redução das Emissões no Campo
+                </p>
             </div>
         </div>
+    </header>
 
-        <!-- Seção 2: O Papel da Agricultura na Agenda Climática Global -->
-        <section class="secao-infografico">
-            <h2 class="titulo-pontilhado">O Papel da Agricultura na Agenda Climática Global</h2>
-            <div class="bloco-texto">
-                <p>A agricultura influencia diretamente a emissão de metano, a emissão de óxido nitroso, a degradação do solo, o desmatamento e as mudanças no uso da terra.</p>
-                <p>Por outro lado, o próprio setor agrícola possui enorme potencial de mitigação climática. Práticas adequadas podem sequestrar carbono no solo, reduzir emissões, recuperar a biodiversidade, melhorar a eficiência energética e aumentar a resiliência climática. O produtor rural deixa de ser visto apenas como emissor e passa a ocupar papel estratégico na solução climática global.</p>
+    <!-- CONTEÚDO -->
+    <main class="container">
+
+        <!-- INTRODUÇÃO -->
+        <section class="section">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>Introdução</h2>
+            </div>
+
+            <p>
+                As mudanças climáticas deixaram de ser apenas uma discussão ambiental e passaram
+                a influenciar diretamente a economia global, o comércio internacional e a
+                competitividade do agronegócio.
+            </p>
+
+            <p>
+                O setor agrícola ocupa posição central nesse debate porque, ao mesmo tempo em que
+                sofre os impactos climáticos, também participa das emissões de gases de efeito
+                estufa (GEE).
+            </p>
+
+            <p>
+                Nesse contexto, surge a Agricultura de Baixo Carbono (ABC), um modelo produtivo
+                que busca aumentar a eficiência agrícola reduzindo impactos ambientais e emissões
+                atmosféricas.
+            </p>
+
+            <div class="quote-box">
+                <span>“</span>
+                <p>
+                    Produzir mais com sustentabilidade é o principal objetivo da Agricultura ABC.
+                </p>
             </div>
         </section>
 
-        <!-- Seção 3: Principais Técnicas da Agricultura de Baixo Carbono (Matriz de 4 Colunas) -->
-        <section class="secao-infografico">
-            <h2 class="titulo-pontilhado">Principais Técnicas da Agricultura ABC</h2>
-            <p class="intro-grid">Conheça as quatro abordagens fundamentais para a mitigação de impactos no campo:</p>
-            
-            <div class="matriz-beneficios">
-                <div class="item-beneficio">
-                    <div class="circulo-icone"><i class="fa-solid fa-tree"></i></div>
-                    <h3>Integração (ILPF)</h3>
-                    <p>Combina sistemas produtivos na mesma área, recuperando o solo e diversificando a renda.</p>
+        <!-- AGENDA CLIMÁTICA -->
+        <section class="section">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>O Papel da Agricultura na Agenda Climática Global</h2>
+            </div>
+
+            <p>
+                A agricultura influencia diretamente a emissão de metano, a emissão de óxido
+                nitroso, a degradação do solo, o desmatamento e as mudanças no uso da terra.
+            </p>
+
+            <p>
+                Por outro lado, o próprio setor agrícola possui enorme potencial de mitigação
+                climática.
+            </p>
+
+            <ul>
+                <li>Sequestro de carbono no solo;</li>
+                <li>Redução das emissões de gases de efeito estufa;</li>
+                <li>Recuperação da biodiversidade;</li>
+                <li>Melhoria da eficiência energética;</li>
+                <li>Aumento da resiliência climática.</li>
+            </ul>
+
+            <p>
+                O produtor rural deixa de ser visto apenas como emissor e passa a ocupar papel
+                estratégico na solução climática global.
+            </p>
+        </section>
+
+        <!-- TÉCNICAS -->
+        <section class="section">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>Principais Técnicas da Agricultura ABC</h2>
+            </div>
+
+            <p>
+                Conheça as quatro abordagens fundamentais para a mitigação de impactos no campo:
+            </p>
+
+            <div class="benefits">
+
+                <div class="card">
+                    <div class="icon">🌳</div>
+                    <h4>Integração (ILPF)</h4>
+                    <p>
+                        Combina sistemas produtivos na mesma área, recuperando o solo e
+                        diversificando a renda.
+                    </p>
                 </div>
-                <div class="item-beneficio">
-                    <div class="circulo-icone"><i class="fa-solid fa-seedling"></i></div>
-                    <h3>Plantio Direto</h3>
-                    <p>Reduz o revolvimento da terra, diminuindo a erosão e retendo mais umidade.</p>
+
+                <div class="card">
+                    <div class="icon">🚜</div>
+                    <h4>Plantio Direto</h4>
+                    <p>
+                        Reduz o revolvimento da terra, diminuindo a erosão e retendo mais umidade.
+                    </p>
                 </div>
-                <div class="item-beneficio">
-                    <div class="circulo-icone"><i class="fa-solid fa-cow"></i></div>
-                    <h3>Pastagens</h3>
-                    <p>A recuperação de áreas degradadas aumenta a eficiência e reduz a pressão por desmatamento.</p>
+
+                <div class="card">
+                    <div class="icon">🌿</div>
+                    <h4>Pastagens Recuperadas</h4>
+                    <p>
+                        A recuperação de áreas degradadas aumenta a eficiência produtiva e reduz a
+                        pressão por desmatamento.
+                    </p>
                 </div>
-                <div class="item-beneficio">
-                    <div class="circulo-icone"><i class="fa-solid fa-dna"></i></div>
-                    <h3>Fixação de Nitrogênio</h3>
-                    <p>Usa microrganismos para nutrir as plantas, reduzindo o uso de adubos industriais.</p>
+
+                <div class="card">
+                    <div class="icon">🦠</div>
+                    <h4>Fixação de Nitrogênio</h4>
+                    <p>
+                        Utiliza microrganismos para nutrir as plantas, reduzindo o uso de adubos
+                        industriais.
+                    </p>
                 </div>
+
             </div>
         </section>
 
-        <!-- Seção 4: Conservação Biológica do Solo (Layout Dividido com Imagem Retangular) -->
-        <section class="secao-infografico grid-divisao">
-            <div class="coluna-texto">
-                <h2 class="titulo-pontilhado">Conservação Biológica do Solo</h2>
-                <div class="bloco-texto">
-                    <p>O solo é um dos maiores reservatórios naturais de carbono do planeta. Práticas sustentáveis aumentam a matéria orgânica, a atividade microbiana, a estabilidade estrutural e a retenção hídrica.</p>
-                    <p>A cobertura vegetal permanente protege o solo contra a erosão e mantém os ciclos biológicos ativos a longo prazo.</p>
+        <!-- CONSERVAÇÃO DO SOLO -->
+        <section class="section grid-section">
+
+            <div class="grid-text">
+
+                <div class="section-title">
+                    <div class="title-line"></div>
+                    <h2>Conservação Biológica do Solo</h2>
                 </div>
+
+                <p>
+                    O solo é um dos maiores reservatórios naturais de carbono do planeta.
+                </p>
+
+                <p>
+                    Práticas sustentáveis aumentam a matéria orgânica, a atividade microbiana,
+                    a estabilidade estrutural e a retenção hídrica.
+                </p>
+
+                <p>
+                    A cobertura vegetal permanente protege o solo contra a erosão e mantém os
+                    ciclos biológicos ativos a longo prazo.
+                </p>
+
             </div>
-            <div class="coluna-imagem">
-                <!-- Imagem horizontal que representa o solo protegido e ativo biologicamente -->
-                <img src="https://unsplash.com" alt="Conservação do Solo">
-            </div>
+
+            <div class="grid-image"></div>
+
         </section>
 
-        <!-- Seção 5: Benefícios Econômicos da Agricultura ABC -->
-        <section class="secao-infografico">
-            <h2 class="titulo-pontilhado">Benefícios Econômicos da Agricultura ABC</h2>
-            <div class="bloco-texto">
-                <p>A agricultura sustentável não representa apenas benefício ambiental. Também proporciona redução de custos, valorização comercial, acesso a certificações, maior eficiência produtiva e acesso facilitado a linhas de crédito verde.</p>
-                <p>Mercados internacionais exigem cada vez mais comprovação ambiental ativa da produção agropecuária moderna.</p>
+        <!-- BENEFÍCIOS ECONÔMICOS -->
+        <section class="section">
+
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>Benefícios Econômicos da Agricultura ABC</h2>
             </div>
+
+            <p>
+                A agricultura sustentável não representa apenas benefício ambiental.
+            </p>
+
+            <p>
+                Também proporciona redução de custos, valorização comercial, acesso a
+                certificações, maior eficiência produtiva e acesso facilitado a linhas de crédito
+                verde.
+            </p>
+
+            <p>
+                Mercados internacionais exigem cada vez mais comprovação ambiental ativa da
+                produção agropecuária moderna.
+            </p>
+
         </section>
 
-        <!-- Seção 6: Agricultura ABC e Crédito de Carbono -->
-        <section class="secao-infografico">
-            <h2 class="titulo-pontilhado">Agricultura ABC e Crédito de Carbono</h2>
-            <div class="bloco-texto">
-                <p>A redução de emissões pode gerar novas oportunidades econômicas por meio do mercado de carbono. Produtores que adotam recuperação de áreas, conservação florestal, manejo regenerativo e sequestro de carbono podem participar de programas de certificação e comercialização de créditos ambientais.</p>
+        <!-- CRÉDITO DE CARBONO -->
+        <section class="section">
+
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>Agricultura ABC e Crédito de Carbono</h2>
             </div>
+
+            <p>
+                A redução de emissões pode gerar novas oportunidades econômicas por meio do
+                mercado de carbono.
+            </p>
+
+            <p>
+                Produtores que adotam recuperação de áreas, conservação florestal, manejo
+                regenerativo e sequestro de carbono podem participar de programas de certificação
+                e comercialização de créditos ambientais.
+            </p>
+
         </section>
 
-        <!-- Bloco de Conclusão Final Baseado no Rodapé -->
-        <div class="box-citacao box-conclusao">
-            <div class="icone-aspa">66</div>
-            <div class="texto-citacao">
-                <h3>Conclusão</h3>
-                <p class="texto-base">A Agricultura de Baixo Carbono representa uma mudança estratégica na forma de produzir alimentos. O modelo busca unir de forma consistente produtividade, conservação ambiental e competitividade econômica.</p>
-                <p class="destaque-final">O futuro do agronegócio dependerá da capacidade de produzir com eficiência sem ampliar a degradação ambiental. Produtores que compreenderem isso cedo terão vantagem competitiva duradoura.</p>
-            </div>
-        </div>
+        <!-- CONCLUSÃO -->
+        <section class="conclusion">
 
-    </div>
+            <div class="conclusion-box">
+
+                <span>“</span>
+
+                <div>
+                    <h2>Conclusão</h2>
+
+                    <p>
+                        A Agricultura de Baixo Carbono representa uma mudança estratégica na forma
+                        de produzir alimentos.
+                    </p>
+
+                    <p>
+                        O modelo busca unir de forma consistente produtividade, conservação
+                        ambiental e competitividade econômica.
+                    </p>
+
+                    <strong>
+                        O futuro do agronegócio dependerá da capacidade de produzir com eficiência
+                        sem ampliar a degradação ambiental. Produtores que compreenderem isso cedo
+                        terão vantagem competitiva duradoura.
+                    </strong>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/js/global.js"></script>
+    <script src="/modulos/conhecimento/destaque/artigo.js"></script>
 
 </body>
+
 </html>
