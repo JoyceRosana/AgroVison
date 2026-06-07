@@ -201,6 +201,10 @@ CONTAINER
 .tech-item.css3 i { color: #0284c7; }
 .tech-item.js i { color: #eab308; }
 .tech-item.vercel i { color: #000000; font-size: 1.8rem; }
+.tech-item.chatgpt i {color: #10a37f;}
+.tech-item.gemini i { color: #4285f4;}
+
+.tech-item.pinterest i {color: #e60023;}
 
 /* Bloco Compromisso */
 .compromisso-box {
@@ -232,27 +236,25 @@ CONTAINER
     font-weight: 500;
 }
 
-/* Garante que o círculo esconda o que passar dos limites */
 .compromisso-icon {
     background-color: #f0fdf4;
     border: 1px solid #dcfce7;
     color: #16a34a;
     width: 150px;
     height: 150px;
-    border-radius: 50%; /* 50% garante um círculo perfeito */
+    border-radius: 50%; 
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    overflow: hidden; /* Corta as rebarbas da imagem fora do círculo */
+    overflow: hidden; 
 }
 
-/* Controla o comportamento da imagem dentro do círculo */
 .compromisso-icon img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Preenche o círculo sem distorcer a imagem */
-    object-position: center; /* Mantém o foco no centro da imagem */
+    object-fit: cover; 
+    object-position: center; 
 }
 
 /* Referências */
