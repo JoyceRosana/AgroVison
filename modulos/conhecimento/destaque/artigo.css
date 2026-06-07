@@ -78,29 +78,7 @@ body{
 
 /* HERO */
 
-.hero-artigo1{
-    background:
-    linear-gradient(to right,
-    rgba(255,255,255,0.96) 40%,
-    rgba(255,255,255,0.15)),
-    url('img/artigo1.jpg');
-}
-
-.hero-artigo2{
-    background:
-    linear-gradient(to right,
-    rgba(255,255,255,0.96) 40%,
-    rgba(255,255,255,0.15)),
-    url('img/artigo2.jpg');
-}
-
-.hero-artigo3{
-    background:
-    linear-gradient(to right,
-    rgba(255,255,255,0.96) 40%,
-    rgba(255,255,255,0.15)),
-    url('img/artigo3.jpg');
-}
+.hero{ width:100%; height:560px; background: linear-gradient(to right, rgba(255,255,255,0.96) 40%, rgba(255,255,255,0.15)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1600&auto=format&fit=crop'); background-size:cover; background-position:center; display:flex; align-items:center; position:relative; }
 
 .hero-content{
     width:100%;
@@ -122,6 +100,39 @@ body{
 }
 
 /* TIPOGRAFIA HERO AJUSTADA */
+.hero{
+    width:100%;
+    height:560px;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.hero-artigo1{
+    background-image:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('img/artigo1.jpg');
+}
+
+.hero-artigo2{
+    background-image:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('img/artigo2.jpg');
+}
+
+.hero-artigo3{
+    background-image:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('img/artigo3.jpg');
+}
 
 .hero h1{
     font-size:56px;
@@ -275,6 +286,15 @@ body{
     grid-template-columns:1fr 1fr;
     gap:50px;
     align-items:center;
+}
+
+.grid-image{
+    width:100%;
+    height:350px;
+    border-radius:25px;
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 15px 30px rgba(0,0,0,0.12);
 }
 
 .grid-image-artigo1{
