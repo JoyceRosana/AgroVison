@@ -288,8 +288,16 @@ CONTAINER
 .logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
-.logo-ministerio { height: 48px; width: auto; object-fit: contain; }
+.logo-ministerio { color: #02c744; font-size: 0.85rem; flex-direction: column; gap: 2px; }
 
+.logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
+.logo-embrapa span { color: #a3e635; }
+.logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
+.logo-mapa-colorido {font-family: 'Arial Black', sans-serif; font-size: 1.3rem; font-weight: 900; letter-spacing: -1px; display: flex;  justify-content: center; align-items: center;}
+.m-azul { color: #0f4cda; }
+.a-amarelo { color: #ffcc00; }
+.p-vermelho { color: #e31b23; }
+.a-verde { color: #00a859; }
 
 
 
