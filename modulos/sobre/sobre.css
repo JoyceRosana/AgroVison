@@ -288,21 +288,17 @@ CONTAINER
 .logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
-/* ========================================
-   LOGO CIRCULAR DO MAPA EM CSS
-======================================== */
 .logo-mapa-circular-container {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
+    flex-shrink: 0;
     width: 100px;
     height: 55px;
-    flex-shrink: 0;
-    overflow: hidden;
+    background: transparent !important;
+    border: none !important;
 }
+
 
 /* O Círculo com o efeito das faixas coloridas */
 .mapa-circle {
