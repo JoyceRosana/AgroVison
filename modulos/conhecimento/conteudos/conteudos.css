@@ -59,27 +59,23 @@ body{
 
 .dropdown-content a{
     display: block;
-
     padding: 14px 18px;
-
-    color: #14532d;
-
-    font-weight: 600;
-
+    color: white;
     text-decoration: none;
-
-    transition: all .25s ease;
+    font-weight: 600;
+    transition: .2s;
+    text-decoration: none;
 }
 
 .dropdown-content a:hover{
-    background: #dcfce7;
+    background: #16a34a;
     color: #14532d;
 
     padding-left: 24px;
 }
 
 .dropdown-content a.active{
-    background: #166534;
+    background: #14532d;
     color: white;
 }
 
