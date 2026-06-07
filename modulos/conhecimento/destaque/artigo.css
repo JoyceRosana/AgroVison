@@ -77,29 +77,6 @@ body{
 }
 
 /* HERO */
-
-.hero{ width:100%; height:560px; background: linear-gradient(to right, rgba(255,255,255,0.96) 40%, rgba(255,255,255,0.15)), url('https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?q=80&w=1600&auto=format&fit=crop'); background-size:cover; background-position:center; display:flex; align-items:center; position:relative; }
-
-.hero-content{
-    width:100%;
-    max-width:1200px;
-    margin:auto;
-    padding:0 60px;
-}
-
-.hero-text{
-    max-width:600px;
-}
-
-.line{
-    width:70px;
-    height:5px;
-    background:#1d8a39;
-    margin-bottom:30px;
-    border-radius:10px;
-}
-
-/* TIPOGRAFIA HERO AJUSTADA */
 .hero{
     width:100%;
     height:560px;
@@ -122,13 +99,37 @@ body{
     linear-gradient(to right,
     rgba(255,255,255,0.96) 40%,
     rgba(255,255,255,0.15)),
-    url('....');    }
+    url('....');    
+}
+
 .hero-artigo3{
     background:
     linear-gradient(to right,
     rgba(255,255,255,0.96) 40%,
     rgba(255,255,255,0.15)),
-    url('....');}
+    url('....');
+}
+
+.hero-content{
+    width:100%;
+    max-width:1200px;
+    margin:auto;
+    padding:0 60px;
+}
+
+.hero-text{
+    max-width:600px;
+}
+
+.line{
+    width:70px;
+    height:5px;
+    background:#1d8a39;
+    margin-bottom:30px;
+    border-radius:10px;
+}
+
+/* TIPOGRAFIA HERO AJUSTADA */
 
 .hero h1{
     font-size:56px;
