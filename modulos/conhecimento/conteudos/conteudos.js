@@ -10,6 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
             dropdownMenu.classList.toggle("show");
         });
     }
+    document.addEventListener("click", (e) => {
+
+    if (
+        !menuConhecimento.contains(e.target) &&
+        !dropdownMenu.contains(e.target)
+    ) {
+        dropdownMenu.classList.remove("show");
+    }
+
+});
 
     // QUIZ
     const options = document.querySelectorAll(".quiz-option");
