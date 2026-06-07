@@ -101,27 +101,34 @@ body{
 
 /* TIPOGRAFIA HERO AJUSTADA */
 .hero{
-  width: 100%;
-  height: 560px;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  position: relative;
+    width:100%;
+    height:560px;
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    align-items:center;
+    position:relative;
 }
-
 .hero-artigo1{
       background:
-       linear-gradient(to right, rgba(255, 255, 255, 0.96) 40%, rgba(255, 255, 255, 0.15)), url('img/artigo1.jpg');
-
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('....');
 }
 
 .hero-artigo2{
-      background: linear-gradient(to right, rgba(255, 255, 255, 0.96) 40%, rgba(255, 255, 255, 0.15)), url('img/artigo2.jpg');
-    }
+    background:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('....');    }
 .hero-artigo3{
-      background: linear-gradient(to right, rgba(255, 255, 255, 0.96) 40%, rgba(255, 255, 255, 0.15)), url('img/artigo1.jpg');
-}
+    background:
+    linear-gradient(to right,
+    rgba(255,255,255,0.96) 40%,
+    rgba(255,255,255,0.15)),
+    url('....');}
 
 .hero h1{
     font-size:56px;
