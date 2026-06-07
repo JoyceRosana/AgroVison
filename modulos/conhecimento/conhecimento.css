@@ -48,7 +48,7 @@ body {
         rgba(0,0,0,.30),
         rgba(0,0,0,.30)
     ),
-    url('/assets/imagens/geral/bannerconhecimento.png');
+    url('/img/conhecimento/bannerconhecimento.png');
 
     background-size:cover;
     background-position:center;
