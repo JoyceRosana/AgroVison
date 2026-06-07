@@ -10,15 +10,16 @@ document.addEventListener("DOMContentLoaded", () => {
             dropdownMenu.classList.toggle("show");
         });
     }
-    document.addEventListener("click", (e) => {
+    menuConhecimento.addEventListener("click", (e) => {
+    e.preventDefault();
 
-    if (
-        !menuConhecimento.contains(e.target) &&
-        !dropdownMenu.contains(e.target)
-    ) {
-        dropdownMenu.classList.remove("show");
+    dropdownMenu.classList.toggle("show");
+
+    if (dropdownMenu.classList.contains("show")) {
+        seta.style.display = "none";
+    } else {
+        seta.style.display = "inline";
     }
-
 });
 
     // QUIZ
