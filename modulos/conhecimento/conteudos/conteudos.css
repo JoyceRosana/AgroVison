@@ -32,14 +32,6 @@ body{
     line-height: 1.6;
 }
 
-/* CONTAINER */
-.main-container{
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 30px 20px 80px;
-}
-
 /*TOPO*/
 
 .dropdown{
