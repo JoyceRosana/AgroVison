@@ -288,14 +288,7 @@ CONTAINER
 .logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
-.logo-ministerio { 
-    color: #00a859; 
-    font-size: 1.1rem; 
-    font-weight: 800; 
-    display: flex; 
-    gap: 6px; 
-    align-items: center; 
-}
+.logo-ministerio { height: 48px; width: auto; object-fit: contain; }
 
 
 
