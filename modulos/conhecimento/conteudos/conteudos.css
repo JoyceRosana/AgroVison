@@ -32,75 +32,70 @@ body{
     line-height: 1.6;
 }
 
-/* CONTAINER */
-.main-container{
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 30px 20px 80px;
+/*TOPO*/
+
+.dropdown{
+    position: relative;
 }
 
-/* TOPO */
-.conteudos-nav-container{
-    margin-bottom: 35px;
-}
+.dropdown-content{
+    display: none;
+    position: absolute;
 
-.nav-title{
-    display: block;
-    margin-bottom: 14px;
+    top: calc(100% + 12px);
+    left: 0;
 
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--green-main);
-
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.tabs-scroll{
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-}
-
-.tabs-scroll::-webkit-scrollbar{
-    height: 5px;
-}
-
-.tabs-scroll::-webkit-scrollbar-thumb{
-    background: #cbd5e1;
-    border-radius: 999px;
-}
-
-.tab-btn{
-    text-decoration: none;
+    min-width: 260px;
 
     background: white;
-    color: var(--text-medium);
+
+    border-radius: 18px;
 
     border: 1px solid var(--border);
 
-    padding: 12px 20px;
-    border-radius: 999px;
+    box-shadow: var(--shadow-md);
 
-    font-size: 0.92rem;
+    overflow: hidden;
+
+    z-index: 1000;
+}
+
+.dropdown-content.show{
+    display: block;
+    animation: dropdownFade .25s ease;
+}
+
+.dropdown-content a{
+    display: block;
+
+    padding: 14px 18px;
+
+    color: var(--text-medium);
+
     font-weight: 600;
 
-    white-space: nowrap;
+    text-decoration: none;
 
     transition: all .25s ease;
 }
 
-.tab-btn:hover{
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
+.dropdown-content a:hover{
+    background: #f8fafc;
+    color: var(--green-main);
+
+    padding-left: 24px;
 }
 
-.tab-btn.active{
-    background: var(--green-dark);
-    color: white;
-    border-color: var(--green-dark);
+@keyframes dropdownFade{
+    from{
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* HERO */
@@ -493,70 +488,4 @@ body{
     border-color: #ef4444;
     background-color: #fef2f2;
     color: #991b1b;
-}
-
-
-
-.dropdown{
-    position: relative;
-}
-
-.dropdown-content{
-    display: none;
-    position: absolute;
-
-    top: calc(100% + 12px);
-    left: 0;
-
-    min-width: 260px;
-
-    background: white;
-
-    border-radius: 18px;
-
-    border: 1px solid var(--border);
-
-    box-shadow: var(--shadow-md);
-
-    overflow: hidden;
-
-    z-index: 1000;
-}
-
-.dropdown-content.show{
-    display: block;
-    animation: dropdownFade .25s ease;
-}
-
-.dropdown-content a{
-    display: block;
-
-    padding: 14px 18px;
-
-    color: var(--text-medium);
-
-    font-weight: 600;
-
-    text-decoration: none;
-
-    transition: all .25s ease;
-}
-
-.dropdown-content a:hover{
-    background: #f8fafc;
-    color: var(--green-main);
-
-    padding-left: 24px;
-}
-
-@keyframes dropdownFade{
-    from{
-        opacity: 0;
-        transform: translateY(-8px);
-    }
-
-    to{
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
