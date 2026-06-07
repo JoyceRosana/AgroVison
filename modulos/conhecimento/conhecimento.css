@@ -379,166 +379,372 @@ letter-spacing:-1px;
 }
 
 /* ========================================
+
    CTA - ÁREA DE PERGUNTAS
+
 ======================================== */
+
+
 
 .cta-section{
 
+
+
 max-width:1200px;
 
+
+
 margin:90px auto 150px auto;
+
 /* topo | lados | rodapé */
 
+
+
 padding:0 20px;
+
 }
 
+
+
 .cta-box{
+
+
 
 background:white;
 
+
+
 border:1px solid #e8ecef;
+
+
 
 border-radius:24px;
 
+
+
 padding:45px;
+
+
 
 display:grid;
 
+
+
 grid-template-columns:1fr .8fr;
 
+
+
 align-items:center;
+
+
 
 gap:40px;
 
+
+
 box-shadow:
+
 0 10px 30px rgba(0,0,0,.05);
 
+
+
 transition:.4s;
+
 }
+
+
 
 .cta-box:hover{
 
+
+
 transform:translateY(-4px);
 
+
+
 box-shadow:
+
 0 15px 40px rgba(0,0,0,.08);
+
 }
+
+
 
 .cta-content{
 
+
+
 display:flex;
+
+
 
 align-items:flex-start;
 
+
+
 gap:20px;
+
 }
+
+
 
 .cta-icon{
 
+
+
 min-width:65px;
+
 height:65px;
 
+
+
 display:flex;
+
 align-items:center;
+
 justify-content:center;
+
+
 
 font-size:1.5rem;
 
+
+
 border-radius:18px;
+
+
 
 background:#e8f7ef;
 
+
+
 color:#00875a;
+
 }
+
+
 
 .cta-content h3{
 
+
+
 font-size:1.7rem;
+
+
 
 margin-bottom:8px;
 
+
+
 color:#1f2937;
+
 }
+
+
 
 .cta-content p{
 
+
+
 line-height:1.7;
+
+
 
 color:#666;
 
+
+
 max-width:500px;
+
 }
+
+
 
 /* campo */
 
+
+
 .search-box{
+
+
 
 display:flex;
 
+
+
 background:#f8faf9;
+
+
 
 border:1px solid #e2e8f0;
 
+
+
 border-radius:60px;
+
+
 
 padding:6px;
 
+
+
 height:65px;
+
 }
+
+
 
 .search-box input{
 
+
+
 flex:1;
 
+
+
 border:none;
+
+
 
 background:transparent;
 
+
+
 padding:0 20px;
+
+
 
 outline:none;
 
+
+
 font-size:1rem;
+
 }
+
+
 
 .btn-search{
 
+
+
 border:none;
+
+
 
 padding:0 28px;
 
+
+
 border-radius:50px;
+
+
 
 background:#00875a;
 
+
+
 color:white;
+
+
 
 font-weight:600;
 
+
+
 cursor:pointer;
 
+
+
 transition:.3s;
+
 }
+
+
 
 .btn-search:hover{
 
+
+
 background:#006644;
+
 }
+
+
 
 @media(max-width:900px){
 
+
+
 .cta-box{
+
+
 
 grid-template-columns:1fr;
 
+
+
 text-align:center;
+
 }
+
+
 
 .cta-content{
 
+
+
 flex-direction:column;
 
+
+
 align-items:center;
+
 }
 
+
+
+}
+
+/* ==========================================================================
+   CTA BANNER
+   ========================================================================== */
+.cta-banner {
+    background-color: #ffffff;
+    border: 1px solid #eef2f6;
+    border-radius: 16px;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.cta-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cta-text h3 {
+    font-size: 1.3rem;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.cta-text p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.cta-btn {
+    background-color: #052e16;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 28px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
 }
