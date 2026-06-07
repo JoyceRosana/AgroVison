@@ -47,11 +47,11 @@ body{
 
     min-width: 260px;
 
-    background: white;
+    background: #f0fdf4;
 
     border-radius: 18px;
 
-    border: 1px solid var(--border);
+    border: 1px solid #bbf7d0;
 
     box-shadow: var(--shadow-md);
 
@@ -70,7 +70,7 @@ body{
 
     padding: 14px 18px;
 
-    color: var(--text-medium);
+    color: #14532d;
 
     font-weight: 600;
 
@@ -80,10 +80,15 @@ body{
 }
 
 .dropdown-content a:hover{
-    background: #f8fafc;
-    color: var(--green-main);
+    background: #dcfce7;
+    color: #14532d;
 
     padding-left: 24px;
+}
+
+.dropdown-content a.active{
+    background: #166534;
+    color: white;
 }
 
 @keyframes dropdownFade{
