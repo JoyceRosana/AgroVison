@@ -41,22 +41,14 @@ body{
 .dropdown-content{
     display: none;
     position: absolute;
-
     top: calc(100% + 12px);
     left: 0;
-
     min-width: 260px;
-
-    background: #f0fdf4;
-
-    border-radius: 18px;
-
+    background: #22c55e;
+    border-radius: 16px;
     border: 1px solid #bbf7d0;
-
     box-shadow: var(--shadow-md);
-
     overflow: hidden;
-
     z-index: 1000;
 }
 
