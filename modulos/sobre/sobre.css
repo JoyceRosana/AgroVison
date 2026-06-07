@@ -288,72 +288,15 @@ CONTAINER
 .logo-embrapa { color: #005ca9; font-style: italic; font-size: 1.1rem; }
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
-.logo-mapa-circular-container {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 100px;
-    height: 55px;
-    background: transparent !important;
-    border: none !important;
+.logo-ministerio { 
+    color: #00a859; 
+    font-size: 1.1rem; 
+    font-weight: 800; 
+    display: flex; 
+    gap: 6px; 
+    align-items: center; 
 }
 
-
-/* O Círculo com o efeito das faixas coloridas */
-.mapa-circle {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    box-sizing: border-box;
-    /* Gradiente cônico simulando as faixas coloridas da borda (Verde, Amarelo, Azul, Vermelho) */
-    background: conic-gradient(
-        #00a859 0deg 90deg, 
-        #ffcc00 90deg 160deg, 
-        #005ca9 160deg 250deg, 
-        #e31b23 250deg 360deg
-    );
-    padding: 2px; /* Espessura da borda colorida */
-}
-
-/* Miolo branco interno do círculo */
-.mapa-content-inner {
-    background: #ffffff;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-/* Sigla MAPA centralizada */
-.mapa-sigla {
-    font-family: 'Arial Black', 'Inter', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 900;
-    color: #00a859; /* Verde oficial */
-    line-height: 1;
-    letter-spacing: -0.5px;
-    margin-top: 2px;
-}
-
-/* Descrição interna inferior */
-.mapa-desc {
-    font-family: Arial, sans-serif;
-    font-size: 0.22rem; /* Mini fonte calibrada para caber no círculo */
-    font-weight: 700;
-    color: #00a859;
-    line-height: 1.1;
-    transform: scale(0.9);
-    margin-top: 1px;
-}
 
 
 
