@@ -422,10 +422,16 @@ gap:20px;
 
 
 
-.cta-info {
+.cta-icon{
+    min-width: 800px;      /* Aumentado de 65px para 80px */
+    height: 800px;         /* Aumentado de 65px para 80px */
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    font-size: 2.2rem;    /* Aumentado de 1.5rem para 2.2rem */
+    border-radius: 18px;
+    background: #e8f7ef;
+    color: #00875a;
 }
 
 
