@@ -44,10 +44,9 @@ body{
     top: calc(100% + 12px);
     left: 0;
     min-width: 260px;
-    background: #22c55e;
+    background: #86efac; /* verde claro */
     border-radius: 16px;
-    border: 1px solid #15803d;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 8px 24px rgba(0,0,0,.15);
     overflow: hidden;
     z-index: 1000;
 }
@@ -60,11 +59,10 @@ body{
 .dropdown-content a{
     display: block;
     padding: 14px 18px;
-    color: white;
+    color: #052e16; /* verde bem escuro para boa leitura */
     text-decoration: none;
     font-weight: 600;
-    transition: .2s;
-    text-decoration: none;
+    transition: all .25s ease;
 }
 
 .dropdown-content a:hover{
