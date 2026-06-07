@@ -12,6 +12,69 @@ body{
     color:#1d1d1d;
     line-height:1.7;
 }
+/* CONTAINER */
+.main-container{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 120px 20px 80px;
+}
+
+/*TOPO*/
+
+.dropdown{
+    position: relative;
+}
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    min-width: 260px;
+    background: #c5f5d7; /* verde claro */
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.15);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-content.show{
+    display: block;
+    animation: dropdownFade .25s ease;
+}
+
+.dropdown-content a{
+    display: block;
+    padding: 14px 18px;
+    color: #052e16; 
+    text-decoration: none;
+    font-weight: 600;
+    transition: all .25s ease;
+}
+
+.dropdown-content a:hover{
+    background: #166534; 
+    color: white;
+    padding-left: 24px;
+}
+
+.dropdown-content a.active{
+    background: #14532d; 
+    color: white;
+}
+
+@keyframes dropdownFade{
+    from{
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 /* HERO */
 
