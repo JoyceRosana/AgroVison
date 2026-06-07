@@ -1,4 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    // MENU CONHECIMENTO
+    const menuConhecimento = document.getElementById("menuConhecimento");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    if (menuConhecimento && dropdownMenu) {
+        menuConhecimento.addEventListener("click", (e) => {
+            e.preventDefault();
+            dropdownMenu.classList.toggle("show");
+        });
+    }
+
+    // QUIZ
     const options = document.querySelectorAll(".quiz-option");
 
     let answered = false;
