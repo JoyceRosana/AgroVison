@@ -289,68 +289,74 @@ CONTAINER
 .logo-embrapa span { color: #a3e635; }
 .logo-fao { color: #0284c7; font-size: 0.85rem; flex-direction: column; gap: 2px; }
 /* ========================================
-   LOGO ESTILO MINISTÉRIO DA AGRICULTURA
+   ASSINATURA OFICIAL DO MINISTÉRIO (GOV.BR)
 ======================================== */
-.logo-mapa-moderno {
+.logo-mapa-oficial {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    gap: 8px;
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
-    padding: 6px;
     width: 100px;
     height: 55px;
     flex-shrink: 0;
+    padding: 0 4px !important;
+    box-sizing: border-box;
 }
 
-/* Símbolo Gráfico da Logo */
-.brand-symbol {
+/* Lado Esquerdo - gov.br */
+.gov-brand-side {
     display: flex;
-    flex-direction: column;
-    gap: 3px;
-    width: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.brand-symbol span {
-    display: block;
-    height: 4px;
-    border-radius: 2px;
-}
-
-/* Cores Oficiais da Identidade Visual */
-.stripe-blue { background-color: #133ced; width: 12px; }
-.stripe-green { background-color: #00b11c; width: 10px; }
-.stripe-yellow { background-color: #ffcc00; width: 7px; }
-
-/* Bloco de Texto da Logo */
-.brand-text {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    line-height: 1.1;
-    text-align: left;
-}
-
-.brand-gov {
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: #1e293b;
-    font-family: sans-serif;
+.gov-txt-main {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #0f172a;
+    font-family: 'Inter', sans-serif, Arial;
     letter-spacing: -0.5px;
 }
 
-.brand-gov span {
-    color: #005ca9;
+.gov-txt-dot {
+    color: #005ca9; /* Azul oficial gov.br */
 }
 
-.brand-dept {
-    font-size: 0.55rem;
-    font-weight: 700;
-    color: #64748b;
-    letter-spacing: 0.5px;
+/* Linha divisória cinza */
+.gov-divider-line {
+    width: 1px;
+    height: 32px;
+    background-color: #cbd5e1;
+    margin: 0 5px;
+    flex-shrink: 0;
 }
+
+/* Lado Direito - Texto do Ministério */
+.gov-text-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    line-height: 1.05;
+    text-align: left;
+}
+
+.gov-text-side span {
+    font-family: 'Inter', sans-serif, Arial;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+
+/* Ajuste fino dos tamanhos para caber perfeitamente em 100px de largura */
+.gov-title-top { font-size: 0.36rem; }
+.gov-title-mid { font-size: 0.35rem; }
+.gov-title-bot { font-size: 0.38rem; }
+
 
 .ref-info h4 {
     font-size: 0.9rem;
