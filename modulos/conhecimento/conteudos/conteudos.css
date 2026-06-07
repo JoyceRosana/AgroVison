@@ -57,6 +57,8 @@ body{
     box-shadow: 0 8px 24px rgba(0,0,0,.15);
     overflow: hidden;
     z-index: 1000;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 .dropdown-content.show{
