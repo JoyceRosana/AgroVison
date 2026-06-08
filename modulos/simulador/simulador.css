@@ -73,25 +73,30 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 300px;   /* Ajuste para onde quiser no mapa */
-  left: 450px;  /* Ajuste para onde quiser no mapa */
+  top: 300px;   
+  left: 450px;  
 
   display: flex;
-  flex-wrap: wrap; /* Faz quebrar a linha automaticamente */
-  
-  /* LARGURA MÁXIMA: 10 terras de 100px + os espacinhos entre elas */
-  width: 1020px; 
-  
-  /* DISTÂNCIA DE 1 A 3PX: Dá o espaço que você queria entre os blocos */
-  gap: 2px; 
+  flex-wrap: wrap; 
+  /* Largura aproximada para forçar a quebra perfeita a cada 10 blocos */
+  width: 530px; 
 }
 
 .terra {
-  width: 100px; /* Tamanho normal da sua imagem */
+  width: 100px; 
   height: auto;
   display: block;
-  border: none; /* Garante que não tem borda vermelha */
+  border: none;
+
+  /* 
+    O SEGREDO DA PLANTAÇÃO CONTÍNUA:
+    Em vez de afastar com gap, usamos margens negativas para recolher 
+    a transparência do losango e fazer as texturas de terra se encostarem.
+  */
+  margin-left: -50px;  /* Junta as laterais eliminando o buraco do centro */
+  margin-top: -25px;   /* Junta as fileiras de cima com as de baixo */
 }
+
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
