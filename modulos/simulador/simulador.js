@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Distâncias para o seu sprite de 100px
   const LARGURA_VISIVEL = 48; 
   const ALTURA_VISIVEL = 24;  
-  const COLUNAS = 10; 
+  const COLUNAS = 5; 
 
   terras.forEach((terra, index) => {
     const col = index % COLUNAS;
