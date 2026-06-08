@@ -173,6 +173,7 @@ button {
 }
 
 .menu-plantio button{
+  position: static;
   display:block;
   width:100%;
   margin:5px 0;

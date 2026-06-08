@@ -185,6 +185,9 @@ document.getElementById("menuPlantio");
 const cursorPlantio =
 document.getElementById("cursorPlantio");
 
+console.log("Menu:", menuPlantio);
+console.log("Cursor:", cursorPlantio);
+console.log("Terras:", terras.length);
 // =======================
 // TERRAS
 // =======================
@@ -208,7 +211,9 @@ terras.forEach((terra, index) => {
 
   terra.addEventListener("click", (e) => {
 
-    const status = terra.dataset.status;
+  console.log("CLIQUE NA TERRA");
+
+  const status = terra.dataset.status;
 
     // ABRIR MENU
 
