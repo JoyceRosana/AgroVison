@@ -71,16 +71,11 @@ html, body {
   left: 630px;
 }
 
-:root {
-  /* Altere apenas esses valores se o tamanho da imagem mudar */
-  --largura-terra: 80px;
-  --altura-visivel: 40px; /* Metade da largura é o padrão para isometria 2:1 */
-}
 .plantacao {
   position: absolute;
-  /* Ajuste aqui para mover o bloco inteiro de 50 terras na grama */
+  /* Ajuste aqui para posicionar o bloco todo na grama limpa */
   top: 350px;   
-  left: 200px;  
+  left: 450px;  
   
   width: 100%;
   height: 100%;
@@ -88,79 +83,11 @@ html, body {
 
 .terra {
   position: absolute;
-  /* Mantém o tamanho exato e fixo que funcionou nos primeiros blocos */
-  width: 100px; 
+  width: 100px; /* Mantém o tamanho original de 100px da sua imagem */
   height: auto;
   display: block;
   border: none;
 }
-
-/* 
-  MÁGICA ISOMÉTRICA (Encaixe Perfeito):
-  Cada bloco anda 50px para a direita (metade da largura) 
-  e SOBE 25px (metade da altura) para grudar quina com quina.
-*/
-
-/* 1ª FILEIRA DE 10 BLOCOS */
-.terra:nth-child(1)  { left: 0px;   top: 0px; }
-.terra:nth-child(2)  { left: 50px;  top: -25px; }
-.terra:nth-child(3)  { left: 100px; top: -50px; }
-.terra:nth-child(4)  { left: 150px; top: -75px; }
-.terra:nth-child(5)  { left: 200px; top: -100px; }
-.terra:nth-child(6)  { left: 250px; top: -125px; }
-.terra:nth-child(7)  { left: 300px; top: -150px; }
-.terra:nth-child(8)  { left: 350px; top: -175px; }
-.terra:nth-child(9)  { left: 400px; top: -200px; }
-.terra:nth-child(10) { left: 450px; top: -225px; }
-
-/* 2ª FILEIRA DE 10 BLOCOS (Desloca para baixo e para a direita) */
-.terra:nth-child(11) { left: 50px;  top: 25px; }
-.terra:nth-child(12) { left: 100px; top: 0px; }
-.terra:nth-child(13) { left: 150px; top: -25px; }
-.terra:nth-child(14) { left: 200px; top: -50px; }
-.terra:nth-child(15) { left: 250px; top: -75px; }
-.terra:nth-child(16) { left: 300px; top: -100px; }
-.terra:nth-child(17) { left: 350px; top: -125px; }
-.terra:nth-child(18) { left: 400px; top: -150px; }
-.terra:nth-child(19) { left: 450px; top: -175px; }
-.terra:nth-child(20) { left: 500px; top: -200px; }
-
-/* 3ª FILEIRA DE 10 BLOCOS */
-.terra:nth-child(21) { left: 100px; top: 50px; }
-.terra:nth-child(22) { left: 150px; top: 25px; }
-.terra:nth-child(23) { left: 200px; top: 0px; }
-.terra:nth-child(24) { left: 250px; top: -25px; }
-.terra:nth-child(25) { left: 300px; top: -50px; }
-.terra:nth-child(26) { left: 350px; top: -75px; }
-.terra:nth-child(27) { left: 400px; top: -100px; }
-.terra:nth-child(28) { left: 450px; top: -125px; }
-.terra:nth-child(29) { left: 500px; top: -150px; }
-.terra:nth-child(30) { left: 550px; top: -175px; }
-
-/* 4ª FILEIRA DE 10 BLOCOS */
-.terra:nth-child(31) { left: 150px; top: 75px; }
-.terra:nth-child(32) { left: 200px; top: 50px; }
-.terra:nth-child(33) { left: 250px; top: 25px; }
-.terra:nth-child(34) { left: 300px; top: 0px; }
-.terra:nth-child(35) { left: 350px; top: -25px; }
-.terra:nth-child(36) { left: 400px; top: -50px; }
-.terra:nth-child(37) { left: 450px; top: -75px; }
-.terra:nth-child(38) { left: 500px; top: -100px; }
-.terra:nth-child(39) { left: 550px; top: -125px; }
-.terra:nth-child(40) { left: 600px; top: -150px; }
-
-/* 5ª FILEIRA DE 10 BLOCOS */
-.terra:nth-child(41) { left: 200px; top: 100px; }
-.terra:nth-child(42) { left: 250px; top: 75px; }
-.terra:nth-child(43) { left: 300px; top: 50px; }
-.terra:nth-child(44) { left: 350px; top: 25px; }
-.terra:nth-child(45) { left: 400px; top: 0px; }
-.terra:nth-child(46) { left: 450px; top: -25px; }
-.terra:nth-child(47) { left: 500px; top: -50px; }
-.terra:nth-child(48) { left: 550px; top: -75px; }
-.terra:nth-child(49) { left: 600px; top: -100px; }
-.terra:nth-child(50) { left: 650px; top: -125px; }
-
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
