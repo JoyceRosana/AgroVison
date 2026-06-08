@@ -159,70 +159,138 @@ terras.forEach((terra, index) => {
     const status =
       terra.getAttribute("data-status");
 
-    // ===================
-    // PLANTAR
-    // ===================
+// =========================
+// SISTEMA DE TERRAS
+// =========================
 
-    if (status === "vazio") {
+const terras = document.querySelectorAll(".plantacao .terra");
 
-      if (sementesMilho <= 0) {
+// Cultura atualmente selecionada
+let culturaSelecionada = null;
 
-        alert(
-          "Você não possui sementes suficientes."
-        );
+// Dados das culturas
+const culturas = {
+  milho: {
+    crescimento: 5000,
+    broto: "/img/simulador/milho_broto.png",
+    pronto: "/img/simulador/milho_pronto.png"
+  },
 
-        return;
-      }
+  soja: {
+    crescimento: 8000,
+    broto: "/img/simulador/soja_broto.png",
+    pronto: "/img/simulador/soja_pronto.png"
+  },
 
-      sementesMilho--;
+  alface: {
+    crescimento: 3000,
+    broto: "/img/simulador/alface_broto.png",
+    pronto: "/img/simulador/alface_pronto.png"
+  },
 
-      terra.src =
-        "/img/simulador/milho_broto.png";
+  cenoura: {
+    crescimento: 6000,
+    broto: "/img/simulador/cenoura_broto.png",
+    pronto: "/img/simulador/cenoura_pronto.png"
+  },
 
-      terra.setAttribute(
-        "data-status",
-        "crescendo"
+  tomate: {
+    crescimento: 7000,
+    broto: "/img/simulador/tomate_broto.png",
+    pronto: "/img/simulador/tomate_pronto.png"
+  }
+};
+
+// =========================
+// ALINHAMENTO DAS TERRAS
+// =========================
+
+const LARGURA_EMENDA = 51;
+const ALTURA_EMENDA = 26;
+const MAX_COLUNAS = 10;
+
+terras.forEach((terra, index) => {
+
+  const col = index % MAX_COLUNAS;
+  const lin = Math.floor(index / MAX_COLUNAS);
+
+  const posX =
+    (col * LARGURA_EMENDA) +
+    (lin * -LARGURA_EMENDA);
+
+  const posY =
+    (col * ALTURA_EMENDA) +
+    (lin * ALTURA_EMENDA);
+
+  terra.style.left = `${posX}px`;
+  terra.style.top = `${posY}px`;
+  terra.style.zIndex = col + lin;
+
+});
+
+// =========================
+// MENU DE PLANTIO
+// =========================
+
+const menuPlantio =
+document.getElementById("menuPlantio");
+
+const cursorPlantio =
+document.getElementById("cursorPlantio");
+
+// =========================
+// ABRIR MENU
+// =========================
+
+terras.forEach((terra) => {
+
+  terra.addEventListener("click", (e) => {
+
+    const status =
+    terra.dataset.status;
+
+    // Colher
+    if (status === "pronto") {
+
+      alert(
+        "Você colheu " +
+        terra.dataset.cultura
       );
 
-      salvar();
+      terra.src =
+      "/img/simulador/terra.png";
 
-      // Crescimento automático
-
-      setTimeout(() => {
-
-        terra.src =
-          "/img/simulador/milho_pronto.png";
-
-        terra.setAttribute(
-          "data-status",
-          "pronto"
-        );
-
-      }, 5000);
+      terra.dataset.status = "vazio";
+      terra.dataset.cultura = "";
 
       return;
     }
 
-    // ===================
-    // COLHER
-    // ===================
+    // Plantar
+    if (
+      status === "vazio" &&
+      culturaSelecionada
+    ) {
 
-    if (status === "pronto") {
+      plantar(terra);
 
-      milhoArmazenado += 5;
+      return;
+    }
 
-      terra.src =
-        "/img/simulador/terra.png";
+    // Abrir menu
+    if (
+      status === "vazio" &&
+      !culturaSelecionada
+    ) {
 
-      terra.setAttribute(
-        "data-status",
-        "vazio"
-      );
+      menuPlantio.style.left =
+      e.pageX + "px";
 
-      salvar();
+      menuPlantio.style.top =
+      e.pageY + "px";
 
-      alert(
-        "Colheita realizada! +5 kg de milho."
+      menuPlantio.classList.remove(
+        "oculto"
       );
     }
 
@@ -230,4 +298,108 @@ terras.forEach((terra, index) => {
 
 });
 
-salvar();
+// =========================
+// ESCOLHER CULTURA
+// =========================
+
+document
+.querySelectorAll(
+"#menuPlantio button"
+)
+.forEach((botao) => {
+
+  botao.addEventListener(
+    "click",
+    () => {
+
+      culturaSelecionada =
+      botao.dataset.cultura;
+
+      menuPlantio.classList.add(
+        "oculto"
+      );
+
+      cursorPlantio.classList.remove(
+        "oculto"
+      );
+
+    }
+  );
+
+});
+
+// =========================
+// CURSOR
+// =========================
+
+document.addEventListener(
+"mousemove",
+(e) => {
+
+  cursorPlantio.style.left =
+  (e.clientX + 10) + "px";
+
+  cursorPlantio.style.top =
+  (e.clientY + 10) + "px";
+
+});
+
+// =========================
+// PLANTAR
+// =========================
+
+function plantar(terra) {
+
+  const cultura =
+  culturas[culturaSelecionada];
+
+  terra.src = cultura.broto;
+
+  terra.dataset.status =
+  "crescendo";
+
+  terra.dataset.cultura =
+  culturaSelecionada;
+
+  setTimeout(() => {
+
+    if (
+      terra.dataset.status ===
+      "crescendo"
+    ) {
+
+      terra.src =
+      cultura.pronto;
+
+      terra.dataset.status =
+      "pronto";
+
+    }
+
+  }, cultura.crescimento);
+
+}
+
+// =========================
+// ESC PARA CANCELAR
+// =========================
+
+document.addEventListener(
+"keydown",
+(e) => {
+
+  if (e.key === "Escape") {
+
+    culturaSelecionada = null;
+
+    menuPlantio.classList.add(
+      "oculto"
+    );
+
+    cursorPlantio.classList.add(
+      "oculto"
+    );
+
+  }
+
+});
