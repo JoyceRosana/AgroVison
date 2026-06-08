@@ -73,23 +73,23 @@ html, body {
 
 :root {
   /* Altere apenas esses valores se o tamanho da imagem mudar */
-  --largura-terra: 50px;
-  --altura-visivel: 25px; /* Metade da largura é o padrão para isometria 2:1 */
+  --largura-terra: 80px;
+  --altura-visivel: 40px; /* Metade da largura é o padrão para isometria 2:1 */
 }
 
 .plantacao {
   position: absolute;
   top: 200px;  
   left: 500px; 
-  display: flex;
-  align-items: flex-end;
+  width: 400px;
+  height: 200px;
 }
 
 .terra {
   width: var(--largura-terra);
   height: auto;
   display: block;
-  margin-left: -100px; 
+  margin-left: -80px; 
 }
 .terra:first-child {
   margin-left: 0;
