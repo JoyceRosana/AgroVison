@@ -79,50 +79,45 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 150px;  /* Ajuste para posicionar na grama livre */
-  left: 300px; /* Ajuste para posicionar na grama livre */
+  top: 300px;  /* Ajuste para posicionar o bloco todo na grama */
+  left: 300px; /* Ajuste para posicionar o bloco todo na grama */
 
-  display: grid;
-  /* Cria as 10 colunas. Ajuste o '45px' se quiser mais perto ou longe */
-  grid-template-columns: repeat(10, 45px); 
+  display: flex;
+  flex-wrap: wrap; /* Faz quebrar a linha a cada 10 blocos */
   
-  /* Ajusta a distância vertical entre as fileiras */
-  row-gap: 22px; 
+  /* Largura exata para caber 10 blocos (10 x 50px de espaço visível) */
+  width: 500px; 
 }
 
 .terra {
-  width: 90px; /* Controla o tamanho individual de cada bloco */
+  width: 100px; /* Mantém o tamanho original do seu bloco */
   height: auto;
   display: block;
-  border: none; /* Remove de vez as bordas vermelhas do começo */
+
+  /* 
+    O SEGREDO DO ENCAIXE:
+    Aproxima os blocos na horizontal e na vertical para as quinas se cruzarem.
+    Cada bloco "entra" metade no espaço do outro.
+  */
+  margin-left: -50px;  /* Junta os blocos da mesma fileira horizontalmente */
+  margin-top: -25px;   /* Sobe as fileiras de baixo para encaixar na quina */
 }
 
 /* 
-  EFEITO DE PERSPECTIVA:
-  Para que não pareça uma parede reta, empurramos cada fileira 
-  um pouco mais para o lado (como os degraus de uma escada deitada)
+  CORREÇÃO DE DIAGONAL:
+  Como cada bloco avança para a direita, ele precisa subir um pouco 
+  para acompanhar a linha isométrica do chão do jogo.
 */
-
-/* 2ª Fileira (itens do 11 ao 20) */
-.terra:nth-child(n+11):nth-child(-n+20) {
-  transform: translateX(25px);
-}
-
-/* 3ª Fileira (itens do 21 ao 30) */
-.terra:nth-child(n+21):nth-child(-n+30) {
-  transform: translateX(50px);
-}
-
-/* 4ª Fileira (itens do 31 ao 40) */
-.terra:nth-child(n+31):nth-child(-n+40) {
-  transform: translateX(75px);
-}
-
-/* 5ª Fileira (itens do 41 ao 50) */
-.terra:nth-child(n+41):nth-child(-n+50) {
-  transform: translateX(100px);
-}
-
+.terra:nth-child(10n+1) { margin-top: calc(-25px + 0px); }
+.terra:nth-child(10n+2) { margin-top: calc(-25px - 25px); }
+.terra:nth-child(10n+3) { margin-top: calc(-25px - 50px); }
+.terra:nth-child(10n+4) { margin-top: calc(-25px - 75px); }
+.terra:nth-child(10n+5) { margin-top: calc(-25px - 100px); }
+.terra:nth-child(10n+6) { margin-top: calc(-25px - 125px); }
+.terra:nth-child(10n+7) { margin-top: calc(-25px - 150px); }
+.terra:nth-child(10n+8) { margin-top: calc(-25px - 175px); }
+.terra:nth-child(10n+9) { margin-top: calc(-25px - 200px); }
+.terra:nth-child(10n+10) { margin-top: calc(-25px - 225px); }
 
 
 /* ===== GALPÃO ARMAZÉM ===== */
