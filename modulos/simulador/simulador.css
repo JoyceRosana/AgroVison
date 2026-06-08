@@ -85,7 +85,12 @@ html, body {
   width: 100px; /* Mantém o tamanho original de 100px da sua imagem */
   height: auto;
   display: block;
-  border: none;
+  
+  /* CORREÇÃO: Fechando a propriedade e removendo a borda vermelha antiga */
+  border: none; 
+  
+  /* Mantém a qualidade dos pixels se a imagem for um sprite em Pixel Art */
+  image-rendering: pixelated; 
 }
 
 /* ===== GALPÃO ARMAZÉM ===== */
