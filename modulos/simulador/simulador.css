@@ -79,31 +79,50 @@ html, body {
 
 .plantacao {
   position: absolute;
-  /* Ajuste top e left para posicionar as 50 terras juntas na grama */
-  top: 300px;
-  left: 350px;
+  top: 150px;  /* Ajuste para posicionar na grama livre */
+  left: 300px; /* Ajuste para posicionar na grama livre */
 
-  /* ORGANIZAÇÃO: Cria um canteiro de 10 colunas por 5 linhas (10x5 = 50 terras) */
   display: grid;
-  grid-template-columns: repeat(10, 50px); /* Metade da largura do bloco */
-  grid-template-rows: repeat(5, 25px);    /* Metade da altura visível */
+  /* Cria as 10 colunas. Ajuste o '45px' se quiser mais perto ou longe */
+  grid-template-columns: repeat(10, 45px); 
   
-  /* O SEGREDO: Rotaciona o bloco em 45 graus e inclina para deitar na perspectiva do mapa */
-  transform: rotateX(60deg) rotateZ(-45deg);
-  transform-style: preserve-3d;
+  /* Ajusta a distância vertical entre as fileiras */
+  row-gap: 22px; 
 }
 
 .terra {
-  width: 100px; /* Tamanho real da sua imagem */
+  width: 90px; /* Controla o tamanho individual de cada bloco */
   height: auto;
   display: block;
-  
-  /* Ajuste de profundidade: garante que a sobreposição isométrica fique correta */
-  position: relative;
-  
-  /* Remove qualquer borda que possa afastar os blocos */
-  border: none; 
+  border: none; /* Remove de vez as bordas vermelhas do começo */
 }
+
+/* 
+  EFEITO DE PERSPECTIVA:
+  Para que não pareça uma parede reta, empurramos cada fileira 
+  um pouco mais para o lado (como os degraus de uma escada deitada)
+*/
+
+/* 2ª Fileira (itens do 11 ao 20) */
+.terra:nth-child(n+11):nth-child(-n+20) {
+  transform: translateX(25px);
+}
+
+/* 3ª Fileira (itens do 21 ao 30) */
+.terra:nth-child(n+21):nth-child(-n+30) {
+  transform: translateX(50px);
+}
+
+/* 4ª Fileira (itens do 31 ao 40) */
+.terra:nth-child(n+31):nth-child(-n+40) {
+  transform: translateX(75px);
+}
+
+/* 5ª Fileira (itens do 41 ao 50) */
+.terra:nth-child(n+41):nth-child(-n+50) {
+  transform: translateX(100px);
+}
+
 
 
 /* ===== GALPÃO ARMAZÉM ===== */
