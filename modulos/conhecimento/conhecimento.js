@@ -33,13 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = "tavares.rosana@escola.pr.gov.br";
 
                 const assunto = encodeURIComponent(
-                    "Pergunta enviada pela Base de Conhecimento - AgroVision"
+                    "Contato sobre o site AgroVision Sustentável - Base de Conhecimento"
                 );
 
                 const mensagem = encodeURIComponent(
 `Olá,
 
-Estou entrando em contato pela Base de Conhecimento do AgroVision.
+Estou entrando em contato pela Base de Conhecimento do site AgroVision Sustentável.
 
 Pergunta:
 ${pergunta}
