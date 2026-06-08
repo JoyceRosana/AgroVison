@@ -89,14 +89,25 @@ html, body {
   width: var(--largura-terra);
   height: auto;
   display: block;
-  margin-left: -80px; 
 }
-.terra:first-child {
-  margin-left: 0;
+
+.terra:nth-child(1) {
+  left: 0px;
+  top: 0px;
+  z-index: 1;
 }
-.terra:nth-child(1) { transform: translateY(0); }
-.terra:nth-child(2) { transform: translateY(calc(var(--altura-visivel) * -1)); }
-.terra:nth-child(3) { transform: translateY(calc(var(--altura-visivel) * -2)); }
+
+.terra:nth-child(2) {
+  left: 50px;  /* Anda metade da largura para a direita */
+  top: 25px;  /* Desce para encaixar na quina inferior */
+  z-index: 2; /* Garante que o bloco da frente fique por cima */
+}
+
+.terra:nth-child(3) {
+  left: 100px; /* Anda mais metade da largura */
+  top: 50px;  /* Desce mais um nível */
+  z-index: 3;
+}
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
