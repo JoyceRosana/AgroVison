@@ -77,24 +77,48 @@ html, body {
   top: 300px;   
   left: 450px;  
 
-  display: grid;
-  /* 10 colunas horizontais com encaixe lateral */
-  grid-template-columns: repeat(10, 48px); 
+  /* Garante o tamanho correto para o bloco de 50 terras */
+  width: 580px; 
+  height: auto;
+
+  display: flex;
+  flex-wrap: wrap; /* Permite que os blocos quebrem linha sozinhos */
   
-  /* Encaixe vertical entre as 5 fileiras */
-  row-gap: 24px; 
+  /* O SEGREDO DO VISUAL NATURAL: */
+  /* Faz o navegador renderizar as imagens de trás para frente. */
+  /* Isso força as terras da direita a ficarem naturalmente POR CIMA das da esquerda! */
+  direction: rtl; 
 }
 
 .terra {
-  width: 100px;
+  width: 100px; /* Mantém o tamanho original intacto */
   height: auto;
   display: block;
   border: none;
+
+  /* DISTÂNCIA DE 1 A 3PX: Cria a separação natural para as bordinhas aparecerem */
+  margin-left: 2px;
+  margin-right: 2px;
   
-  /* Garante que o ponto de clique e renderização acompanhe a inversão */
-  position: relative; 
+  /* AJUSTE VERTICAL: Junta as fileiras subindo levemente para morder a quina de cima */
+  margin-top: -30px; 
 }
 
+/* Ajuste fino para a primeira fileira de cima não perder o topo */
+.terra:nth-child(-n+10) {
+  margin-top: 0;
+}
+
+/* 
+  EFEITO COLHEITA FELIZ (Zigue-Zague):
+  Para a ponta de cima de uma terra conectar na ponta de baixo da outra, 
+  as fileiras precisam ser intercaladas. 
+  Isso empurra as fileiras pares ligeiramente para o lado para morder a fresta perfeita.
+*/
+.terra:nth-child(n+11):nth-child(-n+20),
+.terra:nth-child(n+31):nth-child(-n+40) {
+  transform: translateX(-50px);
+}
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
