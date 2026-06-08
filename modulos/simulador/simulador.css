@@ -73,29 +73,22 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 300px;   
+  /* Ajuste aqui para centralizar o bloco inteiro na parte limpa da grama */
+  top: 150px;   
   left: 450px;  
-
-  display: flex;
-  flex-wrap: wrap; 
   
-  /* LARGURA MÁXIMA: Mantém o tamanho para as 10 colunas */
-  width: 1020px; 
-  
-  /* DISTÂNCIA DE 1 A 3PX: Mantém o espaço perfeito que você aprovou */
-  gap: 2px; 
-
-  /* O TOQUE FINAL: Inverte o fluxo do HTML nativamente. */
-  /* Isso faz com que as terras da DIREITA fiquem por cima das da ESQUERDA! */
-  direction: rtl; 
+  width: 1px;
+  height: 1px;
 }
 
 .terra {
-  width: 100px; 
+  position: absolute;
+  width: 100px; /* Tamanho original de 100px da sua imagem */
   height: auto;
   display: block;
-  border: none; 
+  border: none;
 }
+
 
 
 /* ===== GALPÃO ARMAZÉM ===== */

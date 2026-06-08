@@ -88,30 +88,31 @@ function mostrar(item) {
 document.addEventListener("DOMContentLoaded", () => {
   const terras = document.querySelectorAll('.plantacao .terra');
   
-  const COLUNAS = 10; // 10 terras na horizontal
+  // Define o desenho exato da foto: 5 de profundidade por 10 de largura
+  const MAX_COLUNAS = 10; 
 
-  // Ajustes milimétricos baseados no seu sprite de 100px para dar o espaço de 1 a 3px
-  const ESPACAMENTO_X = 51; // Controla a distância lateral (esquerda/direita)
-  const ESPACAMENTO_Y = 26; // Controla a distância vertical (cima/baixo)
+  // Medidas perfeitas para o encaixe do seu losango de 100px com a folga de 1 a 3px
+  const LARGURA_EMENDA = 51; // Espaço horizontal entre as quinas
+  const ALTURA_EMENDA = 26;  // Espaço vertical entre as quinas
 
   terras.forEach((terra, index) => {
-    // Descobre a linha (0 a 4) e a coluna (0 a 9) de cada um dos 50 blocos
-    const col = index % COLUNAS;
-    const lin = Math.floor(index / COLUNAS);
+    // Organiza os 50 blocos na matriz 5x10
+    const col = index % MAX_COLUNAS; // Vai de 0 a 9 (as 10 colunas descendo para a direita)
+    const lin = Math.floor(index / MAX_COLUNAS); // Vai de 0 a 4 (as 5 fileiras subindo para a esquerda)
 
-    // MÁGICA ISOMÉTRICA DA FAZENDA:
-    // Monta o tabuleiro perfeito deslocando as linhas em diagonal pura
-    const posX = (col * ESPACAMENTO_X) + (lin * -ESPACAMENTO_X);
-    const posY = (col * ESPACAMENTO_Y) + (lin * ESPACAMENTO_Y);
+    // FÓRMULA ISOMÉTRICA DE FAZENDA (Idêntica ao seu exemplo gráfico):
+    // As colunas avançam para a direita (+) e descem (+). 
+    // As linhas avançam para a esquerda (-) e também descem (+).
+    const posX = (col * LARGURA_EMENDA) + (lin * -LARGURA_EMENDA);
+    const posY = (col * ALTURA_EMENDA) + (lin * ALTURA_EMENDA);
 
-    // Aplica a posição exata em pixels na imagem
+    // Posiciona a imagem milimetricamente na tela
     terra.style.left = `${posX}px`;
     terra.style.top = `${posY}px`;
     
     // ORDEM DE CAMADAS PERFEITA:
-    // Quanto maior a coluna (mais à direita), maior o zIndex (fica por cima)
-    // Quanto maior a linha (mais à frente), maior o zIndex (fica por cima)
-    terra.style.zIndex = (lin * 20) + col;
+    // Garante nativamente que as terras da direita e da frente cubram as de trás/esquerda
+    terra.style.zIndex = col + lin;
   });
 });
 
