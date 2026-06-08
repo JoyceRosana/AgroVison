@@ -365,3 +365,5 @@ document.addEventListener(
   }
 
 });
+
+console.log("JS FUNCIONANDO");
