@@ -87,18 +87,31 @@ function mostrar(item) {
 
 document.addEventListener("DOMContentLoaded", () => {
   const terras = document.querySelectorAll('.plantacao .terra');
-  const COLUNAS = 10;
+  
+  const COLUNAS = 10; // 10 terras na horizontal
+
+  // Ajustes milimétricos baseados no seu sprite de 100px para dar o espaço de 1 a 3px
+  const ESPACAMENTO_X = 51; // Controla a distância lateral (esquerda/direita)
+  const ESPACAMENTO_Y = 26; // Controla a distância vertical (cima/baixo)
 
   terras.forEach((terra, index) => {
+    // Descobre a linha (0 a 4) e a coluna (0 a 9) de cada um dos 50 blocos
     const col = index % COLUNAS;
     const lin = Math.floor(index / COLUNAS);
 
-    /* 
-      INVERSÃO DE CAMADAS:
-      Multiplicamos a linha por 10 e somamos a coluna.
-      Isso faz com que o bloco da direita (maior coluna) e da frente (maior linha)
-      ganhe um peso muito maior, ficando por cima do bloco da esquerda!
-    */
-    terra.style.zIndex = (lin * 10) + col;
+    // MÁGICA ISOMÉTRICA DA FAZENDA:
+    // Monta o tabuleiro perfeito deslocando as linhas em diagonal pura
+    const posX = (col * ESPACAMENTO_X) + (lin * -ESPACAMENTO_X);
+    const posY = (col * ESPACAMENTO_Y) + (lin * ESPACAMENTO_Y);
+
+    // Aplica a posição exata em pixels na imagem
+    terra.style.left = `${posX}px`;
+    terra.style.top = `${posY}px`;
+    
+    // ORDEM DE CAMADAS PERFEITA:
+    // Quanto maior a coluna (mais à direita), maior o zIndex (fica por cima)
+    // Quanto maior a linha (mais à frente), maior o zIndex (fica por cima)
+    terra.style.zIndex = (lin * 20) + col;
   });
 });
+
