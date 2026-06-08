@@ -80,8 +80,9 @@ html, body {
 .plantacao {
   position: absolute;
   top: 200px;  
-  left: 900px; 
+  left: 500px; 
   display: flex;
+  align-items: flex-end;
 }
 
 .terra {
