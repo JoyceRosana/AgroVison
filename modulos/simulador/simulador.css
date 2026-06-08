@@ -79,45 +79,34 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 300px;  /* Ajuste para posicionar o bloco todo na grama */
-  left: 300px; /* Ajuste para posicionar o bloco todo na grama */
+  /* Ajuste essas duas linhas para mover o bloco de terras para o centro da grama */
+  top: 150px;   
+  left: 450px;  
 
-  display: flex;
-  flex-wrap: wrap; /* Faz quebrar a linha a cada 10 blocos */
+  display: grid;
+  /* Define um grid de 10 colunas por 5 linhas */
+  grid-template-columns: repeat(10, 50px); /* Metade da largura da imagem */
+  grid-template-rows: repeat(5, 25px);    /* Metade da altura visível do losango */
   
-  /* Largura exata para caber 10 blocos (10 x 50px de espaço visível) */
-  width: 500px; 
+  /* O GRANDE SEGREDO: */
+  /* Removemos distorções estranhas. Apenas rotacionamos o container inteiro em 45 graus */
+  /* e achatamos o eixo X/Y na proporção isométrica perfeita (2:1) para os blocos se encaixarem */
+  transform: rotateZ(-45deg) scaleY(0.577);
+  transform-style: preserve-3d;
 }
 
 .terra {
-  width: 100px; /* Mantém o tamanho original do seu bloco */
+  width: 100px; /* Mantém o tamanho original de 100px da sua imagem */
   height: auto;
   display: block;
+  
+  /* Remove qualquer borda para evitar frestas brancas ou desalinhamento */
+  border: none; 
 
-  /* 
-    O SEGREDO DO ENCAIXE:
-    Aproxima os blocos na horizontal e na vertical para as quinas se cruzarem.
-    Cada bloco "entra" metade no espaço do outro.
-  */
-  margin-left: -50px;  /* Junta os blocos da mesma fileira horizontalmente */
-  margin-top: -25px;   /* Sobe as fileiras de baixo para encaixar na quina */
+  /* Desfaz a distorção do container na imagem individual para ela não ficar amassada */
+  transform: scaleY(1.732) rotateZ(45deg);
 }
 
-/* 
-  CORREÇÃO DE DIAGONAL:
-  Como cada bloco avança para a direita, ele precisa subir um pouco 
-  para acompanhar a linha isométrica do chão do jogo.
-*/
-.terra:nth-child(10n+1) { margin-top: calc(-25px + 0px); }
-.terra:nth-child(10n+2) { margin-top: calc(-25px - 25px); }
-.terra:nth-child(10n+3) { margin-top: calc(-25px - 50px); }
-.terra:nth-child(10n+4) { margin-top: calc(-25px - 75px); }
-.terra:nth-child(10n+5) { margin-top: calc(-25px - 100px); }
-.terra:nth-child(10n+6) { margin-top: calc(-25px - 125px); }
-.terra:nth-child(10n+7) { margin-top: calc(-25px - 150px); }
-.terra:nth-child(10n+8) { margin-top: calc(-25px - 175px); }
-.terra:nth-child(10n+9) { margin-top: calc(-25px - 200px); }
-.terra:nth-child(10n+10) { margin-top: calc(-25px - 225px); }
 
 
 /* ===== GALPÃO ARMAZÉM ===== */
