@@ -73,10 +73,10 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 150px;   /* Se quiser descer mais o bloco, aumente este valor */
+  top: 250px;   /* Se quiser descer mais o bloco, aumente este valor */
   
   /* MOVIDO PARA A DIREITA: Aumentamos de 450px para 650px */
-  left: 650px;  
+  left: 800px;  
   
   width: 1px;
   height: 1px;
