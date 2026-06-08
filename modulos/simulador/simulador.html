@@ -97,8 +97,18 @@
 
     <button onclick="fechar()">X</button>
 
+  <div id="armazem" class="armazem oculto">
+
+  <div class="armazem-box">
+
+    ...
+
   </div>
-  <div id="menuPlantio" class="menu-plantio oculto">
+
+</div>
+
+<!-- MENU DE PLANTIO -->
+<div id="menuPlantio" class="menu-plantio oculto">
   <button data-cultura="milho">🌽 Milho</button>
   <button data-cultura="soja">🌱 Soja</button>
   <button data-cultura="alface">🥬 Alface</button>
@@ -106,9 +116,15 @@
   <button data-cultura="tomate">🍅 Tomate</button>
 </div>
 
-</div>                 
+<!-- MÃOZINHA -->
+<img
+  id="cursorPlantio"
+  src="/img/simulador/mao.png"
+  class="cursor-plantio oculto">
 
 <script src="simulador.js"></script>
+
+</div>                 
 
 </body>
 </html>
