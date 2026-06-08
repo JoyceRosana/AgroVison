@@ -71,25 +71,29 @@ html, body {
   left: 630px;
 }
 
+:root {
+  /* Altere apenas esses valores se o tamanho da imagem mudar */
+  --largura-terra: 100px;
+  --altura-visivel: 50px; /* Metade da largura é o padrão para isometria 2:1 */
+}
+
 .plantacao {
   position: absolute;
-  top: 200px;
-  left: 500px;
-
-  display: grid;
-  grid-template-columns: repeat(3, 80px); 
-  gap: 2px; 
-  transform: rotateX(60deg) rotateZ(45deg);
-  transform-style: preserve-3d;
+  top: 400px;  
+  left: 300px; 
+  
+  display: flex;
 }
 
 .terra {
-  width: 100%;
+  width: var(--largura-terra);
   height: auto;
   display: block;
-  border: none; 
+  margin-left: -2px; 
 }
-
+.terra:nth-child(1) { transform: translateY(0); }
+.terra:nth-child(2) { transform: translateY(calc(var(--altura-visivel) * -1)); }
+.terra:nth-child(3) { transform: translateY(calc(var(--altura-visivel) * -2)); }
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
