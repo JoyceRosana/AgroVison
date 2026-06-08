@@ -79,9 +79,8 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 400px;  
-  left: 300px; 
-  
+  top: 200px;  
+  left: 900px; 
   display: flex;
 }
 
@@ -89,7 +88,10 @@ html, body {
   width: var(--largura-terra);
   height: auto;
   display: block;
-  margin-left: -2px; 
+  margin-left: -50px; 
+}
+.terra:first-child {
+  margin-left: 0;
 }
 .terra:nth-child(1) { transform: translateY(0); }
 .terra:nth-child(2) { transform: translateY(calc(var(--altura-visivel) * -1)); }
