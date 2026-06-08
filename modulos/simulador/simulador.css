@@ -93,7 +93,7 @@ html, body {
     Em vez de afastar com gap, usamos margens negativas para recolher 
     a transparência do losango e fazer as texturas de terra se encostarem.
   */
-  margin-left: -100px;  /* Junta as laterais eliminando o buraco do centro */
+  margin-left: -200px;  /* Junta as laterais eliminando o buraco do centro */
   margin-top: -50px;   /* Junta as fileiras de cima com as de baixo */
 }
 
