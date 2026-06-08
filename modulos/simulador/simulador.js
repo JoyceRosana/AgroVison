@@ -90,30 +90,11 @@ function mostrar(item) {
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   const terras = document.querySelectorAll('.plantacao .terra');
-  
-  if (terras.length === 0) {
-    console.error("ERRO: Nenhuma imagem de terra foi encontrada no HTML!");
-    return;
-  }
-
-  // Distâncias para o seu sprite de 100px
-  const LARGURA_VISIVEL = 48; 
-  const ALTURA_VISIVEL = 24;  
-  const COLUNAS = 5; 
+  const COLUNAS = 10;
 
   terras.forEach((terra, index) => {
-    const col = index % COLUNAS;
     const lin = Math.floor(index / COLUNAS);
-
-    // Ajuste na fórmula para evitar que valores negativos de 'lin' joguem a terra para fora da tela à esquerda
-    const isoX = (col * LARGURA_VISIVEL) - (lin * LARGURA_VISIVEL);
-    const isoY = (col * ALTURA_VISIVEL) + (lin * ALTURA_VISIVEL);
-
-    // Posiciona fisicamente
-    terra.style.left = `${isoX}px`;
-    terra.style.top = `${isoY}px`;
-    terra.style.zIndex = col + lin;
+    // Garante que as fileiras de baixo (da frente) fiquem por cima das fileiras de cima (de trás)
+    terra.style.zIndex = lin;
   });
-  
-  console.log(`Sucesso: ${terras.length} terras posicionadas.`);
 });
