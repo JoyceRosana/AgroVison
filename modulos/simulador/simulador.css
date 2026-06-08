@@ -73,26 +73,29 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 300px;   /* Ajuste para onde quiser no mapa */
-  left: 450px;  /* Ajuste para onde quiser no mapa */
+  top: 300px;   
+  left: 450px;  
 
   display: flex;
-  flex-wrap: wrap; /* Faz quebrar a linha automaticamente */
+  flex-wrap: wrap; 
   
-  /* LARGURA MÁXIMA: 10 terras de 100px + os espacinhos entre elas */
+  /* LARGURA MÁXIMA: Mantém o tamanho para as 10 colunas */
   width: 1020px; 
   
-  /* DISTÂNCIA DE 1 A 3PX: Dá o espaço que você queria entre os blocos */
+  /* DISTÂNCIA DE 1 A 3PX: Mantém o espaço perfeito que você aprovou */
   gap: 2px; 
+
+  /* O TOQUE FINAL: Inverte o fluxo do HTML nativamente. */
+  /* Isso faz com que as terras da DIREITA fiquem por cima das da ESQUERDA! */
+  direction: rtl; 
 }
 
 .terra {
-  width: 100px; /* Tamanho normal da sua imagem */
+  width: 100px; 
   height: auto;
   display: block;
-  border: none; /* Garante que não tem borda vermelha */
+  border: none; 
 }
-
 
 
 /* ===== GALPÃO ARMAZÉM ===== */
