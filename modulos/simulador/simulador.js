@@ -85,16 +85,20 @@ function mostrar(item) {
   info.innerHTML = dados[item];
 }
 
-// ==========================================
-// SISTEMA DE GRUDA-QUINA DAS 50 TERRAS
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   const terras = document.querySelectorAll('.plantacao .terra');
   const COLUNAS = 10;
 
   terras.forEach((terra, index) => {
+    const col = index % COLUNAS;
     const lin = Math.floor(index / COLUNAS);
-    // Garante que as fileiras de baixo (da frente) fiquem por cima das fileiras de cima (de trás)
-    terra.style.zIndex = lin;
+
+    /* 
+      INVERSÃO DE CAMADAS:
+      Multiplicamos a linha por 10 e somamos a coluna.
+      Isso faz com que o bloco da direita (maior coluna) e da frente (maior linha)
+      ganhe um peso muito maior, ficando por cima do bloco da esquerda!
+    */
+    terra.style.zIndex = (lin * 10) + col;
   });
 });

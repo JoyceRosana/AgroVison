@@ -73,23 +73,28 @@ html, body {
 
 .plantacao {
   position: absolute;
-  top: 350px;   /* Ajuste para mover o bloco todo para cima/baixo na grama */
-  left: 300px;  /* Ajuste para mover o bloco todo para os lados */
+  /* Posicionamento exato solicitado */
+  top: 300px;   
+  left: 450px;  
 
   display: grid;
-  /* Cria as 10 colunas horizontais. Ajustamos o tamanho para grudar as quinas esquerdas/direitas */
+  /* 10 colunas horizontais com encaixe lateral */
   grid-template-columns: repeat(10, 48px); 
   
-  /* Cria as 5 fileiras verticais. Ajustamos o espaçamento para grudar as quinas cima/baixo */
+  /* Encaixe vertical entre as 5 fileiras */
   row-gap: 24px; 
 }
 
 .terra {
-  width: 100px; /* Mantém o tamanho original de 100px da sua imagem */
+  width: 100px;
   height: auto;
   display: block;
   border: none;
+  
+  /* Garante que o ponto de clique e renderização acompanhe a inversão */
+  position: relative; 
 }
+
 
 /* ===== GALPÃO ARMAZÉM ===== */
 
