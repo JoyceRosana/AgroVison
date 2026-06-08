@@ -73,13 +73,15 @@ html, body {
 
 .plantacao {
   position: absolute;
-  /* Ajuste aqui para centralizar o bloco inteiro na parte limpa da grama */
-  top: 150px;   
-  left: 450px;  
+  top: 150px;   /* Se quiser descer mais o bloco, aumente este valor */
+  
+  /* MOVIDO PARA A DIREITA: Aumentamos de 450px para 650px */
+  left: 650px;  
   
   width: 1px;
   height: 1px;
 }
+
 
 .terra {
   position: absolute;
