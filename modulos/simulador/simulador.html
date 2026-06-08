@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador</title>
+  <link rel="stylesheet" href="simulador.css">
+</head>
+<body>
+
+<div class="viewport">
+    
+  <div class="world">
+    <img src="/assets/imagens/simulador/mapa.png" class="mapa">
+
+    <!-- OBJETOS -->
+    <img src="/assets/imagens/simulador/galpao.png" class="objeto galpao">
+
+    <img src="/assets/imagens/simulador/cisterna.png" class="objeto cisterna">
+
+    <img src="/assets/imagens/simulador/mercado.png" class="objeto mercado">
+
+    <div class="plantacao">
+  <div class="plantacao">
+  <img src="/assets/imagens/simulador/terra.png" class="terra">
+  <img src="/assets/imagens/simulador/terra.png" class="terra">
+  <img src="/assets/imagens/simulador/terra.png" class="terra">
+</div>
+</div>
+
+</div>
+<!-- ARMAZÉM -->
+<div id="armazem" class="armazem oculto">
+
+  <div class="armazem-box">
+
+    <div class="lista">
+      <div onclick="mostrar('milho')">🌽 Milho - 50 kg</div>
+      <div onclick="mostrar('soja')">🌱 Soja - 40 kg</div>
+      <div onclick="mostrar('feijao')">🫘 Feijão - 25 kg</div>
+      <div onclick="mostrar('alface')">🥬 Alface - 30 un.</div>
+      <div onclick="mostrar('organico')">🧺 Adubo Orgânico - 20</div>
+      <div onclick="mostrar('quimico')">🧪 Adubo Químico - 15</div>
+    </div>
+
+    <div class="info" id="info">
+      <h2>GALPÃO</h2>
+      <p>Selecione um item para ver informações.</p>
+    </div>
+
+    <button onclick="fechar()">X</button>
+
+  </div>
+
+</div>                 
+
+<script src="simulador.js"></script>
+
+</body>
+</html>
