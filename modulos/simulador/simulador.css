@@ -72,13 +72,13 @@ html, body {
 }
 
 .plantacao {
-  position: relative; /* cria um contexto de empilhamento */  top: 200px;
+  position: relative; /* cria um contexto de empilhamento */  
+  top: 200px;
   left: 890px;
 
   width: 1px;
   height: auto;
 }
-
 
 .terra {
   position: absolute;
