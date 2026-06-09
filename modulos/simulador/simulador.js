@@ -183,7 +183,6 @@ setTimeout(() => {
 
     return;
 }
-);
 
   // COLHER
   if (status === "pronto") {
@@ -286,4 +285,4 @@ document.addEventListener(
 
   }
 
-});
+})
