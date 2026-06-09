@@ -13,14 +13,110 @@ O **AgroVision** nasceu da ideia de mostrar como a tecnologia pode ajudar a pens
 - **[JavaScript](ca://s?q=Explicar_JavaScript_no_projeto)** → interatividade e dinamismo  
 
 ## 📂 Estrutura
-AgroVision/
-│── index.html
-│── style.css
-│── script.js
-│── assets/
-│    ├── imagens/
-│    └── sons/
-│── README.md
+.
+├── css/
+│   ├── animations.css
+│   ├── global.css
+│   ├── responsive.css
+│   └── style.css
+├── img/
+│   ├── conhecimento/
+│   │   ├── conteudos/
+│   │   │   ├── clima/
+│   │   │   │   ├── clima_diferente.jpeg
+│   │   │   │   ├── climatico.jpeg
+│   │   │   │   ├── irrigar.jpeg
+│   │   │   │   ├── plantio.jpeg
+│   │   │   │   └── previsao.jpeg
+│   │   │   ├── irrigacao/
+│   │   │   │   ├── estufa.jpeg
+│   │   │   │   ├── hortalicas.jpeg
+│   │   │   │   ├── irrigacao.png
+│   │   │   │   ├── irrigar_soja.jpeg
+│   │   │   │   ├── produtor_irrigacao.png
+│   │   │   │   └── regar.jpeg
+│   │   │   ├── pragas/
+│   │   │   │   ├── bacterias.jpeg
+│   │   │   │   ├── ervas.jpeg
+│   │   │   │   ├── fungos.png
+│   │   │   │   ├── insetos.jpeg
+│   │   │   │   ├── plantação_saudavel.jpeg
+│   │   │   │   └── pragas_agricolas.jpeg
+│   │   │   ├── solo/
+│   │   │   │   ├── agua_armazenada.jpeg
+│   │   │   │   ├── analise_solo.jpeg
+│   │   │   │   ├── fertilidade.jpeg
+│   │   │   │   ├── ph.jpeg
+│   │   │   │   ├── solo_agro.jpg
+│   │   │   │   └── textura.jpeg
+│   │   │   └── sustentabilidade/
+│   │   │       ├── agro_sustentavel.jpeg
+│   │   │       ├── agronomia.jpeg
+│   │   │       ├── agua_consciente.png
+│   │   │       ├── cuidado_natureza.png
+│   │   │       └── renovavel.jpeg
+│   │   ├── tecnologia/
+│   │   │   ├── GPS_Agricola.png
+│   │   │   ├── Sensor.png
+│   │   │   ├── agricultura_IA.jpeg
+│   │   │   └── drone.jpeg
+│   │   ├── bannerCO2_BDC.jpeg
+│   │   ├── bannerbio_BDC.jpeg
+│   │   ├── bannerclima_BDC.jpeg
+│   │   ├── bannerconhecimento.png
+│   │   ├── bannerirrigar_BDC.jpeg
+│   │   ├── bannermonitorar_BDC.jpeg
+│   │   ├── bannerpragas_BDC.jpeg
+│   │   ├── bannersolo_BDC.jpeg
+│   │   ├── bannersustentabilidade_BDC.jpeg
+│   │   └── bannertech_BDC.jpeg
+│   ├── geral/
+│   │   ├── TechAgro.png
+│   │   ├── agro-inicial.png
+│   │   └── Fazenda.png
+│   ├── simulador/
+│   │   ├── cisterna.png
+│   │   ├── cooperativa.png
+│   │   ├── galpao.png
+│   │   ├── maozinha.png
+│   │   ├── mapa.png
+│   │   ├── milho_adulto.png
+│   │   ├── milho_broto.png
+│   │   ├── milho_jovem.png
+│   │   └── terra.png
+│   └── sobre/
+│       ├── Plantação.png
+│       ├── planta.jpg
+│       └── plantas-plantação.jpg
+├── js/
+│   ├── global.js
+│   ├── script.js
+│   └── scroll.js
+├── modulos/
+│   ├── conhecimento/
+│   │   ├── conteudos/
+│   │   │   ├── clima.html
+│   │   │   ├── conteudos.css
+│   │   │   ├── conteudos.js
+│   │   │   ├── irrigacao.html
+│   │   │   ├── pragas.html
+│   │   │   ├── solo.html
+│   │   │   ├── sustentabilidade.html
+│   │   │   └── tecnologia.html
+│   │   ├── destaque/
+│   │   ├── conhecimento.css
+│   │   ├── conhecimento.html
+│   │   └── conhecimento.js
+│   ├── simulador/
+│   │   ├── simulador.css
+│   │   ├── simulador.html
+│   │   └── simulador.js
+│   └── sobre/
+│       ├── sobre.css
+│       ├── sobre.html
+│       └── sobre.js
+├── README.md
+└── index.html
 
 
 ##  O que o site faz
@@ -33,12 +129,19 @@ AgroVision/
 Veja o projeto publicado: [AgroVision no GitHub Pages](ca://s?q=Abrir_AgroVision_no_GitHub_Pages)
 
 ##  Autoria
-- Estudante: **Joyce Rosana**  
-- Escola: *[Nome da sua escola]*  
-- Professor(a) orientador(a): *[Nome do professor]*  
+- Estudante: **Rosana Joyce Rocha Tavares**  
+- Escola: **Colégio Estadual Dr. João Ferreira Neves**  
+- Professor(a) orientador(a): **Gabriela Morreira de Assis**  
 - Categoria: **Programação Front-End (HTML, CSS, JS)**  
 
-📷 Créditos, Referências e Uso de IAEste projeto foi construído utilizando recursos visuais externos e suporte tecnológico, distribuídos da seguinte forma:Imagens de Referência: Inspirações visuais retiradas do Pinterest e Google, utilizadas estritamente para fins educacionais e conceituais.Artes e Mídias com IA: Elementos visuais e sonoros gerados por Inteligência Artificial por meio de prompts próprios e personalizados para o tema.Suporte em Programação: Utilização de IA como assistente de codificação para refinamento de design, otimização de lógica e limpeza do código (clean code).Autoria e Integração: Toda a arquitetura do site, estrutura HTML, estilização CSS e comportamento JavaScript foram integrados, testados e adaptados manualmente por mim.🚀 Tecnologias e FerramentasHTML5: Estruturação semântica das páginas.CSS3: Design responsivo, estilização e identidade visual.JavaScript (Vanilla): Lógica de interatividade e dinamismo da aplicação.Ferramentas de IA: Auxílio no design visual, geração de mídias e revisão de código.                                                                              
+## 📷 Créditos, Referências e Uso de IA
+Este projeto foi construído utilizando recursos visuais externos e suporte tecnológico, distribuídos da seguinte forma:
+
+- Imagens de referência retiradas do **Pinterest** e **Google**, utilizadas estritamente para fins educacionais e conceituais.  
+- Elementos visuais e sonoros gerados por **Inteligência Artificial**, com prompts próprios e personalizados para o tema.  
+- A IA também foi utilizada como **assistente de programação**, ajudando a refinar o design, otimizar a lógica e deixar o código mais limpo.  
+- Toda a arquitetura do site (HTML, CSS e JavaScript) foi integrada, testada e adaptada manualmente por mim.  
+
 ##  Regulamento
 Este projeto segue as regras do **Concurso Agrinho 2026**:  
 - Repositório público no GitHub  
