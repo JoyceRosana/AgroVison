@@ -38,6 +38,7 @@ Veja o projeto publicado: [AgroVision no GitHub Pages](ca://s?q=Abrir_AgroVision
 - Professor(a) orientador(a): *[Nome do professor]*  
 - Categoria: **Programação Front-End (HTML, CSS, JS)**  
 
+📷 Créditos, Referências e Uso de IAEste projeto foi construído utilizando recursos visuais externos e suporte tecnológico, distribuídos da seguinte forma:Imagens de Referência: Inspirações visuais retiradas do Pinterest e Google, utilizadas estritamente para fins educacionais e conceituais.Artes e Mídias com IA: Elementos visuais e sonoros gerados por Inteligência Artificial por meio de prompts próprios e personalizados para o tema.Suporte em Programação: Utilização de IA como assistente de codificação para refinamento de design, otimização de lógica e limpeza do código (clean code).Autoria e Integração: Toda a arquitetura do site, estrutura HTML, estilização CSS e comportamento JavaScript foram integrados, testados e adaptados manualmente por mim.🚀 Tecnologias e FerramentasHTML5: Estruturação semântica das páginas.CSS3: Design responsivo, estilização e identidade visual.JavaScript (Vanilla): Lógica de interatividade e dinamismo da aplicação.Ferramentas de IA: Auxílio no design visual, geração de mídias e revisão de código.                                                                              
 ##  Regulamento
 Este projeto segue as regras do **Concurso Agrinho 2026**:  
 - Repositório público no GitHub  
