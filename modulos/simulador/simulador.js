@@ -158,9 +158,14 @@ if (status === "vazio" && culturaSelecionada) {
   planta.className = "planta";
   planta.src = cultura.broto;
 
-  // insere dentro do ponto lógico
-  const ref = terra.querySelector(".terra-ref");
-  ref.appendChild(planta);
+  // insere direto na célula .terra
+  terra.appendChild(planta);
+
+  // centraliza dentro da própria terra
+  planta.style.position = "absolute";
+  planta.style.left = "50%";
+  planta.style.top = "50%";
+  planta.style.transform = "translate(-50%, -50%)";
 
   terra.dataset.status = "crescendo";
   terra.dataset.cultura = culturaSelecionada;
@@ -175,6 +180,7 @@ if (status === "vazio" && culturaSelecionada) {
     terra.dataset.status = "pronto";
   }, cultura.crescimento);
 }
+
     return;
 }
 );
