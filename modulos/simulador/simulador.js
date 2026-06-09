@@ -165,7 +165,7 @@ if (status === "vazio" && culturaSelecionada) {
   planta.style.position = "absolute";
   planta.style.left = "50%";
   planta.style.top = "50%";
-  planta.style.transform = "translate(-10%, -70%)";
+  planta.style.transform = "translate(-30%, -50%)";
 
   terra.dataset.status = "crescendo";
   terra.dataset.cultura = culturaSelecionada;
