@@ -156,60 +156,30 @@ terra.addEventListener("click", (e) => {
   console.log("PLANTANDO");
   console.log(culturaSelecionada);
 
-    const cultura =
-      culturas[culturaSelecionada];
+  const cultura =
+    culturas[culturaSelecionada];
 
-    const planta =
-      document.createElement("img");
+  console.log(cultura);
 
-    planta.className = "planta";
+  const planta =
+    document.createElement("img");
 
-    planta.src =
-      cultura.broto;
+  console.log("PLANTA CRIADA");
 
-    document.querySelector(".world")
-  .appendChild(planta);
+  planta.className = "planta";
 
-    planta.style.left =
-  terra.style.left;
+  planta.src =
+    cultura.broto;
 
-planta.style.top =
-  terra.style.top;
+  console.log(planta.src);
 
-    terra.dataset.status =
-  "crescendo";
+  document.querySelector(".plantacao")
+    .appendChild(planta);
 
-culturaSelecionada = null;
+  console.log("PLANTA ADICIONADA");
 
-cursorPlantio.classList.add(
-  "oculto"
-);
-
-    terra.dataset.cultura =
-      culturaSelecionada;
-
-    terra.planta = planta;
-
-    setTimeout(() => {
-
-      planta.src =
-        cultura.jovem;
-
-    }, cultura.crescimento / 2);
-
-    setTimeout(() => {
-
-      planta.src =
-        cultura.pronta;
-
-      terra.dataset.status =
-        "pronto";
-
-    }, cultura.crescimento);
-
-    return;
-  }
-
+  return;
+}
   // COLHER
   if (status === "pronto") {
 
