@@ -162,7 +162,7 @@ if (status === "vazio" && culturaSelecionada) {
   terra.dataset.cultura = culturaSelecionada;
 
   setTimeout(() => {
-    planta.src = cultura.jovem;
+    if (cultura.jovem) planta.src = cultura.jovem;
   }, cultura.crescimento / 2);
 
   setTimeout(() => {
@@ -170,7 +170,6 @@ if (status === "vazio" && culturaSelecionada) {
     terra.dataset.status = "pronto";
   }, cultura.crescimento);
 }
-
     return;
 }
 );

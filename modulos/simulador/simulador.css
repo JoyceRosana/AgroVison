@@ -103,7 +103,6 @@ html, body {
   pointer-events: none;
 }
 
-
 /* BOTÃO FECHAR */
 
 .menu-plantio{
@@ -131,4 +130,4 @@ html, body {
 
 .oculto{
   display:none;
-}
+} 
