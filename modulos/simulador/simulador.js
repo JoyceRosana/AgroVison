@@ -126,25 +126,25 @@ terras.forEach((terra, index) => {
 
   const status = terra.dataset.status;
   
-    // ABRIR MENU
+// ABRIR MENU
 
-    if (
-      status === "vazio" &&
-      !culturaSelecionada
-    ) }
+if (
+  status === "vazio" &&
+  !culturaSelecionada
+) {
 
-      menuPlantio.style.left =
-        e.pageX + "px";
+  menuPlantio.style.left =
+    e.pageX + "px";
 
-      menuPlantio.style.top =
-        e.pageY + "px";
+  menuPlantio.style.top =
+    e.pageY + "px";
 
-      menuPlantio.classList.remove(
-        "oculto"
-      );
+  menuPlantio.classList.remove(
+    "oculto"
+  );
 
-      return;
-    };
+  return;
+}
 
     // PLANTAR
 
