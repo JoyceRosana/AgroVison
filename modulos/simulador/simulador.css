@@ -82,10 +82,24 @@ html, body {
 
 .terra {
   position: absolute;
-  width: 100px; 
-  height: auto;
-  display: block;
-  border: none;
+  width: 100px;
+  height: 100px; /* altura fixa para manter grid */
+}
+
+
+.terra-ref {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.planta {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  pointer-events: none;
 }
 
 /* BOTÃO FECHAR */
@@ -115,11 +129,4 @@ html, body {
 
 .oculto{
   display:none;
-}
-
-.planta{
-  position:absolute;
-  width:50px;
-  height:auto;
-  pointer-events:none;
 }
