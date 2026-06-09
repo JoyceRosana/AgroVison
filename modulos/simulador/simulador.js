@@ -153,7 +153,7 @@ console.log("CULTURA:", culturaSelecionada);
 // PLANTAR
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
-  const cultura = culturas[culturaSelecionada];
+const cultura = culturas[culturaSelecionada];
 const planta = document.createElement("img");
 planta.className = "planta";
 planta.src = cultura.broto;
@@ -161,14 +161,12 @@ planta.src = cultura.broto;
 // insere a planta dentro da célula
 terra.appendChild(planta);
 
-// centraliza no centro da terra
+// centraliza no meio da imagem da terra
 planta.style.position = "absolute";
 planta.style.left = "50%";
 planta.style.top = "50%";
-planta.style.transform = "translate(-50%, -50%)";
-
-// garante que a planta fique acima da terra
-planta.style.zIndex = 10;
+planta.style.transform = "translate(-50%, -55%)"; // leve ajuste para compensar perspectiva
+planta.style.zIndex = 5; // garante que a planta fique acima da terra
 
 terra.dataset.status = "crescendo";
 terra.dataset.cultura = culturaSelecionada;
