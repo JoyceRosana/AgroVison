@@ -152,27 +152,24 @@ terra.addEventListener("click", (e) => {
 // ==========================================
 
 if (status === "vazio" && culturaSelecionada) {
-    console.log("PLANTANDO");
-    console.log(culturaSelecionada);
 
     const cultura = culturas[culturaSelecionada];
-    const planta = document.createElement("img");
 
-    planta.className = "planta";
-    planta.src = cultura.broto;
-
-    
-
-    terra.parentElement.appendChild(planta);
     const anchor = terra.querySelector(".anchor");
     const rect = anchor.getBoundingClientRect();
     const parent = terra.parentElement.getBoundingClientRect();
 
+    const planta = document.createElement("img");
+    planta.className = "planta";
+    planta.src = cultura.broto;
+
+    terra.parentElement.appendChild(planta);
+
+    planta.style.position = "absolute";
     planta.style.left = (rect.left - parent.left) + "px";
     planta.style.top = (rect.top - parent.top) + "px";
+    planta.style.zIndex = 1000;
 
-planta.style.zIndex =
-  parseInt(terra.style.zIndex) + 100;
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
     terra.planta = planta;
@@ -184,12 +181,11 @@ planta.style.zIndex =
     setTimeout(() => {
         planta.src = cultura.pronta;
         terra.dataset.status = "pronto";
-
     }, cultura.crescimento);
 
     return;
-
 }
+
   // COLHER
   if (status === "pronto") {
 
