@@ -76,7 +76,7 @@ html, body {
   width:60px;
   top: 200px;
   left: 890px;
-  height:auto;
+  height:60px;
   pointer-events:none;
   border:1px solid red;
 }
