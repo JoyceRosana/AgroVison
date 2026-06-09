@@ -84,29 +84,23 @@ html, body {
   width: 100px;
   height: auto;
   display: block;
-  border: none;
-  z-index: 1; /* terra fica abaixo */
-}
-
-.terra-ref {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
 }
 
 .terra-img {
+  position: absolute;
   width: 100%;
-  height: auto;
+  height: 100%;
+  z-index: 1; /* terra fica abaixo */
 }
 
 .planta {
   position: absolute;
-  transform: translate(-50%, -50%);
-  width: 120px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -55%);
+  width: 50px;
+  z-index: 2; /* planta acima da terra */
   pointer-events: none;
-  z-index: 10; /* planta sempre acima da terra */
 }
 
 /* BOTÃO FECHAR */
