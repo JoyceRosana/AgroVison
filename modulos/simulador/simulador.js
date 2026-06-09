@@ -164,7 +164,6 @@ planta.style.position = "absolute";
 planta.style.left = "50%";
 planta.style.top = "50%";
 planta.style.transform = "translate(-50%, -50%)";
-planta.style.pointerEvents = "none";
 
 
     terra.dataset.status = "crescendo";
