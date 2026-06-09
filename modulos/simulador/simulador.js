@@ -182,7 +182,6 @@ if (status === "vazio" && culturaSelecionada) {
   }, cultura.crescimento);
 }
 
-}
     return;
 }
 );
