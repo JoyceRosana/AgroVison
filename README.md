@@ -190,8 +190,8 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "banner de Ilustração de fazenda inicial"
 - Prompt: "banner da ilustração base de conhciment, amigos discutindo"
   Prompt: "banner da pagina agrovision, tecnologia e agricultura"
-- Prompt: "ilustração de planação tomate cenora na horta"
-- Prompt: "ilustração de presevar e tempo"
+- Prompt: "plantação na horta"
+- Prompt: "broto verde e ampulheta"
   
 - Imagem de referência — encontrada via Google/Pinterest — utilizada apenas como inspiração, sem uso direto no projeto
 - Elementos visuais e sonoros gerados por **Inteligência Artificial**, com prompts próprios e personalizados para o tema.  
