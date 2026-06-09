@@ -126,7 +126,7 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 └── index.html
 
 ## Demonstração
-Veja o projeto publicado: [AgroVision no GitHub Pages](ca://s?q=Abrir_AgroVision_no_GitHub_Pages)
+Veja o projeto publicado: [AgroVision no GitHub Pages](https://agro-vison.vercel.app)
 
 ##  Autoria
 - Estudante: **Rosana Joyce Rocha Tavares**  
