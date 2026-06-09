@@ -177,7 +177,7 @@ if (status === "vazio" && culturaSelecionada) {
 }
     return;
 }
-
+);
 
   // COLHER
   if (status === "pronto") {
@@ -205,8 +205,6 @@ if (status === "vazio" && culturaSelecionada) {
   }
 
 }); // fecha addEventListener
-
-}); // fecha forEach
 
 // =======================
 // ESCOLHER CULTURA
