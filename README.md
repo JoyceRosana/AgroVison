@@ -148,3 +148,6 @@ Este projeto segue as regras do **Concurso Agrinho 2026**:
 - Uso exclusivo de **HTML, CSS e JavaScript** (sem frameworks)  
 - Publicação funcional no **GitHub Pages ou Vercel**  
 - Estrutura organizada e documentação clara
+
+ O **AgroVision** é mais que um projeto de programação:  
+é uma iniciativa para unir tecnologia e sustentabilidade, mostrando que o futuro do campo depende de escolhas conscientes hoje.
