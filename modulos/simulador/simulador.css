@@ -79,6 +79,7 @@ html, body {
   height: auto;
 }
 
+
 .terra {
   position: absolute;
   width: 100px;
@@ -123,7 +124,7 @@ html, body {
 
 .cursor-plantio{
   position:fixed;
-  width:40px;
+  width:80px;
   pointer-events:none;
   z-index:10000;
 }
