@@ -176,6 +176,11 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "Sensor agrícola inteligente"
 - Prompt: "GPS aplicado na agricultura"
 
+ ### conhecimento
+- Prompt: "CO2 na floresta"
+- Prompt: "passagem de estação nas árvores"
+- Prompt: "laboratorio"
+
 ### simulador
 - Prompt: "Mapa interativo de fazenda em 2d"
 - Prompt: "Cisterna para armazenamento de água estilo 3d"
@@ -184,6 +189,8 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "Milho broto"
 - Prompt: "Milho jovem"
 - Prompt: "Milho adulto"
+- Prompt: "cartoon de terra para plantar"
+- Prompt: "luva branca 3d"
 
 ### sobre/geral
 - Prompt: "banner da tela inicial"
