@@ -107,7 +107,7 @@ html, body {
   transform: translate(-50%, -50%);
   width: 120px;
   pointer-events: none;
-  z-index: 2; /* planta sempre acima da terra */
+  z-index: 100; /* planta sempre acima da terra */
 }
 
 /* BOTÃO FECHAR */
