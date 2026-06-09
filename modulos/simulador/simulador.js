@@ -208,9 +208,7 @@ if (status === "vazio" && culturaSelecionada) {
 
    return;
 }
-
-
-
+);
 
  // COLHER
  if (status === "pronto") {
