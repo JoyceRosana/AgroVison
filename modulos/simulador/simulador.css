@@ -73,10 +73,9 @@ html, body {
 
 .plantacao {
   position: relative; /* cria um contexto de empilhamento */  
-  top: 200px;
-  left: 890px;
-
-  width: 1px;
+  top: 200px; /* ajuste conforme o mapa */
+  left: 900px; /* ajuste horizontal */
+  width: auto;
   height: auto;
 }
 

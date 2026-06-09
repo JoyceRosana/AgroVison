@@ -108,17 +108,16 @@ terras.forEach((terra, index) => {
   const col = index % MAX_COLUNAS;
   const lin = Math.floor(index / MAX_COLUNAS);
 
-  const posX =
-    (col * LARGURA_EMENDA) +
-    (lin * -LARGURA_EMENDA);
+  const OFFSET_X = 900; // deslocamento horizontal
+const OFFSET_Y = 200; // deslocamento vertical
 
-  const posY =
-    (col * ALTURA_EMENDA) +
-    (lin * ALTURA_EMENDA);
+const posX = OFFSET_X + (col - lin) * LARGURA_EMENDA;
+const posY = OFFSET_Y + (col + lin) * (ALTURA_EMENDA / 2);
 
-  terra.style.left = `${posX}px`;
-  terra.style.top = `${posY}px`;
-  terra.style.zIndex = col + lin;
+terra.style.left = `${posX}px`;
+terra.style.top = `${posY}px`;
+terra.style.zIndex = col + lin;
+
 
 terra.addEventListener("click", (e) => {
 
