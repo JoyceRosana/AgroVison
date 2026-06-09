@@ -97,15 +97,6 @@ html, body {
   height: 0;
 }
 
-.terra {
-  position: absolute;
-  width: 100px;
-  height: auto;
-  display: block;
-  border: none;
-  z-index: 1; /* terra fica abaixo */
-}
-
 .planta {
   position: absolute;
   width: 50px;
