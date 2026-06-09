@@ -164,10 +164,10 @@ if (status === "vazio" && culturaSelecionada) {
     planta.style.position = "absolute";
 
 planta.style.left =
-  (terra.offsetLeft + 20) + "px";
+  terra.offsetLeft + "px";
 
 planta.style.top =
-  (terra.offsetTop + 10) + "px";
+  terra.offsetTop + "px";
 
 planta.style.zIndex =
   parseInt(terra.style.zIndex) + 100;
