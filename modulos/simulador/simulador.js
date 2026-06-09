@@ -57,7 +57,7 @@ const culturas = {
   crescimento: 15000,
   broto: "/img/simulador/milho_broto.png",
   jovem: "/img/simulador/milho_jovem.png",
-  pronta: "/img/simulador/milho_adulta.png"
+  pronta: "/img/simulador/milho_adulto.png"
 },
 
   soja: {
