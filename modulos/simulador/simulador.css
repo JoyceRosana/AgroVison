@@ -71,20 +71,29 @@ html, body {
   left: 630px;
 }
 
+
 .plantacao {
-  position: relative; /* cria um contexto de empilhamento */
-  top: 200px;   /* ajuste conforme o mapa */
-  left: 900px;  /* ajuste horizontal */
-  width: auto;
-  height: auto;
+ position: absolute;
+ top: 200px;
+ left: 890px;
+ width: 1px;
+ height: auto;
 }
 
+
 .terra {
-  position: absolute;
-  width: 100px;
-  height: auto;
-  display: block;
-  border: none;
+ position: absolute;
+ width: 100px;
+ height: 100px;
+}
+
+
+.terra-ref {
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ width: 0;
+ height: 0;
 }
 
 .terra-img {
@@ -94,11 +103,12 @@ html, body {
 }
 
 .planta {
-  position: absolute;
-  width: 50px;
-  pointer-events: none;
-  z-index: 10; /* planta sempre acima da terra */
+ position: absolute;
+ transform: translate(-50%, -50%);
+ width: 50px;
+ pointer-events: none;
 }
+
 
 
 /* BOTÃO FECHAR */
