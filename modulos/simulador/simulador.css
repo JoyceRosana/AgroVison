@@ -71,15 +71,12 @@ html, body {
   left: 630px;
 }
 
-.plantacao {
-  position: absolute;
-  top: 200px;   /* Se quiser descer mais o bloco, aumente este valor */
-  
-  /* MOVIDO PARA A DIREITA: Aumentamos de 450px para 650px */
-  left: 890px;  
-  
-  width: 1px;
-  height: 1px;
+.planta{
+  position:absolute;
+  width:60px;
+  height:auto;
+  pointer-events:none;
+  border:2px solid red;
 }
 
 
