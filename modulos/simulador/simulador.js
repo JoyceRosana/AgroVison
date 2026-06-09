@@ -98,8 +98,7 @@ document.getElementById("cursorPlantio");
 console.log("Menu:", menuPlantio);
 console.log("Cursor:", cursorPlantio);
 console.log("Terras:", terras.length);
-
-agora um  erro em 
+ 
 // =======================
 // TERRAS
 // =======================
@@ -125,7 +124,7 @@ terras.forEach((terra, index) => {
 
   console.log("CLIQUE NA TERRA");
 
-  const status = terra.dataset.status)
+  const status = terra.dataset.status;
   
 // ABRIR MENU
 
