@@ -148,6 +148,8 @@ terra.addEventListener("click", (e) => {
  if (
     status === "vazio" &&
     culturaSelecionada
+    console.log("PLANTANDO");
+    console.log(culturaSelecionada);
   ) {
 
     const cultura =
