@@ -86,7 +86,7 @@ html, body {
   height: auto;
   display: block;
   border: none;
-  z-index: 1; /* terra fica abaixo */
+  z-index: 100; /* terra fica abaixo */
 }
 
 .terra-ref {
