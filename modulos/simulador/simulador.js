@@ -147,38 +147,45 @@ terra.addEventListener("click", (e) => {
     return;
   }
 
-  // PLANTAR
- if (
-  status === "vazio" &&
-  culturaSelecionada
-) {
+// ==========================================
+// AÇÃO: PLANTAR
+// ==========================================
+if (status === "vazio" && culturaSelecionada) {
+    console.log("PLANTANDO");
+    console.log(culturaSelecionada);
 
-  console.log("PLANTANDO");
-  console.log(culturaSelecionada);
+    const cultura = culturas[culturaSelecionada];
+    const planta = document.createElement("img");
+    
+    planta.className = "planta";
+    planta.src = cultura.broto;
+    
+    terra.parentElement.appendChild(planta);
+    planta.style.position = "absolute";
 
-  const cultura =
-    culturas[culturaSelecionada];
+planta.style.left =
+  (terra.offsetLeft + 20) + "px";
 
-  console.log(cultura);
+planta.style.top =
+  (terra.offsetTop + 10) + "px";
 
-  const planta =
-    document.createElement("img");
+planta.style.zIndex =
+  parseInt(terra.style.zIndex) + 100;
 
-  console.log("PLANTA CRIADA");
+    terra.dataset.status = "crescendo";
+    terra.dataset.cultura = culturaSelecionada;
+    terra.planta = planta;
 
-  planta.className = "planta";
+    setTimeout(() => {
+        planta.src = cultura.jovem;
+    }, cultura.crescimento / 2);
 
-  planta.src =
-    cultura.broto;
+    setTimeout(() => {
+        planta.src = cultura.pronta;
+        terra.dataset.status = "pronto";
+    }, cultura.crescimento);
 
-  console.log(planta.src);
-
-  document.querySelector(".plantacao")
-    .appendChild(planta);
-
-  console.log("PLANTA ADICIONADA");
-
-  return;
+    return;
 }
   // COLHER
   if (status === "pronto") {
