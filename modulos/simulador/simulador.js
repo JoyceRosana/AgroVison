@@ -167,9 +167,8 @@ terra.addEventListener("click", (e) => {
     planta.src =
       cultura.broto;
 
-    terra.parentElement.appendChild(
-      planta
-    );
+    document.querySelector(".world")
+  .appendChild(planta);
 
     planta.style.left =
   (terra.offsetLeft + 10) + "px";
