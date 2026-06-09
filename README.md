@@ -180,6 +180,13 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "CO2 na floresta"
 - Prompt: "passagem de estação nas árvores"
 - Prompt: "laboratório botânico"
+- Pormpt: "teconologia com conhecimento no agro"
+- Prompt: "água e irrigação sustentável no jardim"
+- Prompt: "pragas agrícolas em macro fotografia"
+- Prompt: "solo fértil e conservação agrícola"
+- Prompt: "agricultura sustentável e biodiversidade"
+- Prompt: "agricultura de precisão com drones e sensores"
+- Prompt: "rastreabilidade e segurança alimentar no agro"
 
 ### simulador
 - Prompt: "Mapa interativo de fazenda em 2d"
