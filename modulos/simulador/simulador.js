@@ -120,115 +120,114 @@ terras.forEach((terra, index) => {
   terra.style.top = `${posY}px`;
   terra.style.zIndex = col + lin;
 
-  terra.addEventListener("click", (e) => {
+terra.addEventListener("click", (e) => {
 
   console.log("CLIQUE NA TERRA");
 
   const status = terra.dataset.status;
-  
-// ABRIR MENU
 
-if (
-  status === "vazio" &&
-  !culturaSelecionada
-) {
+  // ABRIR MENU
+  if (
+    status === "vazio" &&
+    !culturaSelecionada
+  ) {
 
-  menuPlantio.style.left =
-    e.pageX + "px";
+    menuPlantio.style.left =
+      e.pageX + "px";
 
-  menuPlantio.style.top =
-    e.pageY + "px";
+    menuPlantio.style.top =
+      e.pageY + "px";
 
-  menuPlantio.classList.remove(
-    "oculto"
-  );
+    menuPlantio.classList.remove(
+      "oculto"
+    );
 
-  return;
-}
-
-    // PLANTAR
-
-if (
-  status === "vazio" &&
-  culturaSelecionada
-) {
-
-  const cultura =
-    culturas[culturaSelecionada];
-
-  const planta =
-    document.createElement("img");
-
-  planta.className = "planta";
-
-  planta.src =
-    cultura.broto;
-
-  terra.parentElement.appendChild(
-    planta
-  );
-
-  planta.style.left =
-    terra.style.left;
-
-  planta.style.top =
-    terra.style.top;
-
-  terra.dataset.status =
-    "crescendo";
-
-  terra.dataset.cultura =
-    culturaSelecionada;
-
-  terra.planta = planta;
-
-  setTimeout(() => {
-
-    planta.src =
-      cultura.jovem;
-
-  }, cultura.crescimento / 2);
-
-  setTimeout(() => {
-
-    planta.src =
-      cultura.pronta;
-
-    terra.dataset.status =
-      "pronto";
-
-  }, cultura.crescimento);
-
-  return;
-}
-
-});
-
-});
-
-if (status === "pronto") {
-
-  alert(
-    "Você colheu " +
-    terra.dataset.cultura
-  );
-
-  if (terra.planta) {
-
-    terra.planta.remove();
-
-    terra.planta = null;
-
+    return;
   }
 
-  terra.dataset.status =
-    "vazio";
+  // PLANTAR
+  if (
+    status === "vazio" &&
+    culturaSelecionada
+  ) {
 
-  terra.dataset.cultura =
-    "";
+    const cultura =
+      culturas[culturaSelecionada];
 
-  return;
-}
+    const planta =
+      document.createElement("img");
+
+    planta.className = "planta";
+
+    planta.src =
+      cultura.broto;
+
+    terra.parentElement.appendChild(
+      planta
+    );
+
+    planta.style.left =
+      terra.style.left;
+
+    planta.style.top =
+      terra.style.top;
+
+    terra.dataset.status =
+      "crescendo";
+
+    terra.dataset.cultura =
+      culturaSelecionada;
+
+    terra.planta = planta;
+
+    setTimeout(() => {
+
+      planta.src =
+        cultura.jovem;
+
+    }, cultura.crescimento / 2);
+
+    setTimeout(() => {
+
+      planta.src =
+        cultura.pronta;
+
+      terra.dataset.status =
+        "pronto";
+
+    }, cultura.crescimento);
+
+    return;
+  }
+
+  // COLHER
+  if (status === "pronto") {
+
+    alert(
+      "Você colheu " +
+      terra.dataset.cultura
+    );
+
+    if (terra.planta) {
+
+      terra.planta.remove();
+
+      terra.planta = null;
+
+    }
+
+    terra.dataset.status =
+      "vazio";
+
+    terra.dataset.cultura =
+      "";
+
+    return;
+  }
+
+}); // fecha addEventListener
+
+}); // fecha forEach
 
 // =======================
 // ESCOLHER CULTURA
