@@ -154,35 +154,35 @@ console.log("CULTURA:", culturaSelecionada);
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
   const cultura = culturas[culturaSelecionada];
-  const planta = document.createElement("img");
-  planta.className = "planta";
-  planta.src = cultura.broto;
+const planta = document.createElement("img");
+planta.className = "planta";
+planta.src = cultura.broto;
 
-  // insere direto na célula .terra
-  terra.appendChild(planta);
+// insere a planta dentro da célula
+terra.appendChild(planta);
 
-  // centraliza dentro da própria terra
+// centraliza no centro da terra
 planta.style.position = "absolute";
 planta.style.left = "50%";
-planta.style.top = "45%"; // sobe um pouco o ponto de referência
-planta.style.transform = "translate(-50%, -55%)";
+planta.style.top = "50%";
+planta.style.transform = "translate(-50%, -50%)";
 
+// garante que a planta fique acima da terra
+planta.style.zIndex = 10;
 
+terra.dataset.status = "crescendo";
+terra.dataset.cultura = culturaSelecionada;
+terra.planta = planta;
 
-  terra.dataset.status = "crescendo";
-  terra.dataset.cultura = culturaSelecionada;
-  terra.planta = planta;
+setTimeout(() => {
+  planta.src = cultura.jovem;
+}, cultura.crescimento / 2);
 
-  setTimeout(() => {
-    planta.src = cultura.jovem;
-  }, cultura.crescimento / 2);
-
-  setTimeout(() => {
-    planta.src = cultura.pronta;
-    terra.dataset.status = "pronto";
-  }, cultura.crescimento);
+setTimeout(() => {
+  planta.src = cultura.pronta;
+  terra.dataset.status = "pronto";
+}, cultura.crescimento);
 }
-
     return;
 }
 );
