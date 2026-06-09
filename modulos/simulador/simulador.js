@@ -151,25 +151,21 @@ terra.addEventListener("click", (e) => {
 // PLANTAR
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
+    console.log("PLANTANDO");
+    console.log(culturaSelecionada);
 
     const cultura = culturas[culturaSelecionada];
-
     const planta = document.createElement("img");
+
     planta.className = "planta";
     planta.src = cultura.broto;
-
     terra.parentElement.appendChild(planta);
 
-    const rect = terra.getBoundingClientRect();
-    const parent = terra.parentElement.getBoundingClientRect();
-
-    const centerX = (rect.left - parent.left) + rect.width / 2;
-    const centerY = (rect.top - parent.top) + rect.height * 0.75;
-
     planta.style.position = "absolute";
-    planta.style.left = centerX + "px";
-    planta.style.top = centerY + "px";
-    planta.style.zIndex = 1000;
+    planta.style.left = (terra.offsetLeft + (terra.offsetWidth / 2) - 25) + "px";
+    planta.style.top = (terra.offsetTop + (terra.offsetHeight / 4) - 15) + "px";
+    
+    planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 100;
 
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
@@ -186,6 +182,7 @@ if (status === "vazio" && culturaSelecionada) {
 
     return;
 }
+
 
   // COLHER
   if (status === "pronto") {
