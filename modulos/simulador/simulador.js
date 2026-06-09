@@ -170,6 +170,7 @@ if (status === "vazio" && culturaSelecionada) {
     terra.dataset.status = "pronto";
   }, cultura.crescimento);
 }
+
     return;
 }
 );
