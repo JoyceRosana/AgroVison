@@ -125,9 +125,6 @@ terra.addEventListener("click", (e) => {
   console.log("CLIQUE NA TERRA");
 
   const status = terra.dataset.status;
-console.log("CLICK TERRA OK");
-console.log("STATUS:", terra.dataset.status);
-console.log("CULTURA:", culturaSelecionada);
   console.log("STATUS:", status);
   console.log("CULTURA:", culturaSelecionada);
 
@@ -167,6 +164,7 @@ planta.style.position = "absolute";
 planta.style.left = "50%";
 planta.style.top = "50%";
 planta.style.transform = "translate(-50%, -50%)";
+planta.style.pointerEvents = "none";
 
 
     terra.dataset.status = "crescendo";
