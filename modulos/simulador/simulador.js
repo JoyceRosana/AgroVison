@@ -126,6 +126,9 @@ terra.addEventListener("click", (e) => {
 
   const status = terra.dataset.status;
 
+  console.log("STATUS:", status);
+  console.log("CULTURA:", culturaSelecionada);
+
   // ABRIR MENU
   if (
   status === "vazio" &&
