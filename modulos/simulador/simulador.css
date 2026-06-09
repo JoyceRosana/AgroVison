@@ -101,7 +101,7 @@ html, body {
   position: absolute;
   width: 50px;
   pointer-events: none;
-  z-index: 5; /* planta sempre acima da terra */
+  z-index: 2; /* planta sempre acima da terra */
 }
 
 
