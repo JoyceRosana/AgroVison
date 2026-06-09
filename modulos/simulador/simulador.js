@@ -159,13 +159,12 @@ if (status === "vazio" && culturaSelecionada) {
 
     planta.className = "planta";
     planta.src = cultura.broto;
-    terra.parentElement.appendChild(planta);
+    terra.appendChild(planta);
 
-    planta.style.position = "absolute";
-    planta.style.left = (terra.offsetLeft + (terra.offsetWidth / 2) - 25) + "px";
-    planta.style.top = (terra.offsetTop + (terra.offsetHeight / 4) - 15) + "px";
-    
-    planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 100;
+planta.style.position = "absolute";
+planta.style.left = "50%";
+planta.style.top = "50%";
+planta.style.transform = "translate(-50%, -50%)";
 
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
