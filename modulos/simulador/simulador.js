@@ -119,6 +119,7 @@ terra.style.top = `${posY}px`;
 terra.style.zIndex = col + lin;
 
 
+
 terra.addEventListener("click", (e) => {
 
 

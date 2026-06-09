@@ -72,24 +72,22 @@ html, body {
 }
 
 .plantacao {
-  position: relative; /* cria um contexto de empilhamento */  
-  top: 200px; /* ajuste conforme o mapa */
-  left: 900px; /* ajuste horizontal */
+  position: absolute; /* não relative */
+  top: 200px;   /* ajuste conforme o mapa */
+  left: 900px;  /* ajuste horizontal */
   width: auto;
   height: auto;
 }
-
 .terra {
   position: absolute;
   width: 100px;
   height: 100px;
 }
 .terra-img {
+  position: absolute;
   width: 100%;
-  height: auto;
-  z-index: 1; /* terra abaixo */
+  height: 100%;
 }
-
 .planta {
   position: absolute;
   left: 50%;
@@ -99,6 +97,7 @@ html, body {
   z-index: 2; /* planta acima */
   pointer-events: none;
 }
+
 
 /* BOTÃO FECHAR */
 
