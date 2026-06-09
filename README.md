@@ -171,7 +171,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "Uso consciente da água na agricultura"
 - Prompt: "Cuidado com a natureza"
 
-### conhecimento/conteudos/sustentabilidade
+### conhecimento/conteudos/tecnologia
 - Prompt: "Drone monitorando plantação"
 - Prompt: "Sensor agrícola inteligente"
 - Prompt: "GPS aplicado na agricultura"
@@ -193,7 +193,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "ilustração de planação tomate cenora na horta"
 - Prompt: "ilustração de presevar e tempo"
   
-- Imagens de referência retiradas do **Pinterest** e **Google**, utilizadas estritamente para fins educacionais e conceituais.  
+- Imagem de referência — encontrada via Google/Pinterest — utilizada apenas como inspiração, sem uso direto no projeto
 - Elementos visuais e sonoros gerados por **Inteligência Artificial**, com prompts próprios e personalizados para o tema.  
 - A IA também foi utilizada como **assistente de programação**, ajudando a refinar o design, otimizar a lógica e deixar o código mais limpo.  
 - Toda a arquitetura do site (HTML, CSS e JavaScript) foi integrada, testada e adaptada manualmente por mim.  
