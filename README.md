@@ -179,7 +179,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
  ### conhecimento
 - Prompt: "CO2 na floresta"
 - Prompt: "passagem de estação nas árvores"
-- Prompt: "laboratorio"
+- Prompt: "laboratório botânico"
 
 ### simulador
 - Prompt: "Mapa interativo de fazenda em 2d"
