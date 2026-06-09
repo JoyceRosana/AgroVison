@@ -37,97 +37,6 @@ viewport.addEventListener("mousemove", (e) => {
 });
 
 // =======================
-// DADOS DO JOGO
-// =======================
-
-let sementesMilho =
-  Number(localStorage.getItem("sementesMilho")) || 50;
-
-let milhoArmazenado =
-  Number(localStorage.getItem("milhoArmazenado")) || 0;
-
-// =======================
-// SALVAR
-// =======================
-
-function salvar() {
-  localStorage.setItem(
-    "sementesMilho",
-    sementesMilho
-  );
-
-  localStorage.setItem(
-    "milhoArmazenado",
-    milhoArmazenado
-  );
-
-  atualizarTela();
-}
-
-// =======================
-// TELA
-// =======================
-
-function atualizarTela() {
-
-  const estoque = document.getElementById("estoque-milho");
-
-  if (estoque) {
-    estoque.textContent = milhoArmazenado;
-  }
-
-}
-
-atualizarTela();
-
-// =======================
-// GALPÃO
-// =======================
-
-const armazem = document.getElementById("armazem");
-const info = document.getElementById("info");
-
-document
-  .querySelector(".galpao")
-  .addEventListener("click", () => {
-    armazem.classList.remove("oculto");
-  });
-
-function fechar() {
-  armazem.classList.add("oculto");
-}
-
-function mostrar(item) {
-
-  if (item === "milho") {
-
-    info.innerHTML = `
-      <h2>🌽 Milho</h2>
-
-      <p><b>Milho armazenado:</b>
-      ${milhoArmazenado} kg</p>
-
-      <p><b>Sementes:</b>
-      ${sementesMilho}</p>
-
-      <p>Plante nas terras para produzir.</p>
-    `;
-
-    return;
-  }
-
-  const dados = {
-    soja: `<h2>🌱 Soja</h2><p>40 kg</p>`,
-    feijao: `<h2>🫘 Feijão</h2><p>25 kg</p>`,
-    alface: `<h2>🥬 Alface</h2><p>30 unidades</p>`,
-    organico: `<h2>🧺 Adubo Orgânico</h2><p>20 sacos</p>`,
-    quimico: `<h2>🧪 Adubo Químico</h2><p>15 sacos</p>`
-  };
-
-  info.innerHTML = dados[item];
-}
-
-// =======================
 // POSIÇÃO DAS TERRAS
 // =======================
 
@@ -145,10 +54,11 @@ let culturaSelecionada = null;
 
 const culturas = {
   milho: {
-    crescimento: 5000,
-    broto: "/img/simulador/milho_broto.png",
-    pronto: "/img/simulador/milho_pronto.png"
-  },
+  crescimento: 15000,
+  broto: "/img/simulador/milho_broto.png",
+  jovem: "/img/simulador/milho_jovem.png",
+  pronta: "/img/simulador/milho_adulta.png"
+},
 
   soja: {
     crescimento: 5000,
@@ -188,6 +98,7 @@ document.getElementById("cursorPlantio");
 console.log("Menu:", menuPlantio);
 console.log("Cursor:", cursorPlantio);
 console.log("Terras:", terras.length);
+
 // =======================
 // TERRAS
 // =======================
@@ -214,13 +125,13 @@ terras.forEach((terra, index) => {
   console.log("CLIQUE NA TERRA");
 
   const status = terra.dataset.status;
-
+  
     // ABRIR MENU
 
     if (
       status === "vazio" &&
       !culturaSelecionada
-    ) {
+    ) }
 
       menuPlantio.style.left =
         e.pageX + "px";
@@ -233,62 +144,89 @@ terras.forEach((terra, index) => {
       );
 
       return;
-    }
+    };
 
     // PLANTAR
 
-    if (
-      status === "vazio" &&
-      culturaSelecionada
-    ) {
+if (
+  status === "vazio" &&
+  culturaSelecionada
+) {
 
-      const cultura =
-        culturas[culturaSelecionada];
+  const cultura =
+    culturas[culturaSelecionada];
 
-      terra.src =
-        cultura.broto;
+  const planta =
+    document.createElement("img");
 
-      terra.dataset.status =
-        "crescendo";
+  planta.className = "planta";
 
-      terra.dataset.cultura =
-        culturaSelecionada;
+  planta.src =
+    cultura.broto;
 
-      setTimeout(() => {
+  terra.parentElement.appendChild(
+    planta
+  );
 
-        terra.src =
-          cultura.pronto;
+  planta.style.left =
+    terra.style.left;
 
-        terra.dataset.status =
-          "pronto";
+  planta.style.top =
+    terra.style.top;
 
-      }, cultura.crescimento);
+  terra.dataset.status =
+    "crescendo";
 
-      return;
-    }
+  terra.dataset.cultura =
+    culturaSelecionada;
+
+  terra.planta = planta;
+
+  setTimeout(() => {
+
+    planta.src =
+      cultura.jovem;
+
+  }, cultura.crescimento / 2);
+
+  setTimeout(() => {
+
+    planta.src =
+      cultura.pronta;
+
+    terra.dataset.status =
+      "pronto";
+
+  }, cultura.crescimento);
+
+  return;
+}
 
     // COLHER
 
-    if (status === "pronto") {
+if (status === "pronto") {
 
-      alert(
-        "Você colheu " +
-        terra.dataset.cultura
-      );
+  alert(
+    "Você colheu " +
+    terra.dataset.cultura
+  );
 
-      terra.src =
-        "/img/simulador/terra.png";
+  if (terra.planta) {
 
-      terra.dataset.status =
-        "vazio";
+    terra.planta.remove();
 
-      terra.dataset.cultura =
-        "";
-    }
+    terra.planta = null;
 
-  });
+  }
 
-});
+  terra.dataset.status =
+    "vazio";
+
+  terra.dataset.cultura =
+    "";
+
+  return;
+}
 
 // =======================
 // ESCOLHER CULTURA
@@ -364,6 +302,4 @@ document.addEventListener(
 
   }
 
-});
-
-console.log("JS FUNCIONANDO");
+})
