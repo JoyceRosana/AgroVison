@@ -83,7 +83,9 @@ html, body {
 .terra {
   position: absolute;
   width: 100px;
-  height: 100px;
+  height: 100px; /* altura fixa para manter o grid */
+  display: block;
+  border: none;
 }
 
 .terra-ref {
