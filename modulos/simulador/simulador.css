@@ -97,16 +97,18 @@ html, body {
   height: 0;
 }
 
+.terra-img {
+  width: 100%;
+  height: auto;
+}
+
 .planta {
   position: absolute;
   transform: translate(-50%, -50%);
   width: 50px;
   pointer-events: none;
   z-index: 2; /* planta sempre acima da terra */
-
 }
-
-
 
 /* BOTÃO FECHAR */
 
