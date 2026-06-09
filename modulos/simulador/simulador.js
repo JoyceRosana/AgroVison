@@ -164,8 +164,8 @@ if (status === "vazio" && culturaSelecionada) {
   // centraliza dentro da própria terra
   planta.style.position = "absolute";
   planta.style.left = "50%";
-  planta.style.top = "50%";
-  planta.style.transform = "translate(-50%, -60%)";
+  planta.style.top = "55%";
+  planta.style.transform = "translate(-50%, -65%)";
 
   terra.dataset.status = "crescendo";
   terra.dataset.cultura = culturaSelecionada;
