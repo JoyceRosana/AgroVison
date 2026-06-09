@@ -178,7 +178,13 @@ planta.style.top =
   (terra.offsetTop - 20) + "px";
 
     terra.dataset.status =
-      "crescendo";
+  "crescendo";
+
+culturaSelecionada = null;
+
+cursorPlantio.classList.add(
+  "oculto"
+);
 
     terra.dataset.cultura =
       culturaSelecionada;
