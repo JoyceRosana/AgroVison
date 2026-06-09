@@ -87,13 +87,6 @@ html, body {
   display: block;
   border: none;
 }
-.anchor {
-  position: absolute;
-  left: 50%;
-  top: 70%; /* aqui você ajusta até bater no chão real */
-  width: 0;
-  height: 0;
-}
 
 /* BOTÃO FECHAR */
 
