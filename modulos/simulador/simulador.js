@@ -130,8 +130,7 @@ terra.addEventListener("click", (e) => {
   if (
   status === "vazio" &&
   !culturaSelecionada
-)
-
+) {
     menuPlantio.style.left =
       e.pageX + "px";
 
@@ -146,7 +145,7 @@ terra.addEventListener("click", (e) => {
   }
 
   // PLANTAR
-  if (
+ if (
     status === "vazio" &&
     culturaSelecionada
   ) {
