@@ -153,34 +153,28 @@ console.log("CULTURA:", culturaSelecionada);
 // PLANTAR
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
-  console.log("PLANTANDO");
-  console.log(culturaSelecionada);
   const cultura = culturas[culturaSelecionada];
   const planta = document.createElement("img");
   planta.className = "planta";
   planta.src = cultura.broto;
-  terra.parentElement.appendChild(planta);
 
-  planta.style.position = "absolute";
-  planta.style.left = (terra.offsetLeft + (terra.offsetWidth / 2) - 25) + "px";
-  planta.style.top = (terra.offsetTop + (terra.offsetHeight / 4) - 15) + "px";
-  planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 100;
+  // insere dentro do ponto lógico
+  const ref = terra.querySelector(".terra-ref");
+  ref.appendChild(planta);
 
+  terra.dataset.status = "crescendo";
+  terra.dataset.cultura = culturaSelecionada;
+  terra.planta = planta;
 
+  setTimeout(() => {
+    planta.src = cultura.jovem;
+  }, cultura.crescimento / 2);
 
-    terra.dataset.status = "crescendo";
-    terra.dataset.cultura = culturaSelecionada;
-    terra.planta = planta;
-
-    setTimeout(() => {
-        planta.src = cultura.jovem;
-    }, cultura.crescimento / 2);
-
-    setTimeout(() => {
-        planta.src = cultura.pronta;
-        terra.dataset.status = "pronto";
-    }, cultura.crescimento);
-
+  setTimeout(() => {
+    planta.src = cultura.pronta;
+    terra.dataset.status = "pronto";
+  }, cultura.crescimento);
+}
     return;
 }
 

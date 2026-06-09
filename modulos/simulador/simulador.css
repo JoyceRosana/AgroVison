@@ -83,9 +83,8 @@ html, body {
 .terra {
   position: absolute;
   width: 100px;
-  height: 100px; /* altura fixa para manter grid */
+  height: 100px;
 }
-
 
 .terra-ref {
   position: absolute;
@@ -101,6 +100,7 @@ html, body {
   width: 50px;
   pointer-events: none;
 }
+
 
 /* BOTÃO FECHAR */
 
