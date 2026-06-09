@@ -74,6 +74,8 @@ html, body {
 .planta{
   position:absolute;
   width:60px;
+  top: 200px;
+  left: 890px;
   height:auto;
   pointer-events:none;
   border:1px solid red;
