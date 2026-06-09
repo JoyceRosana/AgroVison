@@ -72,7 +72,7 @@ html, body {
 }
 
 .plantacao {
-  position: absolute;
+  position: relative;
   top: 200px;
   left: 890px;
 
