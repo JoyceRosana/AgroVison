@@ -187,32 +187,25 @@ console.log("CULTURA:", culturaSelecionada);
 // PLANTAR
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
- const cultura = culturas[culturaSelecionada];
- const planta = document.createElement("img");
- planta.className = "planta";
- planta.src = cultura.broto;
+  const cultura = culturas[culturaSelecionada];
+  const planta = terra.querySelector(".planta");
+  planta.src = cultura.broto;
+  planta.classList.remove("oculto");
 
+  terra.dataset.status = "crescendo";
+  terra.dataset.cultura = culturaSelecionada;
 
- // insere dentro do ponto lógico
- const ref = terra.querySelector(".terra-ref");
- ref.appendChild(planta);
+  setTimeout(() => {
+    planta.src = cultura.jovem;
+  }, cultura.crescimento / 2);
 
-
- terra.dataset.status = "crescendo";
- terra.dataset.cultura = culturaSelecionada;
- terra.planta = planta;
-
-
- setTimeout(() => {
-   planta.src = cultura.jovem;
- }, cultura.crescimento / 2);
-
-
- setTimeout(() => {
-   planta.src = cultura.pronta;
-   terra.dataset.status = "pronto";
- }, cultura.crescimento);
+  setTimeout(() => {
+    planta.src = cultura.pronta;
+    terra.dataset.status = "pronto";
+  }, cultura.crescimento);
 }
+
+
    return;
 }
 
@@ -227,7 +220,6 @@ if (status === "vazio" && culturaSelecionada) {
      "Você colheu " +
      terra.dataset.cultura
    );
-
 
    if (terra.planta) {
 
@@ -254,9 +246,6 @@ if (status === "vazio" && culturaSelecionada) {
 
 
 }); // fecha addEventListener
-
-
-}); // fecha forEach
 
 
 // =======================

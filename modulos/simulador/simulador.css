@@ -97,16 +97,20 @@ html, body {
 }
 
 .terra-img {
+  position: absolute;
   width: 100%;
   height: auto;
-  z-index: 1; /* terra fica abaixo */
+  z-index: 1; /* terra abaixo */
 }
 
 .planta {
- position: absolute;
- transform: translate(-50%, -50%);
- width: 50px;
- pointer-events: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -55%);
+  width: 50px;
+  z-index: 2; /* planta acima */
+  pointer-events: none;
 }
 
 
