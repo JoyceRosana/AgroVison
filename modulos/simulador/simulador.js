@@ -42,8 +42,8 @@ viewport.addEventListener("mousemove", (e) => {
 
 const terras = document.querySelectorAll(".plantacao .terra");
 
-const LARGURA_EMENDA = 51;
-const ALTURA_EMENDA = 26;
+const LARGURA_EMENDA = 100;
+const ALTURA_EMENDA = 50;
 const MAX_COLUNAS = 10;
 
 // =======================
