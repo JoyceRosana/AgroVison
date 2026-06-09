@@ -148,32 +148,31 @@ terra.addEventListener("click", (e) => {
   }
 
 // ==========================================
-// AÇÃO: PLANTAR
+// PLANTAR
 // ==========================================
+
 if (status === "vazio" && culturaSelecionada) {
     console.log("PLANTANDO");
     console.log(culturaSelecionada);
 
     const cultura = culturas[culturaSelecionada];
     const planta = document.createElement("img");
-    
+
     planta.className = "planta";
     planta.src = cultura.broto;
+
     
-    // Adiciona no mesmo container das terras para manter o referencial correto
-    terra.parentElement.appendChild(planta); 
-    
-    /// Alinha horizontalmente no meio exato da imagem
-const centroX = terra.offsetLeft + (terra.offsetWidth / 2);
 
-// Alinha verticalmente exatamente onde a raiz do milho toca a terra (38% da altura)
-const superficieY = terra.offsetTop + (terra.offsetHeight * 0.38); 
+    terra.parentElement.appendChild(planta);
+    const anchor = terra.querySelector(".anchor");
+    const rect = anchor.getBoundingClientRect();
+    const parent = terra.parentElement.getBoundingClientRect();
 
-planta.style.position = "absolute";
-planta.style.left = centroX + "px";
-planta.style.top = superficieY + "px";
+    planta.style.left = (rect.left - parent.left) + "px";
+    planta.style.top = (rect.top - parent.top) + "px";
 
-
+planta.style.zIndex =
+  parseInt(terra.style.zIndex) + 100;
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
     terra.planta = planta;
@@ -185,9 +184,11 @@ planta.style.top = superficieY + "px";
     setTimeout(() => {
         planta.src = cultura.pronta;
         terra.dataset.status = "pronto";
+
     }, cultura.crescimento);
 
     return;
+
 }
   // COLHER
   if (status === "pronto") {
