@@ -71,14 +71,13 @@ html, body {
   left: 630px;
 }
 
-.planta{
-  position:absolute;
-  width:60px;
+.plantacao {
+  position: absolute;
   top: 200px;
   left: 890px;
-  height:60px;
-  pointer-events:none;
-  border:1px solid red;
+
+  width: 1px;
+  height: auto;
 }
 
 
