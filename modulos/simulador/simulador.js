@@ -163,8 +163,9 @@ if (status === "vazio" && culturaSelecionada) {
     terra.parentElement.appendChild(planta);
     planta.style.position = "absolute";
     planta.style.left = (terra.offsetLeft + (terra.offsetWidth / 2) - 25) + "px"; 
-    planta.style.top = (terra.offsetTop + (terra.offsetHeight / 2) - 25) + "px"; 
+    planta.style.top = (terra.offsetTop + (terra.offsetHeight / 4) - 15) + "px"; 
     planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 100;
+
 
 
 planta.style.zIndex =
