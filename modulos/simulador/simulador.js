@@ -125,8 +125,7 @@ terra.addEventListener("click", (e) => {
   console.log("CLIQUE NA TERRA");
 
   const status = terra.dataset.status;
-  console.log("BOTÃO CLICADO");
-console.log(botao.dataset.cultura);
+  
   console.log("STATUS:", status);
   console.log("CULTURA:", culturaSelecionada);
 
