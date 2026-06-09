@@ -154,34 +154,33 @@ console.log("CULTURA:", culturaSelecionada);
 // ==========================================
 if (status === "vazio" && culturaSelecionada) {
   const cultura = culturas[culturaSelecionada];
-  const planta = document.createElement("img");
-  planta.className = "planta";
-  planta.src = cultura.broto;
+const planta = document.createElement("img");
+planta.className = "planta";
+planta.src = cultura.broto;
 
-  // insere a planta dentro da célula
-  terra.appendChild(planta);
+// insere a planta dentro da célula
+terra.appendChild(planta);
 
-  // centraliza no meio da imagem da terra
-  planta.style.position = "absolute";
-  planta.style.left = "50%";
-  planta.style.top = "50%";
-  planta.style.transform = "translate(-50%, -55%)"; // leve ajuste para compensar perspectiva
-  planta.style.zIndex = parseInt(terra.style.zIndex) + 1; // planta acima da terra
+// centraliza no meio da imagem da terra
+planta.style.position = "absolute";
+planta.style.left = "50%";
+planta.style.top = "50%";
+planta.style.transform = "translate(-50%, -55%)"; // leve ajuste para compensar perspectiva
+planta.style.zIndex = 10; // planta acima da terra
 
-  terra.dataset.status = "crescendo";
-  terra.dataset.cultura = culturaSelecionada;
-  terra.planta = planta;
+terra.dataset.status = "crescendo";
+terra.dataset.cultura = culturaSelecionada;
+terra.planta = planta;
 
-  setTimeout(() => {
-    planta.src = cultura.jovem;
-  }, cultura.crescimento / 2);
+setTimeout(() => {
+  planta.src = cultura.jovem;
+}, cultura.crescimento / 2);
 
-  setTimeout(() => {
-    planta.src = cultura.pronta;
-    terra.dataset.status = "pronto";
-  }, cultura.crescimento);
+setTimeout(() => {
+  planta.src = cultura.pronta;
+  terra.dataset.status = "pronto";
+}, cultura.crescimento);
 }
-
     return;
 }
 );
