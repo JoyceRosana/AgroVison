@@ -72,8 +72,7 @@ html, body {
 }
 
 .plantacao {
-  position: absolute;
-  top: 200px;
+  position: relative; /* cria um contexto de empilhamento */  top: 200px;
   left: 890px;
 
   width: 1px;
@@ -86,7 +85,7 @@ html, body {
   height: auto;
   display: block;
   border: none;
-  z-index: 100; /* terra fica abaixo */
+  z-index: 1; /* terra fica abaixo */
 }
 
 .terra-ref {
@@ -107,7 +106,7 @@ html, body {
   transform: translate(-50%, -50%);
   width: 120px;
   pointer-events: none;
-  z-index: 100; /* planta sempre acima da terra */
+  z-index: 10; /* planta sempre acima da terra */
 }
 
 /* BOTÃO FECHAR */
