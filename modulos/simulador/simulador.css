@@ -80,19 +80,23 @@ html, body {
   height: auto;
 }
 
-
 .terra {
   position: relative;
-  width: 100px; /* Tamanho original de 100px da sua imagem */
-  height: auto;
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+}
+
+.terra img {
+  width: 100%;
+  height: 100%;
   display: block;
-  border: none;
 }
 
 .anchor {
   position: absolute;
   left: 50%;
-  top: 70%; /* aqui você ajusta até bater no chão real */
+  top: 75%;
   width: 0;
   height: 0;
 }
