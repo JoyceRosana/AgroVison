@@ -160,18 +160,17 @@ if (status === "vazio" && culturaSelecionada) {
     planta.className = "planta";
     planta.src = cultura.broto;
     
-    terra.parentElement.appendChild(planta);
+    // Adiciona no mesmo container das terras para manter o referencial correto
+    terra.parentElement.appendChild(planta); 
+    
+    // Alinhamento matemático baseado na superfície isométrica da terra
+    const centroX = terra.offsetLeft + (terra.offsetWidth / 2);
+    const superficieY = terra.offsetTop + (terra.offsetHeight / 4); // Ajusta a altura da superfície
+
     planta.style.position = "absolute";
-    const container = terra.parentElement.getBoundingClientRect();
-    const rect = terra.getBoundingClientRect();
-    planta.style.left = (rect.left - container.left + rect.width / 2 - 25) + "px";
-    planta.style.top = (rect.top - container.top + rect.height / 4 - 15) + "px";
-    planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 100;
-
-
-
-planta.style.zIndex =
-  parseInt(terra.style.zIndex) + 100;
+    planta.style.left = centroX + "px";
+    planta.style.top = superficieY + "px";
+    planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 10;
 
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
