@@ -162,11 +162,11 @@ if (status === "vazio" && culturaSelecionada) {
   terra.appendChild(planta);
 
   // centraliza dentro da própria terra
-  planta.style.position = "absolute";
+planta.style.position = "absolute";
 planta.style.left = "50%";
-planta.style.top = "50%";
+planta.style.top = "45%"; // sobe um pouco o ponto de referência
 planta.style.transform = "translate(-50%, -50%)";
-planta.style.zIndex = "10"; // mantém sobre a terra, sem sobrepor outras
+
 
 
   terra.dataset.status = "crescendo";
