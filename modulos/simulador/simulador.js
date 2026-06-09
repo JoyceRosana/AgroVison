@@ -172,10 +172,10 @@ terra.addEventListener("click", (e) => {
     );
 
     planta.style.left =
-      terra.style.left;
+  (terra.offsetLeft + 10) + "px";
 
-    planta.style.top =
-      terra.style.top;
+planta.style.top =
+  (terra.offsetTop - 20) + "px";
 
     terra.dataset.status =
       "crescendo";

@@ -119,3 +119,10 @@ html, body {
 .oculto{
   display:none;
 }
+
+.planta{
+  position:absolute;
+  width:100px;
+  height:auto;
+  pointer-events:none;
+}
