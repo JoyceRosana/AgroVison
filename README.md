@@ -137,6 +137,62 @@ Veja o projeto publicado: [AgroVision no GitHub Pages](https://agro-vison.vercel
 ## 📷 Créditos, Referências e Uso de IA
 Este projeto foi construído utilizando recursos visuais externos e suporte tecnológico, distribuídos da seguinte forma:
 
+## Créditos de Imagens
+# Projeto Agrinho 2026
+Tema: Agro forte, futuro sustentável: equilíbrio entre produção e meio ambiente
+
+## Estrutura de Imagens
+
+As imagens foram organizadas em pastas temáticas e todas foram geradas ou modificadas por Inteligência Artificial.  
+Abaixo estão os prompts utilizados para cada grupo de imagens:
+
+### conhecimento/conteudos/clima
+- Prompt: "Representação gráfica de diferentes climas agrícolas"
+- Prompt: "Plantio em condições climáticas variadas"
+- Prompt: "Sistema de irrigação em clima seco"
+
+### conhecimento/conteudos/irrigacao
+- Prompt: "Estufa agrícola com irrigação automatizada"
+- Prompt: "Produtor irrigando horta sustentável"
+- Prompt: "Sistema de irrigação para soja"
+
+### conhecimento/conteudos/pragas
+- Prompt: "Ilustração de pragas agrícolas comuns"
+- Prompt: "Insetos atacando plantação"
+- Prompt: "Fungos em folhas de cultivo"
+
+### conhecimento/conteudos/solo
+- Prompt: "Análise de solo agrícola"
+- Prompt: "Textura e fertilidade do solo"
+- Prompt: "pH do solo em gráfico"
+
+### conhecimento/conteudos/sustentabilidade
+- Prompt: "Agro sustentável com energia renovável"
+- Prompt: "Uso consciente da água na agricultura"
+- Prompt: "Cuidado com a natureza"
+
+### conhecimento/conteudos/sustentabilidade
+- Prompt: "Drone monitorando plantação"
+- Prompt: "Sensor agrícola inteligente"
+- Prompt: "GPS aplicado na agricultura"
+
+### simulador
+- Prompt: "Mapa interativo de fazenda em 2d"
+- Prompt: "Cisterna para armazenamento de água estilo 3d"
+- Prompt: "Armazem para o armazenamento de produtos, agua e sementes estilo 3d"
+- Prompt: "cooperativa para vender e comprar estilo 3d"
+- Prompt: "Milho broto"
+- Prompt: "Milho jovem"
+- Prompt: "Milho adulto"
+
+### sobre/geral
+- Prompt: "banner da tela inicial"
+- Prompt: "banner de Ilustração de fazenda inicial"
+- Prompt: "banner da ilustração base de conhciment, amigos discutindo"
+  Prompt: "banner da pagina agrovision, tecnologia e agricultura"
+- Prompt: "ilustração de planação tomate cenora na horta"
+- Prompt: "ilustração de presevar e tempo"
+  
 - Imagens de referência retiradas do **Pinterest** e **Google**, utilizadas estritamente para fins educacionais e conceituais.  
 - Elementos visuais e sonoros gerados por **Inteligência Artificial**, com prompts próprios e personalizados para o tema.  
 - A IA também foi utilizada como **assistente de programação**, ajudando a refinar o design, otimizar a lógica e deixar o código mais limpo.  
