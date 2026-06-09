@@ -150,14 +150,9 @@ terra.addEventListener("click", (e) => {
 // ==========================================
 // PLANTAR
 // ==========================================
-
 if (status === "vazio" && culturaSelecionada) {
 
     const cultura = culturas[culturaSelecionada];
-
-    const anchor = terra.querySelector(".anchor");
-    const rect = anchor.getBoundingClientRect();
-    const parent = terra.parentElement.getBoundingClientRect();
 
     const planta = document.createElement("img");
     planta.className = "planta";
@@ -165,9 +160,15 @@ if (status === "vazio" && culturaSelecionada) {
 
     terra.parentElement.appendChild(planta);
 
+    const rect = terra.getBoundingClientRect();
+    const parent = terra.parentElement.getBoundingClientRect();
+
+    const centerX = (rect.left - parent.left) + rect.width / 2;
+    const centerY = (rect.top - parent.top) + rect.height * 0.75;
+
     planta.style.position = "absolute";
-    planta.style.left = (rect.left - parent.left) + "px";
-    planta.style.top = (rect.top - parent.top) + "px";
+    planta.style.left = centerX + "px";
+    planta.style.top = centerY + "px";
     planta.style.zIndex = 1000;
 
     terra.dataset.status = "crescendo";
