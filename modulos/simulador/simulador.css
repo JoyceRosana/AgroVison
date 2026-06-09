@@ -105,7 +105,7 @@ html, body {
 .planta {
   position: absolute;
   transform: translate(-50%, -50%);
-  width: 50px;
+  width: 120px;
   pointer-events: none;
   z-index: 2; /* planta sempre acima da terra */
 }
