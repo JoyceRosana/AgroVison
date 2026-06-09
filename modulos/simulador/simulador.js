@@ -122,11 +122,13 @@ terras.forEach((terra, index) => {
 
 terra.addEventListener("click", (e) => {
 
-  console.log("CLIQUE NA TERRA");
+
+  console.log("CLICK NA TERRA");
+console.log("STATUS:", terra.dataset.status);
+console.log("CULTURA:", culturaSelecionada);
 
   const status = terra.dataset.status;
-  console.log("BOTÃO CLICADO");
-console.log(botao.dataset.cultura);
+  
   console.log("STATUS:", status);
   console.log("CULTURA:", culturaSelecionada);
 
