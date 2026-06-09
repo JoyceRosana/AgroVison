@@ -128,9 +128,8 @@ terra.addEventListener("click", (e) => {
 
   // ABRIR MENU
   if (
-  const status = terra.dataset.status;
-
-console.log("STATUS =", status);
+  status === "vazio" &&
+  !culturaSelecionada
 )
 
     menuPlantio.style.left =
