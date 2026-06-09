@@ -163,14 +163,16 @@ if (status === "vazio" && culturaSelecionada) {
     // Adiciona no mesmo container das terras para manter o referencial correto
     terra.parentElement.appendChild(planta); 
     
-    // Alinhamento matemático baseado na superfície isométrica da terra
-    const centroX = terra.offsetLeft + (terra.offsetWidth / 2);
-    const superficieY = terra.offsetTop + (terra.offsetHeight / 4); // Ajusta a altura da superfície
+    /// Alinha horizontalmente no meio exato da imagem
+const centroX = terra.offsetLeft + (terra.offsetWidth / 2);
 
-    planta.style.position = "absolute";
-    planta.style.left = centroX + "px";
-    planta.style.top = superficieY + "px";
-    planta.style.zIndex = (parseInt(terra.style.zIndex) || 0) + 10;
+// Alinha verticalmente exatamente onde a raiz do milho toca a terra (38% da altura)
+const superficieY = terra.offsetTop + (terra.offsetHeight * 0.38); 
+
+planta.style.position = "absolute";
+planta.style.left = centroX + "px";
+planta.style.top = superficieY + "px";
+
 
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
