@@ -109,47 +109,85 @@ terras.forEach((terra, index) => {
   terra.style.zIndex = col + lin;
 
 terra.addEventListener("click", (e) => {
-  const status = terra.dataset.status;
-  const planta = terra.querySelector(".planta");
 
-  // COLHER PRIMEIRO
-  if (status === "pronto") {
-    alert("Você colheu " + terra.dataset.cultura);
-    planta.classList.add("oculto");
-    planta.src = "";
-    terra.dataset.status = "vazio";
-    terra.dataset.cultura = "";
-    return;
-  }
 
-  // ABRIR MENU
-  if (status === "vazio" && !culturaSelecionada) {
-    menuPlantio.style.left = e.pageX + "px";
-    menuPlantio.style.top = e.pageY + "px";
-    menuPlantio.classList.remove("oculto");
-    return;
-  }
 
-  // PLANTAR
-  if (status === "vazio" && culturaSelecionada) {
-    const cultura = culturas[culturaSelecionada];
-    planta.src = cultura.broto;
-    planta.classList.remove("oculto");
-    terra.dataset.status = "crescendo";
-    terra.dataset.cultura = culturaSelecionada;
 
-    setTimeout(() => {
-      planta.src = cultura.jovem;
-    }, cultura.crescimento / 2);
 
-    setTimeout(() => {
-      planta.src = cultura.pronta;
-      terra.dataset.status = "pronto";
-    }, cultura.crescimento);
 
-    return;
-  }
-});
+
+
+console.log("CLICK NA TERRA");
+console.log("STATUS:", terra.dataset.status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+const status = terra.dataset.status;
+ console.log("STATUS:", status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+// ABRIR MENU
+if (
+status === "vazio" &&
+!culturaSelecionada
+) {
+  menuPlantio.style.left =
+    e.pageX + "px";
+
+
+
+
+  menuPlantio.style.top =
+    e.pageY + "px";
+
+
+
+
+  menuPlantio.classList.remove(
+    "oculto"
+  );
+
+
+
+
+  return;
+}
+// ==========================================
+// PLANTAR
+// ==========================================
+if (status === "vazio" && culturaSelecionada) {
+ const cultura = culturas[culturaSelecionada];
+ const planta = terra.querySelector(".planta");
+ planta.src = cultura.broto;
+ planta.classList.remove("oculto");
+
+
+ terra.dataset.status = "crescendo";
+ terra.dataset.cultura = culturaSelecionada;
+
+
+ setTimeout(() => {
+   planta.src = cultura.jovem;
+ }, cultura.crescimento / 2);
+
+
+ setTimeout(() => {
+   planta.src = cultura.pronta;
+   terra.dataset.status = "pronto";
+ }, cultura.crescimento);
+}
+
+
+
+
+  return;
+}
+);
 
     // COLHER
     if (status === "pronto") {
