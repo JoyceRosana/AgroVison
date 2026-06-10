@@ -49,10 +49,7 @@ viewport.addEventListener("mousemove", (e) => {
 // =======================
 // POSIÇÃO DAS TERRAS
 // =======================
-
-
 const terras = document.querySelectorAll(".plantacao .terra");
-
 
 const LARGURA_EMENDA = 50;
 const ALTURA_EMENDA = 20;
@@ -96,68 +93,204 @@ const culturas = {
 };
 
 // =======================
+// MENU E CURSOR
+// =======================
+
+
+
+
+const menuPlantio =
+document.getElementById("menuPlantio");
+
+
+
+
+const cursorPlantio =
+document.getElementById("cursorPlantio");
+
+
+
+
+console.log("Menu:", menuPlantio);
+console.log("Cursor:", cursorPlantio);
+console.log("Terras:", terras.length);
+// =======================
 // TERRAS
 // =======================
-terras.forEach((terra, index) => {
-  const col = index % MAX_COLUNAS;
-  const lin = Math.floor(index / MAX_COLUNAS);
-  const posX = (col * LARGURA_EMENDA) + (lin * -LARGURA_EMENDA);
-  const posY = (col * ALTURA_EMENDA) + (lin * ALTURA_EMENDA);
 
-  terra.style.left = `${posX}px`;
-  terra.style.top = `${posY}px`;
-  terra.style.zIndex = col + lin;
+
+
+
+terras.forEach((terra, index) => {
+
+
+
+
+const col = index % MAX_COLUNAS;
+const lin = Math.floor(index / MAX_COLUNAS);
+
+
+
+
+const posX =
+  (col * LARGURA_EMENDA) +
+  (lin * -LARGURA_EMENDA);
+
+
+
+
+const posY =
+  (col * ALTURA_EMENDA) +
+  (lin * ALTURA_EMENDA);
+
+
+
+
+terra.style.left = `${posX}px`;
+terra.style.top = `${posY}px`;
+terra.style.zIndex = col + lin;
+
+
+
 
 terra.addEventListener("click", (e) => {
-  const status = terra.dataset.status;
-  const planta = terra.querySelector(".planta");
 
-  console.log("CLICK NA TERRA");
-  console.log("STATUS:", status);
-  console.log("CULTURA:", culturaSelecionada);
 
-  // COLHER
-  if (status === "pronto") {
-    alert("Você colheu " + terra.dataset.cultura);
-    planta.classList.add("oculto");
-    planta.src = "";
-    terra.dataset.status = "vazio";
-    terra.dataset.cultura = "";
-    return;
+
+
+
+
+
+
+console.log("CLICK NA TERRA");
+console.log("STATUS:", terra.dataset.status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+const status = terra.dataset.status;
+ console.log("STATUS:", status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+// ABRIR MENU
+if (
+status === "vazio" &&
+!culturaSelecionada
+) {
+  menuPlantio.style.left =
+    e.pageX + "px";
+
+
+
+
+  menuPlantio.style.top =
+    e.pageY + "px";
+
+
+
+
+  menuPlantio.classList.remove(
+    "oculto"
+  );
+
+
+
+
+  return;
+}
+// ==========================================
+// PLANTAR
+// ==========================================
+if (status === "vazio" && culturaSelecionada) {
+ const cultura = culturas[culturaSelecionada];
+ const planta = terra.querySelector(".planta");
+ planta.src = cultura.broto;
+ planta.classList.remove("oculto");
+
+
+ terra.dataset.status = "crescendo";
+ terra.dataset.cultura = culturaSelecionada;
+
+
+ setTimeout(() => {
+   planta.src = cultura.jovem;
+ }, cultura.crescimento / 2);
+
+
+ setTimeout(() => {
+   planta.src = cultura.pronta;
+   terra.dataset.status = "pronto";
+ }, cultura.crescimento);
+}
+
+
+
+
+  return;
+}
+);
+
+
+// COLHER
+if (status === "pronto") {
+
+
+
+
+  alert(
+    "Você colheu " +
+    terra.dataset.cultura
+  );
+
+
+  if (terra.planta) {
+
+
+
+
+    terra.planta.remove();
+
+
+
+
+    terra.planta = null;
+
+
+
+
   }
 
-  // ABRIR MENU
-  if (status === "vazio" && !culturaSelecionada) {
-    menuPlantio.style.left = e.pageX + "px";
-    menuPlantio.style.top = e.pageY + "px";
-    menuPlantio.classList.remove("oculto");
-    return;
-  }
-
-  // PLANTAR
-  if (status === "vazio" && culturaSelecionada) {
-    const cultura = culturas[culturaSelecionada];
-    planta.src = cultura.broto;
-    planta.classList.remove("oculto");
-    terra.dataset.status = "crescendo";
-    terra.dataset.cultura = culturaSelecionada;
-
-    setTimeout(() => {
-      planta.src = cultura.jovem;
-    }, cultura.crescimento / 2);
-
-    setTimeout(() => {
-      planta.src = cultura.pronta;
-      terra.dataset.status = "pronto";
-    }, cultura.crescimento);
-
-    return;
-  }
-});
 
 
 
-  // =======================
+  terra.dataset.status =
+    "vazio";
+
+
+
+
+  terra.dataset.cultura =
+    "";
+
+
+
+
+  return;
+}
+
+
+
+
+}); // fecha addEventListener
+
+
+
+
+// =======================
 // ESCOLHER CULTURA
 // =======================
 
@@ -252,11 +385,26 @@ cursorPlantio.style.top =
 // =======================
 // ESC CANCELA PLANTIO
 // =======================
+
+
+
+
 document.addEventListener(
 "keydown",
 (e) => {
+
+
+
+
 if (e.key === "Escape") {
+
+
+
+
   culturaSelecionada = null;
+
+
+
 
   menuPlantio.classList.add(
     "oculto"
