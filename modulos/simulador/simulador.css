@@ -36,12 +36,13 @@ html, body {
 .cooperativa { width: 300px; top: 580px; left: 350px; }
 .cisterna { width: 300px; top: 440px; left: 630px; }
 
-.plantacao { position: absolute; top: 60px; left: 1150px; }
+.plantacao { position: absolute; top: 60px; left: 1150px; z-index: 5; }
 
 .terra {
   position: absolute;
   width: 100px;
   height: 100px;
+  z-index: 6;
 }
 .terra-ref { position: absolute; top: 50%; left: 50%; }
 .terra-img { width: 100%; height: auto; z-index: 1; }
@@ -51,7 +52,7 @@ html, body {
   top: 50%;
   transform: translate(-30%, -20%);
   width: 150px;
-  z-index: 10;
+  z-index: 7;
   pointer-events: none;
 }
 

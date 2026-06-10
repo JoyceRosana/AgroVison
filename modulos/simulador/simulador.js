@@ -16,10 +16,10 @@ viewport.addEventListener("mouseup", () => isDown = false);
 viewport.addEventListener("mousemove", e => {
   if (!isDown) return;
   e.preventDefault();
-  const x = e.pageX - viewport.offsetLeft;
-  const y = e.pageY - viewport.offsetTop;
-  viewport.scrollLeft = scrollLeft - (x - startX) * 1.5;
-  viewport.scrollTop = scrollTop - (y - startY) * 1.5;
+  const x = e.pageX - startX;
+  const y = e.pageY - startY;
+  viewport.scrollLeft = scrollLeft; // fixa horizontal
+  viewport.scrollTop = scrollTop;   // fixa vertical
 });
 
 // =======================
@@ -28,8 +28,8 @@ viewport.addEventListener("mousemove", e => {
 const plantacao = document.getElementById("plantacao");
 const LARGURA_EMENDA = 50;
 const ALTURA_EMENDA = 20;
-const MAX_COLUNAS = 12;
-const MAX_LINHAS = 10;
+const MAX_COLUNAS = 10;
+const MAX_LINHAS = 12;
 
 for (let lin = 0; lin < MAX_LINHAS; lin++) {
   for (let col = 0; col < MAX_COLUNAS; col++) {
