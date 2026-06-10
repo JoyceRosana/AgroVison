@@ -5,19 +5,14 @@ let isDown = false, startX, startY, scrollLeft, scrollTop;
 // MOVIMENTAÇÃO DO MAPA
 // =======================
 viewport.addEventListener("mousedown", e => {
-  // Evita mover o mapa ao clicar nas opções do menu de plantio
-  if (e.target.closest("#menuPlantio")) return;
-  
   isDown = true;
   startX = e.pageX - viewport.offsetLeft;
   startY = e.pageY - viewport.offsetTop;
   scrollLeft = viewport.scrollLeft;
   scrollTop = viewport.scrollTop;
 });
-
 viewport.addEventListener("mouseleave", () => isDown = false);
 viewport.addEventListener("mouseup", () => isDown = false);
-
 viewport.addEventListener("mousemove", e => {
   if (!isDown) return;
   e.preventDefault();
