@@ -95,21 +95,11 @@ const culturas = {
 // =======================
 // MENU E CURSOR
 // =======================
-
-
-
-
 const menuPlantio =
 document.getElementById("menuPlantio");
 
-
-
-
 const cursorPlantio =
 document.getElementById("cursorPlantio");
-
-
-
 
 console.log("Menu:", menuPlantio);
 console.log("Cursor:", cursorPlantio);
@@ -117,64 +107,28 @@ console.log("Terras:", terras.length);
 // =======================
 // TERRAS
 // =======================
-
-
-
-
 terras.forEach((terra, index) => {
-
-
-
-
 const col = index % MAX_COLUNAS;
 const lin = Math.floor(index / MAX_COLUNAS);
-
-
-
-
 const posX =
   (col * LARGURA_EMENDA) +
   (lin * -LARGURA_EMENDA);
-
-
-
-
 const posY =
   (col * ALTURA_EMENDA) +
   (lin * ALTURA_EMENDA);
-
-
-
 
 terra.style.left = `${posX}px`;
 terra.style.top = `${posY}px`;
 terra.style.zIndex = col + lin;
 
-
-
-
 terra.addEventListener("click", (e) => {
-
-
-
-
-
-
-
 
 console.log("CLICK NA TERRA");
 console.log("STATUS:", terra.dataset.status);
 console.log("CULTURA:", culturaSelecionada);
-
-
-
-
 const status = terra.dataset.status;
  console.log("STATUS:", status);
 console.log("CULTURA:", culturaSelecionada);
-
-
-
 
 // ABRIR MENU
 if (
