@@ -70,7 +70,7 @@ const culturas = {
 
     brotoX:"15px",
     jovemX:"0px",
-    adultoX:"-100px"
+    adultoX:"0px"
 },
 
     soja: {
