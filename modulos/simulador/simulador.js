@@ -28,7 +28,7 @@ viewport.addEventListener("mousemove", e => {
 const plantacao = document.getElementById("plantacao");
 const LARGURA_EMENDA = 50;
 const ALTURA_EMENDA = 20;
-const MAX_COLUNAS = 10;
+const MAX_COLUNAS = 12;
 const MAX_LINHAS = 10;
 
 for (let lin = 0; lin < MAX_LINHAS; lin++) {
@@ -81,6 +81,37 @@ const cursorPlantio = document.getElementById("cursorPlantio");
 const cursorFoice = document.getElementById("cursorFoice");
 
 // =======================
+// FUNÇÃO PLANTAR
+// =======================
+function plantar(terra) {
+  const cultura = culturas[culturaSelecionada];
+  const planta = terra.querySelector(".planta");
+  planta.src = cultura.broto;
+  planta.classList.remove("oculto");
+
+  // --- OPÇÃO 1: posição configurável manual ---
+  const OFFSET_X = 10;  // ajuste horizontal
+  const OFFSET_Y = 20;  // ajuste vertical
+  planta.style.left = OFFSET_X + "px";
+  planta.style.top = OFFSET_Y + "px";
+
+  // --- OPÇÃO 2: usar referência da terra ---
+  // const ref = terra.querySelector(".terra-ref");
+  // planta.style.left = ref.offsetLeft + "px";
+  // planta.style.top = ref.offsetTop + "px";
+
+  terra.dataset.status = "crescendo";
+  terra.dataset.cultura = culturaSelecionada;
+
+  setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+  setTimeout(() => {
+    planta.src = cultura.pronta;
+    terra.dataset.status = "pronto";
+    cursorFoice.classList.remove("oculto");
+  }, cultura.crescimento);
+}
+
+// =======================
 // CLIQUE NA TERRA
 // =======================
 plantacao.addEventListener("click", e => {
@@ -96,29 +127,9 @@ plantacao.addEventListener("click", e => {
     return;
   }
 
-  // Plantar
+  // Plantar com clique
   if (status === "vazio" && culturaSelecionada) {
-    const cultura = culturas[culturaSelecionada];
-    const planta = terra.querySelector(".planta");
-    planta.src = cultura.broto;
-    planta.classList.remove("oculto");
-
-    // posição configurável
-    const OFFSET_X = -20;
-    const OFFSET_Y = -30;
-    planta.style.left = `calc(50% + ${OFFSET_X}px)`;
-    planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
-
-    terra.dataset.status = "crescendo";
-    terra.dataset.cultura = culturaSelecionada;
-
-    setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
-    setTimeout(() => {
-      planta.src = cultura.pronta;
-      terra.dataset.status = "pronto";
-      cursorFoice.classList.remove("oculto");
-    }, cultura.crescimento);
-
+    plantar(terra);
     culturaSelecionada = null;
     cursorPlantio.classList.add("oculto");
     return;
@@ -135,12 +146,11 @@ plantacao.addEventListener("click", e => {
   }
 });
 
-
 // =======================
 // ESCOLHER CULTURA
 // =======================
 document.querySelectorAll("#menuPlantio button").forEach(botao => {
-  botao.addEventListener("click", (e) => {
+  botao.addEventListener("click", () => {
     culturaSelecionada = botao.dataset.cultura;
     menuPlantio.classList.add("oculto");
     cursorPlantio.classList.remove("oculto");
@@ -148,18 +158,12 @@ document.querySelectorAll("#menuPlantio button").forEach(botao => {
 });
 
 // =======================
-// CURSORES SEGUEM MOUSE
+// CURSORES SEGUEM MOUSE (modo contínuo)
 // =======================
-document.addEventListener("mousemove", e => {
+plantacao.addEventListener("mousemove", e => {
   const terra = e.target.closest(".terra");
-  if (terra) {
-    cursorPlantio.classList.remove("oculto");
-    document.body.classList.add("plantio-ativo");
-    cursorPlantio.style.left = e.clientX + "px";
-    cursorPlantio.style.top = e.clientY + "px";
-  } else {
-    cursorPlantio.classList.add("oculto");
-    document.body.classList.remove("plantio-ativo");
+  if (terra && culturaSelecionada && terra.dataset.status === "vazio") {
+    plantar(terra); // planta automaticamente ao passar o mouse
   }
 });
 
