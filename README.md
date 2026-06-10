@@ -130,7 +130,7 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 └── index.html
 
 ## Demonstração
-Veja o projeto publicado: [AgroVision no GitHub Pages](https://agro-vison.vercel.app)
+Veja o projeto publicado: [AgroVision no Vercel](https://agro-vison.vercel.app)
 
 ##  Autoria
 - Estudante: **Rosana Joyce Rocha Tavares**  
@@ -224,7 +224,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 Este projeto segue as regras do **Concurso Agrinho 2026**:  
 - Repositório público no GitHub  
 - Uso exclusivo de **HTML, CSS e JavaScript** (sem frameworks)  
-- Publicação funcional no **GitHub Pages ou Vercel**  
+- Publicação funcional no **Vercel**  
 - Estrutura organizada e documentação clara
 
  O **AgroVision** é mais que um projeto de programação:  
