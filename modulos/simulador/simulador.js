@@ -228,6 +228,8 @@ function plantar(terra) {
 
     planta.src = cultura.broto;
 
+planta.dataset.cultura = culturaSelecionada;
+
     planta.style.width = cultura.largura;
 
     planta.style.left = "50%";
@@ -247,11 +249,15 @@ function plantar(terra) {
 
         planta.src = cultura.jovem;
 
+planta.classList.add("milho-fixo");
+
     }, cultura.crescimento / 2);
 
     setTimeout(() => {
 
         planta.src = cultura.pronta;
+
+planta.classList.add("milho-fixo");
 
         terra.dataset.status = "pronto";
 
@@ -307,13 +313,16 @@ plantacao.addEventListener("mouseover", (e) => {
     }
 
     if (
-        !culturaSelecionada &&
-        terra.dataset.status === "pronto"
-    ) {
+    terra.dataset.status === "pronto"
+) {
 
-        colher(terra);
+    cursorFoice.classList.remove("oculto");
 
-    }
+} else {
+
+    cursorFoice.classList.add("oculto");
+
+}
 
 });
 
@@ -322,6 +331,23 @@ plantacao.addEventListener("mouseover", (e) => {
 ================================== */
 
 document.addEventListener("mousemove", e => {
+
+  plantacao.addEventListener("mousemove", (e) => {
+
+    const terra = e.target.closest(".terra");
+
+    if(!terra) return;
+
+    if(
+        terra.dataset.status === "pronto" &&
+        !cursorFoice.classList.contains("oculto")
+    ){
+
+        colher(terra);
+
+    }
+
+});
 
     cursorPlantio.style.left =
         e.clientX + "px";

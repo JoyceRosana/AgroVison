@@ -15,7 +15,6 @@ body{
     width:100vw;
     height:100vh;
     overflow:auto;
-    cursor:grab;
 }
 
 .viewport:active{
@@ -134,6 +133,15 @@ body.plantio-ativo{
     --planta-y:10px;
 }
 
+
+.milho-fixo{
+
+    left:50% !important;
+
+    bottom:20px !important;
+
+    transform:translateX(-50%) !important;
+}
 /* ==========================
    MENU
 ========================== */
