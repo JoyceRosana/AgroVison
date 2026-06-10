@@ -84,6 +84,7 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 │   ├── simulador/
 │   │   ├── cisterna.png
 │   │   ├── cooperativa.png
+│   │   ├── foice.png
 │   │   ├── galpao.png
 │   │   ├── maozinha.png
 │   │   ├── mapa.png
