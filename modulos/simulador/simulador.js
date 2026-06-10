@@ -199,3 +199,118 @@ if (status === "vazio" && culturaSelecionada) {
       return;
     }
   });
+
+
+  // =======================
+// ESCOLHER CULTURA
+// =======================
+
+
+
+
+document
+.querySelectorAll(
+"#menuPlantio button"
+)
+.forEach((botao) => {
+
+
+
+
+botao.addEventListener(
+  "click",
+  () => {
+
+
+
+
+    culturaSelecionada =
+      botao.dataset.cultura;
+
+
+
+
+    menuPlantio.classList.add(
+      "oculto"
+    );
+
+
+
+
+    if (cursorPlantio) {
+      cursorPlantio.classList.remove(
+        "oculto"
+      );
+    }
+
+
+
+
+  }
+);
+
+
+
+
+});
+
+
+
+
+// =======================
+// CURSOR
+// =======================
+
+
+
+
+document.addEventListener(
+"mousemove",
+(e) => {
+
+
+
+
+if (!cursorPlantio) return;
+
+
+
+
+cursorPlantio.style.left =
+  e.clientX + "px";
+
+
+
+
+cursorPlantio.style.top =
+  e.clientY + "px";
+
+
+
+
+});
+
+
+
+
+// =======================
+// ESC CANCELA PLANTIO
+// =======================
+document.addEventListener(
+"keydown",
+(e) => {
+if (e.key === "Escape") {
+  culturaSelecionada = null;
+
+  menuPlantio.classList.add(
+    "oculto"
+  );
+
+  if (cursorPlantio) {
+    cursorPlantio.classList.add(
+      "oculto"
+    );
+  }
+}
+
+});
