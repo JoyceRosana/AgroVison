@@ -23,10 +23,13 @@ viewport.addEventListener("mousemove", e => {
 });
 
 // =======================
-// CRIAÇÃO DAS TERRAS (10x10)
+// CRIAÇÃO E POSIÇÃO DAS TERRAS (10x10)
 // =======================
 const plantacao = document.getElementById("plantacao");
-const LARGURA_EMENDA = 50, ALTURA_EMENDA = 20, MAX_COLUNAS = 10, MAX_LINHAS = 10;
+const LARGURA_EMENDA = 50;
+const ALTURA_EMENDA = 20;
+const MAX_COLUNAS = 10;
+const MAX_LINHAS = 10;
 
 for (let lin = 0; lin < MAX_LINHAS; lin++) {
   for (let col = 0; col < MAX_COLUNAS; col++) {
