@@ -1,124 +1,174 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
+html,
+body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
 
-.viewport {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden; /* Controlado via script para arrastar o mapa */
-    background: #000;
+/* ==========================
+   VIEWPORT
+========================== */
+
+.viewport{
+    width:100vw;
+    height:100vh;
+    overflow:auto;
+    cursor:grab;
 }
 
-.world {
-    position: relative;
-    width: 2000px;
-    height: 1200px;
-    overflow: hidden;
+.viewport:active{
+    cursor:grabbing;
 }
 
-.mapa {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: block;
-    z-index: 1;
+/* ==========================
+   MAPA
+========================== */
+
+.world{
+    position:relative;
+    width:2000px;
+    height:1200px;
 }
 
-.objeto {
-    position: absolute;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-    transition: 0.3s;
-    z-index: 3;
-}
-.objeto:hover { 
-    transform: scale(1.03); 
+.mapa{
+    position:absolute;
+    width:100%;
+    height:100%;
+    z-index:1;
 }
 
-.galpao { width: 350px; top: 545px; left: 0px; }
-.cooperativa { width: 300px; top: 580px; left: 350px; }
-.cisterna { width: 300px; top: 440px; left: 630px; }
+/* ==========================
+   OBJETOS
+========================== */
 
-.plantacao { 
-    position: absolute; 
-    top: 60px; 
-    left: 1150px; 
-    z-index: 5; 
+.objeto{
+    position:absolute;
+    z-index:3;
 }
 
-.terra {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    z-index: 6;
+.galpao{
+    width:350px;
+    top:545px;
+    left:0;
 }
 
-.terra-ref { 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
+.cooperativa{
+    width:300px;
+    top:580px;
+    left:350px;
 }
 
-.terra-img { 
-    width: 100%; 
-    height: auto; 
-    z-index: 6; 
+.cisterna{
+    width:300px;
+    top:440px;
+    left:630px;
 }
 
-/* CONFIGURAÇÃO DO LOCAL DA PLANTA */
-.planta {
-    position: absolute;
-    width: 150px;
-    z-index: 7;
-    pointer-events: none;
-    
-    /* 1. CENTRALIZAÇÃO INICIAL EM RELAÇÃO À TERRA */
-    left: 50%;
-    top: 50%;
-    
-    /* 2. AJUSTE DE POSIÇÃO (EIXO X, EIXO Y) */
-    /* Modifique as porcentagens abaixo para alinhar o pé ou o centro da planta com a imagem da terra */
-    /* Exemplo: usar -80% no segundo valor sobe a planta se ela parecer flutuar ou ficar baixa demais */
-    transform: translate(-50%, -50%); 
+/* ==========================
+   PLANTAÇÃO
+========================== */
+
+.plantacao{
+    position:absolute;
+    top:60px;
+    left:1150px;
+    z-index:5;
 }
 
-.menu-plantio {
-    position: fixed;
-    background: white;
-    border: 2px solid #333;
-    border-radius: 10px;
-    padding: 10px;
-    z-index: 9999;
+/* ==========================
+   TERRA
+========================== */
+
+.terra{
+    position:absolute;
+    width:100px;
+    height:100px;
+    z-index:6;
 }
 
-.menu-plantio button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    cursor: pointer;
+.terra-img{
+    position:absolute;
+    width:100%;
+    height:auto;
+    left:0;
+    top:0;
+    z-index:6;
 }
 
-/* CURSORES PERSONALIZADOS */
-.cursor {
-    position: fixed;
-    width: 60px; 
-    pointer-events: none;
-    z-index: 10000;
-    /* Alinha o centro/ponta da imagem do cursor com o clique real do mouse */
-    transform: translate(-15px, -15px); 
+/* ==========================
+   PLANTA
+========================== */
+
+.planta{
+    position:absolute;
+
+    width:150px;
+
+    left:50%;
+    top:50%;
+
+    z-index:8;
+
+    pointer-events:none;
+
+    transform:translate(-50%, -50%);
 }
 
-/* Remove o ponteiro do sistema apenas quando as interações customizadas estão ativas na terra */
-body.plantio-ativo {
-    cursor: none !important;
-}
-body.plantio-ativo .terra:hover {
-    cursor: none !important;
+/*
+AJUSTE FINO DA PLANTA
+
+altere estes valores quando quiser
+*/
+
+:root{
+    --planta-offset-x:0px;
+    --planta-offset-y:-10px;
 }
 
-.oculto { 
-    display: none !important; 
+.planta{
+    margin-left:var(--planta-offset-x);
+    margin-top:var(--planta-offset-y);
+}
+
+/* ==========================
+   MENU
+========================== */
+
+.menu-plantio{
+    position:fixed;
+
+    background:white;
+
+    border:2px solid #444;
+
+    border-radius:10px;
+
+    padding:10px;
+
+    z-index:9999;
+}
+
+.menu-plantio button{
+    width:100%;
+    margin:4px 0;
+}
+
+/* ==========================
+   CURSORES
+========================== */
+
+.cursor{
+    position:fixed;
+
+    width:60px;
+
+    pointer-events:none;
+
+    z-index:10000;
+}
+
+.oculto{
+    display:none;
 }
