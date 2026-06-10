@@ -106,7 +106,6 @@ plantacao.addEventListener("click", e => {
     setTimeout(() => {
       planta.src = cultura.pronta;
       terra.dataset.status = "pronto";
-      cursorFoice.classList.remove("oculto"); // ativa foice quando há planta pronta
     }, cultura.crescimento);
 
     culturaSelecionada = null;
@@ -161,4 +160,3 @@ document.addEventListener("keydown", e => {
     cursorFoice.classList.add("oculto");
   }
 });
-
