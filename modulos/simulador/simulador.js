@@ -148,7 +148,7 @@ document.querySelectorAll("#menuPlantio button").forEach(botao => {
     menuPlantio.classList.add("oculto");
     cursorPlantio.classList.remove("oculto");
   });
-}
+});
 
 // =======================
 // CURSORES SEGUEM MOUSE
