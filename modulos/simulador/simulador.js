@@ -94,41 +94,38 @@ plantacao.addEventListener("click", e => {
     menuPlantio.style.top = e.pageY + "px";
     menuPlantio.classList.remove("oculto");
     return;
-  }
-
+  }}
+);
   // Plantar
   if (status === "vazio" && culturaSelecionada) {
     const cultura = culturas[culturaSelecionada];
     const planta = terra.querySelector(".planta");
     planta.src = cultura.broto;
     planta.classList.remove("oculto");
-    terra.dataset.status = "crescendo";
-    terra.dataset.cultura = culturaSelecionada;
 
-// Configuração de onde a planta nasce
+    // Configuração de onde a planta nasce
 const OFFSET_X = -20; // ajuste horizontal
 const OFFSET_Y = -30; // ajuste vertical
 
 planta.style.left = `calc(50% + ${OFFSET_X}px)`;
 planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
 
-    planta.style.left = `calc(50% + ${OFFSET_X}px)`;
-  planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
+    terra.dataset.status = "crescendo";
+    terra.dataset.cultura = culturaSelecionada;
 
-  terra.dataset.status = "crescendo";
-  terra.dataset.cultura = culturaSelecionada;
-
-}setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+    setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
     setTimeout(() => {
       planta.src = cultura.pronta;
       terra.dataset.status = "pronto";
+      cursorFoice.classList.remove("oculto"); // ativa foice quando há planta pronta
     }, cultura.crescimento);
 
     culturaSelecionada = null;
     cursorPlantio.classList.add("oculto");
+
     return;
   }
-);
+
   // Colher
   if (status === "pronto") {
     const planta = terra.querySelector(".planta");
