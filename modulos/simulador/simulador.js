@@ -6,6 +6,7 @@ const cursorPlantio = document.getElementById("cursorPlantio");
 const cursorFoice = document.getElementById("cursorFoice");
 
 let culturaSelecionada = null;
+let modoColheita = false;
 
 let isDown = false;
 let startX;
@@ -67,9 +68,9 @@ const culturas = {
 
     largura:"150px",
 
-    brotoX:"-14px",
+    brotoX:"-100px",
     jovemX:"0px",
-    adultoX:"-12px"
+    adultoX:"-5px"
 },
 
     soja: {
@@ -168,9 +169,23 @@ plantacao.addEventListener("mouseenter", () => {
 
 });
 
-plantacao.addEventListener("mouseleave", () => {
+plantacao.addEventListener("mouseleave",()=>{
 
     cursorPlantio.classList.add("oculto");
+
+    cursorFoice.classList.add("oculto");
+
+    document.body.classList.remove(
+        "plantio-ativo"
+    );
+
+    document.body.classList.remove(
+        "colheita-ativa"
+    );
+
+    culturaSelecionada = null;
+
+    modoColheita = false;
 
 });
 
@@ -182,21 +197,55 @@ plantacao.addEventListener("click", (e) => {
 
     const terra = e.target.closest(".terra");
 
-    if (!terra) return;
+    if(!terra) return;
 
-    if (
+    /*
+       TERRA VAZIA
+    */
+
+    if(
         terra.dataset.status === "vazio" &&
-        !culturaSelecionada
-    ) {
+        !culturaSelecionada &&
+        !modoColheita
+    ){
 
-        menuPlantio.style.left = e.pageX + "px";
-        menuPlantio.style.top = e.pageY + "px";
+        menuPlantio.style.left =
+            e.pageX + "px";
+
+        menuPlantio.style.top =
+            e.pageY + "px";
 
         menuPlantio.classList.remove("oculto");
+
+        return;
+    }
+
+    /*
+       PLANTA PRONTA
+    */
+
+    if(
+        terra.dataset.status === "pronto" &&
+        !culturaSelecionada
+    ){
+
+        const resposta =
+            confirm("Deseja colher?");
+
+        if(!resposta) return;
+
+        modoColheita = true;
+
+        document.body.classList.add(
+            "colheita-ativa"
+        );
+
+        cursorFoice.classList.remove("oculto");
+
+        return;
     }
 
 });
-
 /* ==================================
    ESCOLHER CULTURA
 ================================== */
@@ -299,6 +348,8 @@ function colher(terra) {
 
         terra.dataset.cultura = "";
 
+        terra.dataset.cultura = "";
+
         cursorFoice.classList.add("oculto");
         document.body.classList.remove("colheita-ativa");
 
@@ -310,37 +361,27 @@ function colher(terra) {
    PLANTIO E COLHEITA CONTÍNUOS
 ================================== */
 
-plantacao.addEventListener("mouseover", (e) => {
+plantacao.addEventListener("mouseover",(e)=>{
 
     const terra = e.target.closest(".terra");
 
-    if (!terra) return;
+    if(!terra) return;
 
-    if (
+    if(
         culturaSelecionada &&
         terra.dataset.status === "vazio"
-    ) {
+    ){
 
         plantar(terra);
-
-        return;
     }
 
-    if (
-    terra.dataset.status === "pronto"
-) {
+    if(
+        modoColheita &&
+        terra.dataset.status === "pronto"
+    ){
 
-    cursorFoice.classList.remove("oculto");
-
-    document.body.classList.add("colheita-ativa");
-
-} else {
-
-    cursorFoice.classList.add("oculto");
-
-    document.body.classList.remove("colheita-ativa");
-
-}
+        colher(terra);
+    }
 
 });
 

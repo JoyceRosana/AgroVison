@@ -127,6 +127,10 @@ body.plantio-ativo{
     cursor:none !important;
 }
 
+body.colheita-ativa{
+    cursor:none !important;
+}
+
 :root{
 
     --planta-x:-5px;
