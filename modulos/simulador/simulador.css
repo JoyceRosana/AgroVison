@@ -133,12 +133,13 @@ html, body {
   margin:5px 0;
 }
 
-.cursor-plantio{
-  position:fixed;
-  width:80px;
-  pointer-events:none;
-  z-index:10000;
+.cursor-plantio {
+  position: fixed;
+  width: 80px;
+  pointer-events: none;
+  z-index: 10000;
 }
+
 
 .oculto{
   display:none;
