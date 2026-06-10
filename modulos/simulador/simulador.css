@@ -2,7 +2,6 @@ html, body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-
   width: 100%;
   height: 100%;
 }
@@ -10,148 +9,71 @@ html, body {
 .viewport {
   width: 100vw;
   height: 100vh;
-
   overflow: auto;
-
   background: #000;
 }
 
 .world {
   position: relative;
-
   width: 2000px;
   height: 1200px;
 }
 
-/* MAPA */
 .mapa {
   width: 100%;
   height: 100%;
-
   display: block;
 }
 
-/* OBJETOS */
-.objeto{
-    position: absolute;
-
-    image-rendering: auto;
-
-    filter:
-    drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-
-    transition: 0.3s;
+.objeto {
+  position: absolute;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  transition: 0.3s;
 }
+.objeto:hover { transform: scale(1.03); }
 
-.objeto:hover{
-    transform: scale(1.03);
-}
+.galpao { width: 350px; top: 545px; left: 0px; }
+.cooperativa { width: 300px; top: 580px; left: 350px; }
+.cisterna { width: 300px; top: 440px; left: 630px; }
 
-/* galpao */
-.galpao {
-  width: 350px;
-
-  top: 545px;
-  left: 0px;
-}
-
-/* COOPERATIVA */
-.cooperativa {
-  width: 300px;
-
-  top: 580px;
-  left: 350px;
-}
-
-/* CISTERNA */
-.cisterna {
-  width: 300px;
-
-  top: 440px;
-  left: 630px;
-}
-
-
-.plantacao {
- position: absolute;
- top: 200px;
- left: 890px;
- width: 1px;
- height: auto;
-}
-
+.plantacao { position: absolute; top: 200px; left: 890px; }
 
 .terra {
- position: absolute;
- width: 100px;
- height: 100px;
-}
-
-
-.terra-ref {
- position: absolute;
- top: 50%;
- left: 50%;
- width: 0;
- height: 0;
-}
-
-.terra-img {
   position: absolute;
-  width: 100%;
-  height: auto;
-  z-index: 1; /* terra abaixo */
+  width: 100px;
+  height: 100px;
 }
-
+.terra-ref { position: absolute; top: 50%; left: 50%; }
+.terra-img { width: 100%; height: auto; z-index: 1; }
 .planta {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -55%);
   width: 50px;
-  z-index: 2; /* planta acima */
+  z-index: 2;
   pointer-events: none;
 }
 
-
-
-/* BOTÃO FECHAR */
-
 .menu-plantio {
-  position: absolute;
-  background: #fff;
+  position: fixed;
+  background: white;
   border: 2px solid #333;
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
   z-index: 9999;
 }
-
-.menu-plantio::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 20px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: #fff transparent transparent transparent;
+.menu-plantio button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
 }
 
-.menu-plantio button{
-  position: static;
-  display:block;
-  width:100%;
-  margin:5px 0;
-}
-
-.cursor-plantio {
+.cursor {
   position: fixed;
   width: 80px;
   pointer-events: none;
   z-index: 10000;
 }
 
-
-.oculto{
-  display:none;
-} 
+.oculto { display: none; }
