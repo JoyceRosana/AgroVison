@@ -91,6 +91,9 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 │   │   ├── milho_adulto.png
 │   │   ├── milho_broto.png
 │   │   ├── milho_jovem.png
+│   │   ├── soja_adulto.png
+│   │   ├── soja_broto.png
+│   │   ├── soja_jovem.png
 │   │   └── terra.png
 │   └── sobre/
 │       ├── Plantação.png
@@ -197,6 +200,9 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "Milho broto"
 - Prompt: "Milho jovem"
 - Prompt: "Milho adulto"
+- Prompt: "soja broto"
+- Prompt: "soja jovem"
+- Prompt: "soja adulto"
 - Prompt: "cartoon de terra para plantar"
 - Prompt: "luva branca 3d"
 - Prompt: "foice para colher 3d"
