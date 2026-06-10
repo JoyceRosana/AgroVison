@@ -94,8 +94,8 @@ plantacao.addEventListener("click", e => {
     menuPlantio.style.top = e.pageY + "px";
     menuPlantio.classList.remove("oculto");
     return;
-  }}
-);
+  }
+
   // Plantar
   if (status === "vazio" && culturaSelecionada) {
     const cultura = culturas[culturaSelecionada];
@@ -103,12 +103,11 @@ plantacao.addEventListener("click", e => {
     planta.src = cultura.broto;
     planta.classList.remove("oculto");
 
-    // Configuração de onde a planta nasce
-const OFFSET_X = -20; // ajuste horizontal
-const OFFSET_Y = -30; // ajuste vertical
-
-planta.style.left = `calc(50% + ${OFFSET_X}px)`;
-planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
+    // posição configurável
+    const OFFSET_X = -20;
+    const OFFSET_Y = -30;
+    planta.style.left = `calc(50% + ${OFFSET_X}px)`;
+    planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
 
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
@@ -117,12 +116,11 @@ planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
     setTimeout(() => {
       planta.src = cultura.pronta;
       terra.dataset.status = "pronto";
-      cursorFoice.classList.remove("oculto"); // ativa foice quando há planta pronta
+      cursorFoice.classList.remove("oculto");
     }, cultura.crescimento);
 
     culturaSelecionada = null;
     cursorPlantio.classList.add("oculto");
-
     return;
   }
 
@@ -135,6 +133,8 @@ planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
     terra.dataset.cultura = "";
     cursorFoice.classList.add("oculto");
   }
+});
+
 
 // =======================
 // ESCOLHER CULTURA
