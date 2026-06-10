@@ -58,13 +58,19 @@ viewport.addEventListener("mousemove", e => {
 
 const culturas = {
 
-    milho: {
-        crescimento: 15000,
-        broto: "/img/simulador/milho_broto.png",
-        jovem: "/img/simulador/milho_jovem.png",
-        pronta: "/img/simulador/milho_adulto.png",
-        largura: "150px"
-    },
+    milho:{
+    crescimento:15000,
+
+    broto:"/img/simulador/milho_broto.png",
+    jovem:"/img/simulador/milho_jovem.png",
+    pronta:"/img/simulador/milho_adulto.png",
+
+    largura:"150px",
+
+    brotoX:"-14px",
+    jovemX:"0px",
+    adultoX:"-12px"
+},
 
     soja: {
         crescimento: 10000,
@@ -227,6 +233,7 @@ function plantar(terra) {
     const planta = terra.querySelector(".planta");
 
     planta.src = cultura.broto;
+    planta.style.marginLeft = cultura.brotoX;
 
 planta.dataset.cultura = culturaSelecionada;
 
@@ -247,7 +254,9 @@ planta.dataset.cultura = culturaSelecionada;
 
     setTimeout(() => {
 
-        planta.src = cultura.jovem;
+planta.src = cultura.jovem;
+
+planta.style.marginLeft = cultura.jovemX;        
 
 planta.classList.add("milho-fixo");
 
@@ -256,6 +265,8 @@ planta.classList.add("milho-fixo");
     setTimeout(() => {
 
         planta.src = cultura.pronta;
+
+planta.style.marginLeft = cultura.adultoX;
 
 planta.classList.add("milho-fixo");
 
