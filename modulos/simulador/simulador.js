@@ -68,37 +68,42 @@ const culturas = {
         crescimento:15000,
         broto:"/img/simulador/milho_broto.png",
         jovem:"/img/simulador/milho_jovem.png",
-        pronta:"/img/simulador/milho_adulto.png"
+        pronta:"/img/simulador/milho_adulto.png",
+        largura:"150px"
     },
 
     soja:{
         crescimento:10000,
         broto:"/img/simulador/soja_broto.png",
         jovem:"/img/simulador/soja_jovem.png",
-        pronta:"/img/simulador/soja_pronto.png"
+        pronta:"/img/simulador/soja_pronto.png",
+        largura:"100px"
     },
 
     alface:{
         crescimento:8000,
         broto:"/img/simulador/alface_broto.png",
         jovem:"/img/simulador/alface_jovem.png",
-        pronta:"/img/simulador/alface_pronto.png"
+        pronta:"/img/simulador/alface_pronto.png",
+        largura:"80px"
     },
 
     cenoura:{
         crescimento:9000,
         broto:"/img/simulador/cenoura_broto.png",
         jovem:"/img/simulador/cenoura_jovem.png",
-        pronta:"/img/simulador/cenoura_pronto.png"
+        pronta:"/img/simulador/cenoura_pronto.png",
+        largura:"90px"
     },
 
     tomate:{
         crescimento:12000,
         broto:"/img/simulador/tomate_broto.png",
         jovem:"/img/simulador/tomate_jovem.png",
-        pronta:"/img/simulador/tomate_pronto.png"
+        pronta:"/img/simulador/tomate_pronto.png",
+        largura:"120px"
     }
-};
+  };
 
 /* ==================================
    CRIAR GRADE
@@ -176,6 +181,20 @@ plantacao.addEventListener("mouseleave",()=>{
 
 plantacao.addEventListener("click", e => {
 
+  plantacao.addEventListener("mouseover",(e)=>{
+
+    if(!culturaSelecionada) return;
+
+    const terra = e.target.closest(".terra");
+
+    if(!terra) return;
+
+    if(terra.dataset.status !== "vazio") return;
+
+    plantar(terra);
+
+});
+
     const terra = e.target.closest(".terra");
 
     if(!terra) return;
@@ -238,13 +257,11 @@ document
    PLANTAR
 ================================== */
 
-function plantar(terra){
+function plantar(terra){ 
 
-    const cultura =
-        culturas[culturaSelecionada];
+    const cultura = culturas[culturaSelecionada];
 
-    const planta =
-        terra.querySelector(".planta");
+    const planta = terra.querySelector(".planta");
 
     planta.src = cultura.broto;
 
@@ -252,13 +269,26 @@ function plantar(terra){
 
     terra.dataset.status = "crescendo";
 
-    setTimeout(() => {
+    terra.dataset.cultura = culturaSelecionada;
+
+    /*
+    POSIÇÃO FIXA PARA TODAS AS FASES
+    */
+
+    planta.style.left = "50%";
+
+    planta.style.bottom = "20px";
+
+    planta.style.transform = "translateX(-50%)";
+    planta.style.width = cultura.largura;
+
+    setTimeout(()=>{
 
         planta.src = cultura.jovem;
 
     }, cultura.crescimento / 2);
 
-    setTimeout(() => {
+    setTimeout(()=>{
 
         planta.src = cultura.pronta;
 
@@ -266,25 +296,31 @@ function plantar(terra){
 
     }, cultura.crescimento);
 
-    culturaSelecionada = null;
-
-    cursorPlantio.classList.add("oculto");
 }
-
 /* ==================================
    COLHER
 ================================== */
 
 function colher(terra){
 
-    const planta =
-        terra.querySelector(".planta");
+    const planta = terra.querySelector(".planta");
 
-    planta.classList.add("oculto");
+    planta.classList.add("colhendo");
 
-    planta.src = "";
+    setTimeout(()=>{
 
-    terra.dataset.status = "vazio";
+        planta.classList.remove("colhendo");
+
+        planta.classList.add("oculto");
+
+        planta.src="";
+
+        terra.dataset.status="vazio";
+
+        terra.dataset.cultura="";
+
+    },300);
+
 }
 
 /* ==================================
@@ -311,17 +347,15 @@ document.addEventListener("mousemove", e => {
    FOICE
 ================================== */
 
-plantacao.addEventListener("mouseover", e => {
+plantacao.addEventListener("mouseover",(e)=>{
 
     const terra = e.target.closest(".terra");
 
     if(!terra) return;
 
-    if(terra.dataset.status === "pronto"){
+    if(terra.dataset.status !== "pronto") return;
 
-        cursorFoice.classList.remove("oculto");
-
-    }
+    colher(terra);
 
 });
 
@@ -346,6 +380,24 @@ document.addEventListener("keydown",(e)=>{
     cursorPlantio.classList.add("oculto");
 
     cursorFoice.classList.add("oculto");
+
+    document.body.classList.remove("plantio-ativo");
+
+});
+
+document.addEventListener("click",(e)=>{
+
+    const terra = e.target.closest(".terra");
+
+    const menu = e.target.closest("#menuPlantio");
+
+    if(terra || menu) return;
+
+    culturaSelecionada = null;
+
+    menuPlantio.classList.add("oculto");
+
+    cursorPlantio.classList.add("oculto");
 
     document.body.classList.remove("plantio-ativo");
 

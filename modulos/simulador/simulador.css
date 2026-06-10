@@ -174,3 +174,22 @@ body.plantio-ativo{
 .oculto{
     display:none;
 }
+
+
+.colhendo{
+
+    animation: colherAnim .3s ease forwards;
+}
+
+@keyframes colherAnim{
+
+    0%{
+        opacity:1;
+        transform:translateX(-50%) scale(1);
+    }
+
+    100%{
+        opacity:0;
+        transform:translateX(-50%) scale(.6);
+    }
+}
