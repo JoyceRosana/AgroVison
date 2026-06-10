@@ -151,34 +151,54 @@ As imagens foram organizadas em pastas temáticas e todas foram geradas ou modif
 Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 ### conhecimento/conteudos/clima
+
 - Prompt: "Representação gráfica de diferentes climas agrícolas"
-- Prompt: "Plantio em condições climáticas variadas"
+- Prompt: "Mudanças climáticas impactando a agricultura"
 - Prompt: "Sistema de irrigação em clima seco"
+- Prompt: "Plantio em condições climáticas favoráveis"
+- Prompt: "Previsão meteorológica aplicada à agricultura"
 
-### conhecimento/conteudos/irrigacao
+## conhecimento/conteudos/irrigacao
+
 - Prompt: "Estufa agrícola com irrigação automatizada"
-- Prompt: "Produtor irrigando horta sustentável"
-- Prompt: "Sistema de irrigação para soja"
+- Prompt: "Cultivo sustentável de hortaliças irrigadas"
+- Prompt: "Sistema moderno de irrigação agrícola"
+- Prompt: "Irrigação eficiente em lavoura de soja"
+- Prompt: "Produtor monitorando sistema de irrigação"
+- Prompt: "Rega controlada em cultivo agrícola"
 
-### conhecimento/conteudos/pragas
-- Prompt: "Ilustração de pragas agrícolas comuns"
-- Prompt: "Insetos atacando plantação"
+## conhecimento/conteudos/pragas
+
+- Prompt: "Bactérias causadoras de doenças em plantas"
+- Prompt: "Plantas daninhas em área agrícola"
 - Prompt: "Fungos em folhas de cultivo"
+- Prompt: "Insetos atacando plantação"
+- Prompt: "Plantação saudável livre de pragas"
+- Prompt: "Ilustração de pragas agrícolas comuns"
 
-### conhecimento/conteudos/solo
+## conhecimento/conteudos/solo
+
+- Prompt: "Solo agrícola com armazenamento de água"
 - Prompt: "Análise de solo agrícola"
 - Prompt: "Textura e fertilidade do solo"
 - Prompt: "pH do solo em gráfico"
+- Prompt: "Perfil de solo agrícola"
+- Prompt: "Comparação de texturas do solo"
 
-### conhecimento/conteudos/sustentabilidade
+## conhecimento/conteudos/sustentabilidade
+
 - Prompt: "Agro sustentável com energia renovável"
+- Prompt: "Profissional de agronomia em campo sustentável"
 - Prompt: "Uso consciente da água na agricultura"
 - Prompt: "Cuidado com a natureza"
+- Prompt: "Energia renovável aplicada ao agronegócio"
 
-### conhecimento/conteudos/tecnologia
-- Prompt: "Drone monitorando plantação"
-- Prompt: "Sensor agrícola inteligente"
+## conhecimento/conteudos/tecnologia
+
 - Prompt: "GPS aplicado na agricultura"
+- Prompt: "Sensor agrícola inteligente"
+- Prompt: "Inteligência artificial na agricultura"
+- Prompt: "Drone monitorando plantação"
 
  ### conhecimento
 - Prompt: "CO2 na floresta"
