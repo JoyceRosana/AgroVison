@@ -112,16 +112,14 @@ plantacao.addEventListener("click", e => {
   terra.dataset.status = "crescendo";
   terra.dataset.cultura = culturaSelecionada;
 
-  setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
-  setTimeout(() => {
-    planta.src = cultura.pronta;
-    terra.dataset.status = "pronto";
-  }, cultura.crescimento);
+}setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+    setTimeout(() => {
+      planta.src = cultura.pronta;
+      terra.dataset.status = "pronto";
+    }, cultura.crescimento);
 
-  culturaSelecionada = null;
-  cursorPlantio.classList.add("oculto");
-  document.body.classList.remove("plantio-ativo");
-}
+    culturaSelecionada = null;
+    cursorPlantio.classList.add("oculto");
     return;
   }
 );
@@ -134,7 +132,6 @@ plantacao.addEventListener("click", e => {
     terra.dataset.cultura = "";
     cursorFoice.classList.add("oculto");
   }
-);
 
 // =======================
 // ESCOLHER CULTURA
