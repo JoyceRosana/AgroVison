@@ -36,7 +36,7 @@ html, body {
 .cooperativa { width: 300px; top: 580px; left: 350px; }
 .cisterna { width: 300px; top: 440px; left: 630px; }
 
-.plantacao { position: absolute; top: 120px; left: 1200px; }
+.plantacao { position: absolute; top: 100px; left: 1200px; }
 
 .terra {
   position: absolute;
