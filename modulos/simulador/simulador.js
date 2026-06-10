@@ -105,17 +105,26 @@ plantacao.addEventListener("click", e => {
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
 
-    setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
-    setTimeout(() => {
-      planta.src = cultura.pronta;
-      terra.dataset.status = "pronto";
-    }, cultura.crescimento);
 
-    culturaSelecionada = null;
-    cursorPlantio.classList.add("oculto");
+    planta.style.left = `calc(50% + ${OFFSET_X}px)`;
+  planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
+
+  terra.dataset.status = "crescendo";
+  terra.dataset.cultura = culturaSelecionada;
+
+  setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+  setTimeout(() => {
+    planta.src = cultura.pronta;
+    terra.dataset.status = "pronto";
+  }, cultura.crescimento);
+
+  culturaSelecionada = null;
+  cursorPlantio.classList.add("oculto");
+  document.body.classList.remove("plantio-ativo");
+}
     return;
   }
-
+);
   // Colher
   if (status === "pronto") {
     const planta = terra.querySelector(".planta");
@@ -125,7 +134,7 @@ plantacao.addEventListener("click", e => {
     terra.dataset.cultura = "";
     cursorFoice.classList.add("oculto");
   }
-});
+);
 
 // =======================
 // ESCOLHER CULTURA
@@ -142,13 +151,15 @@ document.querySelectorAll("#menuPlantio button").forEach(botao => {
 // CURSORES SEGUEM MOUSE
 // =======================
 document.addEventListener("mousemove", e => {
-  if (!cursorPlantio.classList.contains("oculto")) {
+  const terra = e.target.closest(".terra");
+  if (terra) {
+    cursorPlantio.classList.remove("oculto");
+    document.body.classList.add("plantio-ativo");
     cursorPlantio.style.left = e.clientX + "px";
     cursorPlantio.style.top = e.clientY + "px";
-  }
-  if (!cursorFoice.classList.contains("oculto")) {
-    cursorFoice.style.left = e.clientX + "px";
-    cursorFoice.style.top = e.clientY + "px";
+  } else {
+    cursorPlantio.classList.add("oculto");
+    document.body.classList.remove("plantio-ativo");
   }
 });
 
