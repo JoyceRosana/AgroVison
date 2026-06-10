@@ -105,6 +105,12 @@ plantacao.addEventListener("click", e => {
     terra.dataset.status = "crescendo";
     terra.dataset.cultura = culturaSelecionada;
 
+// Configuração de onde a planta nasce
+const OFFSET_X = -20; // ajuste horizontal
+const OFFSET_Y = -30; // ajuste vertical
+
+planta.style.left = `calc(50% + ${OFFSET_X}px)`;
+planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
 
     planta.style.left = `calc(50% + ${OFFSET_X}px)`;
   planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
@@ -137,12 +143,12 @@ plantacao.addEventListener("click", e => {
 // ESCOLHER CULTURA
 // =======================
 document.querySelectorAll("#menuPlantio button").forEach(botao => {
-  botao.addEventListener("click", () => {
+  botao.addEventListener("click", (e) => {
     culturaSelecionada = botao.dataset.cultura;
     menuPlantio.classList.add("oculto");
     cursorPlantio.classList.remove("oculto");
   });
-});
+}
 
 // =======================
 // CURSORES SEGUEM MOUSE
