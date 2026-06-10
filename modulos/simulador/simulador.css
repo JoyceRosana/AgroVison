@@ -9,15 +9,14 @@ html, body {
 .viewport {
   width: 100vw;
   height: 100vh;
-  overflow: auto;
   background: #000;
+  overflow: hidden;
 }
 
 .world {
   position: relative;
   width: 2000px;
   height: 1200px;
-overflow: hidden;
 }
 
 .mapa {
@@ -40,26 +39,34 @@ overflow: hidden;
 .cooperativa { width: 300px; top: 580px; left: 350px; }
 .cisterna { width: 300px; top: 440px; left: 630px; }
 
-.plantacao { position: absolute; top: 60px; left: 1150px; z-index: 5; }
+.plantacao {
+  position: absolute;
+  top: 60px;
+  left: 1150px;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(5, 100px);
+  grid-gap: 10px;
+}
 
 .terra {
-  position: absolute;
-  width: 95px;
-  height: 95px;
-  z-index: 6;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background: transparent;
 }
-.terra-ref { position: absolute; top: 50%; left: 50%; }
-.terra-img { width: 100%; height: auto; z-index: 6; }
-
-.viewport {
-  overflow: hidden; /* impede que o mapa deslize sobre as terras */
+.terra-img {
+  width: 100%;
+  height: auto;
 }
 .planta {
   position: absolute;
-  width: 150px;
+  width: 80px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 7;
   pointer-events: none;
-  transform: translate(0, 0); 
 }
 
 .menu-plantio {
@@ -78,14 +85,10 @@ overflow: hidden;
 
 .cursor {
   position: fixed;
-  width: 60px; /* menor para ficar natural */
+  width: 60px;
   pointer-events: none;
   z-index: 10000;
 }
-
-body.plantio-ativo {
-  cursor: none; /* esconde o cursor padrão */
-}
-
+body.plantio-ativo { cursor: none; }
 
 .oculto { display: none; }
