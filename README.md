@@ -198,6 +198,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 - Prompt: "Milho adulto"
 - Prompt: "cartoon de terra para plantar"
 - Prompt: "luva branca 3d"
+- Prompt: "foice para colher 3d"
 
 ### sobre/geral
 - Prompt: "banner da tela inicial"
