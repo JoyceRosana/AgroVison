@@ -154,22 +154,22 @@ for(let lin=0; lin<LINHAS; lin++){
    CURSOR MÃO APENAS NA ÁREA
 ================================== */
 
-plantacao.addEventListener("mouseenter", () => {
+plantacao.addEventListener("mouseenter",()=>{
 
     if(culturaSelecionada){
 
         cursorPlantio.classList.remove("oculto");
-
     }
 
 });
 
-plantacao.addEventListener("mouseleave", () => {
+plantacao.addEventListener("mouseleave",()=>{
 
     cursorPlantio.classList.add("oculto");
 
-});
+    document.body.classList.remove("plantio-ativo");
 
+});
 /* ==================================
    MENU DE CULTURA
 ================================== */
@@ -195,33 +195,41 @@ plantacao.addEventListener("click", e => {
         return;
     }
 
-    if(status === "vazio" && culturaSelecionada){
+    plantacao.addEventListener("mouseover",(e)=>{
 
-        plantar(terra);
+    if(!culturaSelecionada) return;
+
+    const terra = e.target.closest(".terra");
+
+    if(!terra) return;
+
+    if(terra.dataset.status !== "vazio") return;
+
+    plantar(terra);
+
+});
 
         return;
-    }
+    });
 
     if(status === "pronto"){
 
         colher(terra);
     }
 
-});
-
 document
 .querySelectorAll("#menuPlantio button")
-.forEach(botao => {
+.forEach(botao=>{
 
-    botao.addEventListener("click", () => {
+    botao.addEventListener("click",()=>{
 
-        culturaSelecionada =
-            botao.dataset.cultura;
+        culturaSelecionada = botao.dataset.cultura;
 
         menuPlantio.classList.add("oculto");
 
-        cursorPlantio.classList.remove("oculto");
+        document.body.classList.add("plantio-ativo");
 
+        cursorPlantio.classList.remove("oculto");
     });
 
 });
@@ -327,16 +335,36 @@ plantacao.addEventListener("mouseout", () => {
    ESC
 ================================== */
 
-document.addEventListener("keydown", e => {
+document.addEventListener("keydown",(e)=>{
 
-    if(e.key === "Escape"){
+    if(e.key !== "Escape") return;
 
-        culturaSelecionada = null;
+    culturaSelecionada = null;
+
+    menuPlantio.classList.add("oculto");
+
+    cursorPlantio.classList.add("oculto");
+
+    cursorFoice.classList.add("oculto");
+
+    document.body.classList.remove("plantio-ativo");
+
+});
+
+
+document.addEventListener("click", (e) => {
+
+    const clicouTerra = e.target.closest(".terra");
+    const clicouMenu = e.target.closest("#menuPlantio");
+
+    if (!clicouTerra && !clicouMenu) {
 
         menuPlantio.classList.add("oculto");
 
+        culturaSelecionada = null;
+
+        document.body.classList.remove("plantio-ativo");
+
         cursorPlantio.classList.add("oculto");
-
     }
-
 });

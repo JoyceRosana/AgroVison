@@ -86,6 +86,8 @@ body{
     width:100px;
     height:100px;
     z-index:6;
+
+    overflow:visible;
 }
 
 .terra-img{
@@ -94,7 +96,7 @@ body{
     height:auto;
     left:0;
     top:0;
-    z-index:6;
+    z-index:7;
 }
 
 /* ==========================
@@ -102,34 +104,34 @@ body{
 ========================== */
 
 .planta{
+
     position:absolute;
+
+    left:50%;
+
+    bottom:20px;
+
+    margin-left:var(--planta-x);
+
+    margin-bottom:var(--planta-y);
 
     width:150px;
 
-    left:50%;
-    top:50%;
+    transform:translateX(-50%);
 
-    z-index:8;
+    z-index:20;
 
     pointer-events:none;
-
-    transform:translate(-50%, -50%);
 }
 
-/*
-AJUSTE FINO DA PLANTA
-
-altere estes valores quando quiser
-*/
+body.plantio-ativo{
+    cursor:none !important;
+}
 
 :root{
-    --planta-offset-x:0px;
-    --planta-offset-y:-10px;
-}
 
-.planta{
-    margin-left:var(--planta-offset-x);
-    margin-top:var(--planta-offset-y);
+    --planta-x:-5px;
+    --planta-y:10px;
 }
 
 /* ==========================
