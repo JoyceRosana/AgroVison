@@ -57,7 +57,7 @@ for (let lin = 0; lin < MAX_LINHAS; lin++) {
     terra.style.top = `${posY}px`;
     terra.style.zIndex = col + lin;
 
-    plantacao.appendChild(terra);
+    plantacao.appendChild (terra);
   }
 }
 
