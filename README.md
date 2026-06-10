@@ -68,15 +68,15 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 │   │   │   ├── agricultura_IA.jpeg
 │   │   │   └── drone.jpeg
 │   │   ├── bannerCO2_BDC.jpeg
-│   │   ├── bannerbio_BDC.jpeg
+│   │   ├── bannerbio_BDC.png
 │   │   ├── bannerclima_BDC.jpeg
 │   │   ├── bannerconhecimento.png
-│   │   ├── bannerirrigar_BDC.jpeg
-│   │   ├── bannermonitorar_BDC.jpeg
-│   │   ├── bannerpragas_BDC.jpeg
-│   │   ├── bannersolo_BDC.jpeg
-│   │   ├── bannersustentabilidade_BDC.jpeg
-│   │   └── bannertech_BDC.jpeg
+│   │   ├── bannerirrigar_BDC.png
+│   │   ├── bannermonitorar_BDC.png
+│   │   ├── bannerpragas_BDC.png
+│   │   ├── bannersolo_BDC.png
+│   │   ├── bannersustentabilidade_BDC.png
+│   │   └── bannertech_BDC.png
 │   ├── geral/
 │   │   ├── TechAgro.png
 │   │   ├── agro-inicial.png
@@ -93,8 +93,8 @@ O site funciona como uma **plataforma educativa**, oferecendo:
 │   │   └── terra.png
 │   └── sobre/
 │       ├── Plantação.png
-│       ├── planta.jpg
-│       └── plantas-plantação.jpg
+│       ├── planta.jpeg
+│       └── horta.jepg
 ├── js/
 │   ├── global.js
 │   ├── script.js
