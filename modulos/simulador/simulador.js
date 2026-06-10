@@ -14,13 +14,14 @@ viewport.addEventListener("mousedown", e => {
 viewport.addEventListener("mouseleave", () => isDown = false);
 viewport.addEventListener("mouseup", () => isDown = false);
 viewport.addEventListener("mousemove", e => {
-  if (!isDown) return;
-  e.preventDefault();
-  const x = e.pageX - startX;
-  const y = e.pageY - startY;
-  viewport.scrollLeft = scrollLeft; // fixa horizontal
-  viewport.scrollTop = scrollTop;   // fixa vertical
+ if (!isDown) return;
+ e.preventDefault();
+ const x = e.pageX - viewport.offsetLeft;
+ const y = e.pageY - viewport.offsetTop;
+ viewport.scrollLeft = scrollLeft - (x - startX) * 1.5;
+ viewport.scrollTop = scrollTop - (y - startY) * 1.5;
 });
+
 
 // =======================
 // CRIAÇÃO E POSIÇÃO DAS TERRAS (10x10)
@@ -115,21 +116,45 @@ plantacao.addEventListener("click", e => {
   if (!terra) return;
   const status = terra.dataset.status;
 
-  // Abrir menu
+    // Abrir menu
   if (status === "vazio" && !culturaSelecionada) {
     menuPlantio.style.left = e.pageX + "px";
     menuPlantio.style.top = e.pageY + "px";
     menuPlantio.classList.remove("oculto");
-  
+    return;
+  }
 
   // Plantar com clique
   if (status === "vazio" && culturaSelecionada) {
-    plantar(terra);
-    culturaSelecionada = null;
-    cursorPlantio.classList.add("oculto");
+   const cultura = culturas[culturaSelecionada];
+   const planta = terra.querySelector(".planta");
+   planta.src = cultura.broto;
+   planta.classList.remove("oculto");
+
+
+   // posição configurável
+   const OFFSET_X = -20;
+   const OFFSET_Y = -30;
+   planta.style.left = `calc(50% + ${OFFSET_X}px)`;
+   planta.style.top = `calc(50% + ${OFFSET_Y}px)`;
+
+
+   terra.dataset.status = "crescendo";
+   terra.dataset.cultura = culturaSelecionada;
+
+
+   setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+   setTimeout(() => {
+     planta.src = cultura.pronta;
+     terra.dataset.status = "pronto";
+     cursorFoice.classList.remove("oculto");
+   }, cultura.crescimento);
+
+
+   culturaSelecionada = null;
+   cursorPlantio.classList.add("oculto");
     return;
   }
-}
 
   // Colher
   if (status === "pronto") {
@@ -141,6 +166,7 @@ plantacao.addEventListener("click", e => {
     cursorFoice.classList.add("oculto");
   }
 });
+
 
 // =======================
 // ESCOLHER CULTURA
