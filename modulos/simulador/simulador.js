@@ -89,16 +89,11 @@ function plantar(terra) {
   planta.src = cultura.broto;
   planta.classList.remove("oculto");
 
-  // --- OPÇÃO 1: posição configurável manual ---
-  const OFFSET_X = 10;  // ajuste horizontal
-  const OFFSET_Y = 20;  // ajuste vertical
+  // posição fixa dentro da terra
+  const OFFSET_X = 10;
+  const OFFSET_Y = 20;
   planta.style.left = OFFSET_X + "px";
   planta.style.top = OFFSET_Y + "px";
-
-  // --- OPÇÃO 2: usar referência da terra ---
-  // const ref = terra.querySelector(".terra-ref");
-  // planta.style.left = ref.offsetLeft + "px";
-  // planta.style.top = ref.offsetTop + "px";
 
   terra.dataset.status = "crescendo";
   terra.dataset.cultura = culturaSelecionada;
@@ -110,6 +105,7 @@ function plantar(terra) {
     cursorFoice.classList.remove("oculto");
   }, cultura.crescimento);
 }
+
 
 // =======================
 // CLIQUE NA TERRA
@@ -133,36 +129,7 @@ plantacao.addEventListener("click", e => {
     cursorPlantio.classList.add("oculto");
     return;
   }
-
-  function plantar(terra) {
-  const cultura = culturas[culturaSelecionada];
-  const planta = terra.querySelector(".planta");
-  planta.src = cultura.broto;
-  planta.classList.remove("oculto");
-
-  // opção 1: offsets fixos
-  const OFFSET_X = 10;
-  const OFFSET_Y = 20;
-  planta.style.left = OFFSET_X + "px";
-  planta.style.top = OFFSET_Y + "px";
-
-  // opção 2: referência da terra
-  // const ref = terra.querySelector(".terra-ref");
-  // planta.style.left = ref.offsetLeft + "px";
-  // planta.style.top = ref.offsetTop + "px";
-
-  terra.dataset.status = "crescendo";
-  terra.dataset.cultura = culturaSelecionada;
-
-  setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
-  setTimeout(() => {
-    planta.src = cultura.pronta;
-    terra.dataset.status = "pronto";
-    cursorFoice.classList.remove("oculto");
-  }, cultura.crescimento);
 }
-return;
-  }
 
   // Colher
   if (status === "pronto") {
