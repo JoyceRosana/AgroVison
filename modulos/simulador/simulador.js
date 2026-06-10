@@ -95,99 +95,336 @@ const culturas = {
 // =======================
 // MENU E CURSOR
 // =======================
+
+
+
+
 const menuPlantio =
 document.getElementById("menuPlantio");
+
+
+
 
 const cursorPlantio =
 document.getElementById("cursorPlantio");
 
+
+
+
 console.log("Menu:", menuPlantio);
 console.log("Cursor:", cursorPlantio);
 console.log("Terras:", terras.length);
-
 // =======================
 // TERRAS
 // =======================
-terras.forEach((terra) => {
-  terra.addEventListener("click", (e) => {
-    const status = terra.dataset.status;
-    const planta = terra.querySelector(".planta");
 
-    console.log("CLICK NA TERRA", status, culturaSelecionada);
 
-    // COLHER
-    if (status === "pronto" && terra.dataset.cultura === "milho") {
-      alert("Você colheu milho 🌽");
-      planta.classList.add("oculto");
-      planta.src = "";
-      terra.dataset.status = "vazio";
-      terra.dataset.cultura = "";
-      return;
-    }
 
-    // ABRIR MENU (balão)
-    if (status === "vazio" && !culturaSelecionada) {
-      menuPlantio.style.left = e.pageX + "px";
-      menuPlantio.style.top = e.pageY + "px";
-      menuPlantio.classList.remove("oculto");
-      return;
-    }
 
-    // PLANTAR MILHO
-    if (status === "vazio" && culturaSelecionada === "milho") {
-      const cultura = culturas.milho;
-      planta.src = cultura.broto;
-      planta.classList.remove("oculto");
-      terra.dataset.status = "crescendo";
-      terra.dataset.cultura = "milho";
+terras.forEach((terra, index) => {
 
-      setTimeout(() => {
-        planta.src = cultura.jovem;
-      }, cultura.crescimento / 2);
 
-      setTimeout(() => {
-        planta.src = cultura.pronta;
-        terra.dataset.status = "pronto";
-      }, cultura.crescimento);
 
-      return;
-    }
-  });
-});
+
+const col = index % MAX_COLUNAS;
+const lin = Math.floor(index / MAX_COLUNAS);
+
+
+
+
+const posX =
+  (col * LARGURA_EMENDA) +
+  (lin * -LARGURA_EMENDA);
+
+
+
+
+const posY =
+  (col * ALTURA_EMENDA) +
+  (lin * ALTURA_EMENDA);
+
+
+
+
+terra.style.left = `${posX}px`;
+terra.style.top = `${posY}px`;
+terra.style.zIndex = col + lin;
+
+
+
+
+terra.addEventListener("click", (e) => {
+
+
+
+
+
+
+
+
+console.log("CLICK NA TERRA");
+console.log("STATUS:", terra.dataset.status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+const status = terra.dataset.status;
+ console.log("STATUS:", status);
+console.log("CULTURA:", culturaSelecionada);
+
+
+
+
+// ABRIR MENU
+if (
+status === "vazio" &&
+!culturaSelecionada
+) {
+  menuPlantio.style.left =
+    e.pageX + "px";
+
+
+
+
+  menuPlantio.style.top =
+    e.pageY + "px";
+
+
+
+
+  menuPlantio.classList.remove(
+    "oculto"
+  );
+
+
+
+
+  return;
+}
+// ==========================================
+// PLANTAR
+// ==========================================
+if (status === "vazio" && culturaSelecionada) {
+ const cultura = culturas[culturaSelecionada];
+ const planta = terra.querySelector(".planta");
+ planta.src = cultura.broto;
+ planta.classList.remove("oculto");
+
+
+ terra.dataset.status = "crescendo";
+ terra.dataset.cultura = culturaSelecionada;
+
+
+ setTimeout(() => {
+   planta.src = cultura.jovem;
+ }, cultura.crescimento / 2);
+
+
+ setTimeout(() => {
+   planta.src = cultura.pronta;
+   terra.dataset.status = "pronto";
+ }, cultura.crescimento);
+}
+
+
+
+
+  return;
+}
+);
+
+
+// COLHER
+if (status === "pronto") {
+
+
+
+
+  alert(
+    "Você colheu " +
+    terra.dataset.cultura
+  );
+
+
+  if (terra.planta) {
+
+
+
+
+    terra.planta.remove();
+
+
+
+
+    terra.planta = null;
+
+
+
+
+  }
+
+
+
+
+  terra.dataset.status =
+    "vazio";
+
+
+
+
+  terra.dataset.cultura =
+    "";
+
+
+
+
+  return;
+}
+
+
+
+
+}); // fecha addEventListener
+
+
+
 
 // =======================
 // ESCOLHER CULTURA
 // =======================
-document.querySelectorAll("#menuPlantio button").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    culturaSelecionada = botao.dataset.cultura;
-    menuPlantio.classList.add("oculto");
+
+
+
+
+document
+.querySelectorAll(
+"#menuPlantio button"
+)
+.forEach((botao) => {
+
+
+
+
+botao.addEventListener(
+  "click",
+  () => {
+
+
+
+
+    culturaSelecionada =
+      botao.dataset.cultura;
+
+
+
+
+    menuPlantio.classList.add(
+      "oculto"
+    );
+
+
+
 
     if (cursorPlantio) {
-      cursorPlantio.classList.remove("oculto");
+      cursorPlantio.classList.remove(
+        "oculto"
+      );
     }
-  });
+
+
+
+
+  }
+);
+
+
+
+
 });
 
+
+
+
 // =======================
-// CURSOR (mãozinha)
+// CURSOR
 // =======================
-document.addEventListener("mousemove", (e) => {
-  if (!cursorPlantio) return;
-  cursorPlantio.style.left = e.clientX + "px";
-  cursorPlantio.style.top = e.clientY + "px";
+
+
+
+
+document.addEventListener(
+"mousemove",
+(e) => {
+
+
+
+
+if (!cursorPlantio) return;
+
+
+
+
+cursorPlantio.style.left =
+  e.clientX + "px";
+
+
+
+
+cursorPlantio.style.top =
+  e.clientY + "px";
+
+
+
+
 });
+
+
+
 
 // =======================
 // ESC CANCELA PLANTIO
 // =======================
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    culturaSelecionada = null;
-    menuPlantio.classList.add("oculto");
 
-    if (cursorPlantio) {
-      cursorPlantio.classList.add("oculto");
-    }
+
+
+
+document.addEventListener(
+"keydown",
+(e) => {
+
+
+
+
+if (e.key === "Escape") {
+
+
+
+
+  culturaSelecionada = null;
+
+
+
+
+  menuPlantio.classList.add(
+    "oculto"
+  );
+
+
+
+
+  if (cursorPlantio) {
+    cursorPlantio.classList.add(
+      "oculto"
+    );
   }
+
+
+
+
+}
+
+
+
+
 });
