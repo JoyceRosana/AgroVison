@@ -124,8 +124,7 @@ plantacao.addEventListener("click", e => {
     menuPlantio.style.left = e.pageX + "px";
     menuPlantio.style.top = e.pageY + "px";
     menuPlantio.classList.remove("oculto");
-    return;
-  }
+  
 
   // Plantar com clique
   if (status === "vazio" && culturaSelecionada) {
@@ -133,6 +132,36 @@ plantacao.addEventListener("click", e => {
     culturaSelecionada = null;
     cursorPlantio.classList.add("oculto");
     return;
+  }
+
+  function plantar(terra) {
+  const cultura = culturas[culturaSelecionada];
+  const planta = terra.querySelector(".planta");
+  planta.src = cultura.broto;
+  planta.classList.remove("oculto");
+
+  // opção 1: offsets fixos
+  const OFFSET_X = 10;
+  const OFFSET_Y = 20;
+  planta.style.left = OFFSET_X + "px";
+  planta.style.top = OFFSET_Y + "px";
+
+  // opção 2: referência da terra
+  // const ref = terra.querySelector(".terra-ref");
+  // planta.style.left = ref.offsetLeft + "px";
+  // planta.style.top = ref.offsetTop + "px";
+
+  terra.dataset.status = "crescendo";
+  terra.dataset.cultura = culturaSelecionada;
+
+  setTimeout(() => planta.src = cultura.jovem, cultura.crescimento / 2);
+  setTimeout(() => {
+    planta.src = cultura.pronta;
+    terra.dataset.status = "pronto";
+    cursorFoice.classList.remove("oculto");
+  }, cultura.crescimento);
+}
+return;
   }
 
   // Colher
@@ -160,12 +189,26 @@ document.querySelectorAll("#menuPlantio button").forEach(botao => {
 // =======================
 // CURSORES SEGUEM MOUSE (modo contínuo)
 // =======================
+document.addEventListener("mousemove", e => {
+  const terra = e.target.closest(".terra");
+  if (terra && culturaSelecionada) {
+    cursorPlantio.classList.remove("oculto");
+    document.body.classList.add("plantio-ativo");
+    cursorPlantio.style.left = e.clientX + "px";
+    cursorPlantio.style.top = e.clientY + "px";
+  } else {
+    cursorPlantio.classList.add("oculto");
+    document.body.classList.remove("plantio-ativo");
+  }
+});
+
 plantacao.addEventListener("mousemove", e => {
   const terra = e.target.closest(".terra");
   if (terra && culturaSelecionada && terra.dataset.status === "vazio") {
-    plantar(terra); // planta automaticamente ao passar o mouse
+    plantar(terra); // só planta dentro da área de terras
   }
 });
+
 
 // =======================
 // ESC CANCELA PLANTIO/COLHEITA
