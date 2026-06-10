@@ -1,94 +1,124 @@
 html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 .viewport {
-  width: 100vw;
-  height: 100vh;
-  background: #000;
-  overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Controlado via script para arrastar o mapa */
+    background: #000;
 }
 
 .world {
-  position: relative;
-  width: 2000px;
-  height: 1200px;
+    position: relative;
+    width: 2000px;
+    height: 1200px;
+    overflow: hidden;
 }
 
 .mapa {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
 }
 
 .objeto {
-  position: absolute;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-  transition: 0.3s;
-  z-index: 3;
+    position: absolute;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+    transition: 0.3s;
+    z-index: 3;
 }
-.objeto:hover { transform: scale(1.03); }
+.objeto:hover { 
+    transform: scale(1.03); 
+}
 
 .galpao { width: 350px; top: 545px; left: 0px; }
 .cooperativa { width: 300px; top: 580px; left: 350px; }
 .cisterna { width: 300px; top: 440px; left: 630px; }
 
-.plantacao {
-  position: absolute;
-  top: 60px;
-  left: 1150px;
-  z-index: 5;
-  display: grid;
-  grid-template-columns: repeat(5, 100px);
-  grid-gap: 10px;
+.plantacao { 
+    position: absolute; 
+    top: 60px; 
+    left: 1150px; 
+    z-index: 5; 
 }
 
 .terra {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  background: transparent;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 6;
 }
-.terra-img {
-  width: 100%;
-  height: auto;
+
+.terra-ref { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
 }
+
+.terra-img { 
+    width: 100%; 
+    height: auto; 
+    z-index: 6; 
+}
+
+/* CONFIGURAÇÃO DO LOCAL DA PLANTA */
 .planta {
-  position: absolute;
-  width: 80px;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 7;
-  pointer-events: none;
+    position: absolute;
+    width: 150px;
+    z-index: 7;
+    pointer-events: none;
+    
+    /* 1. CENTRALIZAÇÃO INICIAL EM RELAÇÃO À TERRA */
+    left: 50%;
+    top: 50%;
+    
+    /* 2. AJUSTE DE POSIÇÃO (EIXO X, EIXO Y) */
+    /* Modifique as porcentagens abaixo para alinhar o pé ou o centro da planta com a imagem da terra */
+    /* Exemplo: usar -80% no segundo valor sobe a planta se ela parecer flutuar ou ficar baixa demais */
+    transform: translate(-50%, -50%); 
 }
 
 .menu-plantio {
-  position: fixed;
-  background: white;
-  border: 2px solid #333;
-  border-radius: 10px;
-  padding: 10px;
-  z-index: 9999;
+    position: fixed;
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 9999;
 }
+
 .menu-plantio button {
-  display: block;
-  width: 100%;
-  margin: 5px 0;
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    cursor: pointer;
 }
 
+/* CURSORES PERSONALIZADOS */
 .cursor {
-  position: fixed;
-  width: 60px;
-  pointer-events: none;
-  z-index: 10000;
+    position: fixed;
+    width: 60px; 
+    pointer-events: none;
+    z-index: 10000;
+    /* Alinha o centro/ponta da imagem do cursor com o clique real do mouse */
+    transform: translate(-15px, -15px); 
 }
-body.plantio-ativo { cursor: none; }
 
-.oculto { display: none; }
+/* Remove o ponteiro do sistema apenas quando as interações customizadas estão ativas na terra */
+body.plantio-ativo {
+    cursor: none !important;
+}
+body.plantio-ativo .terra:hover {
+    cursor: none !important;
+}
+
+.oculto { 
+    display: none !important; 
+}
