@@ -288,6 +288,9 @@ function colher(terra) {
 
         terra.dataset.cultura = "";
 
+        cursorFoice.classList.add("oculto");
+        document.body.classList.remove("colheita-ativa");
+
     }, 300);
 
 }
@@ -318,9 +321,13 @@ plantacao.addEventListener("mouseover", (e) => {
 
     cursorFoice.classList.remove("oculto");
 
+    document.body.classList.add("colheita-ativa");
+
 } else {
 
     cursorFoice.classList.add("oculto");
+
+    document.body.classList.remove("colheita-ativa");
 
 }
 
@@ -368,18 +375,15 @@ document.addEventListener("mousemove", e => {
 ================================== */
 
 document.addEventListener("keydown", (e) => {
-
     if (e.key !== "Escape") return;
 
     culturaSelecionada = null;
-
     menuPlantio.classList.add("oculto");
-
     cursorPlantio.classList.add("oculto");
-
     cursorFoice.classList.add("oculto");
 
     document.body.classList.remove("plantio-ativo");
+    document.body.classList.remove("colheita-ativa");
 
 });
 
