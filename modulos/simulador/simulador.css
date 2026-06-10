@@ -50,6 +50,10 @@ overflow: hidden;
 }
 .terra-ref { position: absolute; top: 50%; left: 50%; }
 .terra-img { width: 100%; height: auto; z-index: 6; }
+
+.viewport {
+  overflow: hidden; /* impede que o mapa deslize sobre as terras */
+}
 .planta {
   position: absolute;
   width: 150px;
