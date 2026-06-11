@@ -1,402 +1,840 @@
 const viewport = document.querySelector(".viewport");
 const plantacao = document.getElementById("plantacao");
 
+
 const menuPlantio = document.getElementById("menuPlantio");
 const cursorPlantio = document.getElementById("cursorPlantio");
 const cursorFoice = document.getElementById("cursorFoice");
-const balaoFoice = document.getElementById("balaoFoice");
-const foiceBalao = document.getElementById("foiceBalao");
+const balaoFoice =
+document.getElementById("balaoFoice");
 
-// 🔥 NOVO BALÃO DE MADEIRA
-const balao = document.getElementById("balao");
-const balaoConteudo = document.getElementById("balaoConteudo");
+
+const foiceBalao =
+document.getElementById("foiceBalao");
+
 
 let terraSelecionada = null;
 let culturaSelecionada = null;
 let modoColheita = false;
 
-// 🔥 estado do balão (novo sistema central)
-let estadoAtual = null; // "plantar" | "colher"
 
-// scroll drag
 let isDown = false;
 let startX;
 let startY;
 let scrollLeft;
 let scrollTop;
 
-/* ==============================
-   CANCELAR MODOS
-============================== */
 
 function cancelarModos(){
 
-    culturaSelecionada = null;
-    modoColheita = false;
-    estadoAtual = null;
-    terraSelecionada = null;
 
-    menuPlantio.classList.add("oculto");
-    balaoFoice.classList.add("oculto");
+   culturaSelecionada = null;
 
-    cursorPlantio.classList.add("oculto");
-    cursorFoice.classList.add("oculto");
 
-    document.body.classList.remove("plantio-ativo");
-    document.body.classList.remove("colheita-ativa");
+   modoColheita = false;
 
-    // 🔥 novo balão
-    if(balao){
-        balao.classList.add("oculto");
-    }
+
+   menuPlantio.classList.add("oculto");
+
+
+   balaoFoice.classList.add("oculto");
+
+
+   cursorPlantio.classList.add("oculto");
+
+
+   cursorFoice.classList.add("oculto");
+
+
+   document.body.classList.remove(
+       "plantio-ativo"
+   );
+
+
+   document.body.classList.remove(
+       "colheita-ativa"
+   );
+
+
 }
 
-/* ==============================
-   MOVER MAPA
-============================== */
+
+/* ==================================
+  MOVER MAPA
+================================== */
+
 
 viewport.addEventListener("mousedown", e => {
 
-    isDown = true;
 
-    startX = e.pageX - viewport.offsetLeft;
-    startY = e.pageY - viewport.offsetTop;
+   isDown = true;
 
-    scrollLeft = viewport.scrollLeft;
-    scrollTop = viewport.scrollTop;
+
+   startX = e.pageX - viewport.offsetLeft;
+   startY = e.pageY - viewport.offsetTop;
+
+
+   scrollLeft = viewport.scrollLeft;
+   scrollTop = viewport.scrollTop;
+
+
 });
+
 
 document.addEventListener("mouseup", () => {
-    isDown = false;
+
+
+   isDown = false;
+
+
 });
+
 
 viewport.addEventListener("mousemove", e => {
 
-    if (!isDown) return;
 
-    e.preventDefault();
+   if (!isDown) return;
 
-    const x = e.pageX - viewport.offsetLeft;
-    const y = e.pageY - viewport.offsetTop;
 
-    viewport.scrollLeft = scrollLeft - (x - startX);
-    viewport.scrollTop = scrollTop - (y - startY);
+   e.preventDefault();
+
+
+   const x = e.pageX - viewport.offsetLeft;
+   const y = e.pageY - viewport.offsetTop;
+
+
+   viewport.scrollLeft =
+       scrollLeft - (x - startX);
+
+
+   viewport.scrollTop =
+       scrollTop - (y - startY);
+
+
 });
 
-/* ==============================
-   CULTURAS
-============================== */
+
+/* ==================================
+  CULTURAS
+================================== */
+
+
 const culturas = {
 
 
-   milho:{
+milho:{
 
 
-       crescimento:15000,
 
 
-       broto:"/img/simulador/milho_broto.png",
-       jovem:"/img/simulador/milho_jovem.png",
-       pronta:"/img/simulador/milho_adulto.png",
+      crescimento:15000,
 
 
-       brotoWidth:"80px",
-       brotoHeight:"90px",
 
 
-       jovemWidth:"120px",
-       jovemHeight:"140px",
+      broto:"/img/simulador/milho_broto.png",
+      jovem:"/img/simulador/milho_jovem.png",
+      pronta:"/img/simulador/milho_adulto.png",
 
 
-       adultoWidth:"150px",
-       adultoHeight:"180px",
 
 
-       brotoX:"-12px",
-       brotoY:"0px",
+      brotoWidth:"80px",
+      brotoHeight:"90px",
 
 
-       jovemX:"0px",
-       jovemY:"0px",
 
 
-       adultoX:"-10px",
-       adultoY:"0px"
-   },
+      jovemWidth:"120px",
+      jovemHeight:"140px",
 
 
-   soja:{
 
 
-       crescimento:10000,
+      adultoWidth:"150px",
+      adultoHeight:"180px",
 
 
-       broto:"/img/simulador/soja_broto.png",
-       jovem:"/img/simulador/soja_jovem.png",
-       pronta:"/img/simulador/soja_pronto.png",
 
 
-       brotoWidth:"60px",
-       brotoHeight:"60px",
+      brotoX:"-12px",
+      brotoY:"0px",
 
 
-       jovemWidth:"90px",
-       jovemHeight:"90px",
 
 
-       adultoWidth:"110px",
-       adultoHeight:"110px",
+      jovemX:"0px",
+      jovemY:"0px",
 
 
-       brotoX:"0px",
-       brotoY:"0px",
 
 
-       jovemX:"0px",
-       jovemY:"0px",
+      adultoX:"-10px",
+      adultoY:"0px"
+  },
 
 
-       adultoX:"0px",
-       adultoY:"0px"
-   },
 
 
-   alface:{
+  soja:{
 
 
-       crescimento:8000,
 
 
-       broto:"/img/simulador/alface_broto.png",
-       jovem:"/img/simulador/alface_jovem.png",
-       pronta:"/img/simulador/alface_pronto.png",
+      crescimento:10000,
 
 
-       brotoWidth:"50px",
-       brotoHeight:"50px",
 
 
-       jovemWidth:"70px",
-       jovemHeight:"70px",
+      broto:"/img/simulador/soja_broto.png",
+      jovem:"/img/simulador/soja_jovem.png",
+      pronta:"/img/simulador/soja_pronto.png",
 
 
-       adultoWidth:"90px",
-       adultoHeight:"90px",
 
 
-       brotoX:"0px",
-       brotoY:"0px",
+      brotoWidth:"60px",
+      brotoHeight:"60px",
 
 
-       jovemX:"0px",
-       jovemY:"0px",
 
 
-       adultoX:"0px",
-       adultoY:"0px"
-   },
+      jovemWidth:"90px",
+      jovemHeight:"90px",
 
 
-   cenoura:{
 
 
-       crescimento:9000,
+      adultoWidth:"110px",
+      adultoHeight:"110px",
 
 
-       broto:"/img/simulador/cenoura_broto.png",
-       jovem:"/img/simulador/cenoura_jovem.png",
-       pronta:"/img/simulador/cenoura_pronto.png",
 
 
-       brotoWidth:"50px",
-       brotoHeight:"60px",
+      brotoX:"0px",
+      brotoY:"0px",
 
 
-       jovemWidth:"70px",
-       jovemHeight:"80px",
 
 
-       adultoWidth:"90px",
-       adultoHeight:"100px",
+      jovemX:"0px",
+      jovemY:"0px",
 
 
-       brotoX:"0px",
-       brotoY:"0px",
 
 
-       jovemX:"0px",
-       jovemY:"0px",
+      adultoX:"0px",
+      adultoY:"0px"
+  },
 
 
-       adultoX:"0px",
-       adultoY:"0px"
-   },
 
 
-   tomate:{
+  alface:{
 
 
-       crescimento:12000,
 
 
-       broto:"/img/simulador/tomate_broto.png",
-       jovem:"/img/simulador/tomate_jovem.png",
-       pronta:"/img/simulador/tomate_pronto.png",
+      crescimento:8000,
 
 
-       brotoWidth:"70px",
-       brotoHeight:"80px",
 
 
-       jovemWidth:"100px",
-       jovemHeight:"120px",
+      broto:"/img/simulador/alface_broto.png",
+      jovem:"/img/simulador/alface_jovem.png",
+      pronta:"/img/simulador/alface_pronto.png",
 
 
-       adultoWidth:"130px",
-       adultoHeight:"150px",
 
 
-       brotoX:"0px",
-       brotoY:"0px",
+      brotoWidth:"50px",
+      brotoHeight:"50px",
 
 
-       jovemX:"0px",
-       jovemY:"0px",
 
 
-       adultoX:"0px",
-       adultoY:"0px"
+      jovemWidth:"70px",
+      jovemHeight:"70px",
+
+
+
+
+      adultoWidth:"90px",
+      adultoHeight:"90px",
+
+
+
+
+      brotoX:"0px",
+      brotoY:"0px",
+
+
+
+
+      jovemX:"0px",
+      jovemY:"0px",
+
+
+
+
+      adultoX:"0px",
+      adultoY:"0px"
+  },
+
+
+
+
+  cenoura:{
+
+
+
+
+      crescimento:9000,
+
+
+
+
+      broto:"/img/simulador/cenoura_broto.png",
+      jovem:"/img/simulador/cenoura_jovem.png",
+      pronta:"/img/simulador/cenoura_pronto.png",
+
+
+
+
+      brotoWidth:"50px",
+      brotoHeight:"60px",
+
+
+
+
+      jovemWidth:"70px",
+      jovemHeight:"80px",
+
+
+
+
+      adultoWidth:"90px",
+      adultoHeight:"100px",
+
+
+
+
+      brotoX:"0px",
+      brotoY:"0px",
+
+
+
+
+      jovemX:"0px",
+      jovemY:"0px",
+
+
+
+
+      adultoX:"0px",
+      adultoY:"0px"
+  },
+
+
+
+
+  tomate:{
+
+
+
+
+      crescimento:12000,
+
+
+
+
+      broto:"/img/simulador/tomate_broto.png",
+      jovem:"/img/simulador/tomate_jovem.png",
+      pronta:"/img/simulador/tomate_pronto.png",
+
+
+
+
+      brotoWidth:"70px",
+      brotoHeight:"80px",
+
+
+
+
+      jovemWidth:"100px",
+      jovemHeight:"120px",
+
+
+
+
+      adultoWidth:"130px",
+      adultoHeight:"150px",
+
+
+
+
+      brotoX:"0px",
+      brotoY:"0px",
+
+
+
+
+      jovemX:"0px",
+      jovemY:"0px",
+
+
+
+
+      adultoX:"0px",
+      adultoY:"0px"
+  }
+
+
+
+
+}
+
+
+
+
+/* ==================================
+  CRIAR GRADE
+================================== */
+
+
+const COLUNAS = 10;
+const LINHAS = 10;
+
+
+const LARGURA = 50;
+const ALTURA = 20;
+
+
+for(let lin=0; lin<LINHAS; lin++){
+
+
+   for(let col=0; col<COLUNAS; col++){
+
+
+       const terra = document.createElement("div");
+
+
+       terra.className = "terra";
+
+
+       terra.dataset.status = "vazio";
+
+
+       const imgTerra = document.createElement("img");
+
+
+       imgTerra.src = "/img/simulador/terra.png";
+
+
+       imgTerra.className = "terra-img";
+
+
+       const planta = document.createElement("img");
+
+
+       planta.className = "planta oculto";
+
+
+       terra.appendChild(imgTerra);
+
+
+       terra.appendChild(planta);
+
+
+       const posX =
+           (col * LARGURA) +
+           (lin * -LARGURA);
+
+
+       const posY =
+           (col * ALTURA) +
+           (lin * ALTURA);
+
+
+       terra.style.left = posX + "px";
+
+
+       terra.style.top = posY + "px";
+
+
+       plantacao.appendChild(terra);
+
+
    }
 
 
-}
+   plantacao.addEventListener("click",(e)=>{
 
-/* ==============================
-   BALÃO (NOVO SISTEMA CENTRAL)
-============================== */
 
-function abrirBalao(terra, x, y){
+   const terra =
+       e.target.closest(".terra");
 
-    terraSelecionada = terra;
 
-    const status = terra.dataset.status;
+   if(!terra) return;
 
-    balao.style.left = x + "px";
-    balao.style.top = (y - 80) + "px";
 
-    if(status === "vazio"){
-        estadoAtual = "plantar";
-        balaoConteudo.innerHTML = "🌱 Plantar";
-    }
+   if(
+       terra.dataset.status === "vazio" &&
+       !culturaSelecionada &&
+       !modoColheita
+   ){
 
-    if(status === "pronto"){
-        estadoAtual = "colher";
-        balaoConteudo.innerHTML = "🪓 Colher";
-    }
 
-    balao.classList.remove("oculto");
-}
+       terraSelecionada = terra;
 
-/* ==============================
-   CLIQUE NA PLANTAÇÃO
-============================== */
 
-plantacao.addEventListener("click",(e)=>{
+       menuPlantio.style.left =
+           e.clientX + "px";
 
-    const terra = e.target.closest(".terra");
-    if(!terra) return;
 
-    const rect = terra.getBoundingClientRect();
+       menuPlantio.style.top =
+           e.clientY + "px";
 
-    abrirBalao(terra, rect.left, rect.top);
+
+       menuPlantio.classList.remove(
+           "oculto"
+       );
+
+
+       return;
+   }
+
+
+   if(
+       terra.dataset.status === "pronto" &&
+       !modoColheita
+   ){
+
+
+       const rect =
+           terra.getBoundingClientRect();
+
+
+       balaoFoice.style.left =
+           rect.left + "px";
+
+
+       balaoFoice.style.top =
+           (rect.top - 90) + "px";
+
+
+       balaoFoice.classList.remove(
+           "oculto"
+       );
+   }
+
+
 });
 
-/* ==============================
-   AÇÃO DO BALÃO
-============================== */
 
-balao.addEventListener("click",()=>{
 
-    if(!terraSelecionada) return;
 
-    // PLANTAR
-    if(estadoAtual === "plantar"){
+/* ==================================
+  ESCOLHER CULTURA
+================================== */
 
-        culturaSelecionada = "milho"; // mantém teu sistema
 
-        modoColheita = false;
+document
+.querySelectorAll("#menuPlantio button")
+.forEach(botao => {
 
-        cursorPlantio.classList.remove("oculto");
-        cursorFoice.classList.add("oculto");
 
-        plantar(terraSelecionada);
-    }
+   botao.addEventListener("click", () => {
 
-    // COLHER
-    if(estadoAtual === "colher"){
 
-        modoColheita = true;
+       culturaSelecionada =
+           botao.dataset.cultura;
 
-        cursorFoice.classList.remove("oculto");
-        cursorPlantio.classList.add("oculto");
 
-        colher(terraSelecionada);
-    }
+       modoColheita = false;
 
-    balao.classList.add("oculto");
+
+       menuPlantio.classList.add("oculto");
+
+
+       cursorFoice.classList.add("oculto");
+
+
+       document.body.classList.remove(
+           "colheita-ativa"
+       );
+
+
+       document.body.classList.add(
+           "plantio-ativo"
+       );
+
+
+       cursorPlantio.classList.remove("oculto");
+
+
+   });
+
+
 });
 
-/* ==============================
-   PLANTAR
-============================== */
+
+/* ==================================
+  PEGAR FOICE
+================================== */
+
+
+foiceBalao.addEventListener("click",()=>{
+
+
+   balaoFoice.classList.add("oculto");
+
+
+   modoColheita = true;
+
+
+   culturaSelecionada = null;
+
+
+   cursorPlantio.classList.add("oculto");
+
+
+   document.body.classList.remove(
+       "plantio-ativo"
+   );
+
+
+   cursorFoice.classList.remove("oculto");
+
+
+   document.body.classList.add(
+       "colheita-ativa"
+   );
+
+
+});
+
+
+/* ==================================
+  PLANTAR
+================================== */
+
 
 function plantar(terra){
 
-    if(terra.dataset.status !== "vazio") return;
 
-    const cultura = culturas[culturaSelecionada];
+   if(terra.dataset.status !== "vazio") return;
 
-    const planta = terra.querySelector(".planta");
 
-    planta.src = cultura.broto;
-    planta.style.width = cultura.brotoWidth;
-    planta.style.height = cultura.brotoHeight;
-    planta.classList.remove("oculto");
+   const cultura =
+       culturas[culturaSelecionada];
 
-    terra.dataset.status = "crescendo";
 
-    setTimeout(()=>{
-        planta.src = cultura.jovem;
-    }, cultura.crescimento / 2);
+   const planta =
+       terra.querySelector(".planta");
 
-    setTimeout(()=>{
-        planta.src = cultura.pronta;
-        terra.dataset.status = "pronto";
-    }, cultura.crescimento);
+
+   planta.src = cultura.broto;
+
+
+   planta.style.width =
+       cultura.brotoWidth;
+
+
+   planta.style.height =
+       cultura.brotoHeight;
+
+
+   planta.style.marginLeft =
+       cultura.brotoX;
+
+
+   planta.style.marginBottom =
+       cultura.brotoY;
+
+
+   planta.style.left = "50%";
+
+
+   planta.style.bottom = "20px";
+
+
+   planta.style.transform =
+       "translateX(-50%)";
+
+
+   planta.classList.remove("oculto");
+
+
+   terra.dataset.status =
+       "crescendo";
+
+
+   terra.dataset.cultura =
+       culturaSelecionada;
+
+
+   setTimeout(()=>{
+
+
+       planta.src =
+           cultura.jovem;
+
+
+       planta.style.width =
+           cultura.jovemWidth;
+
+
+       planta.style.height =
+           cultura.jovemHeight;
+
+
+       planta.style.marginLeft =
+           cultura.jovemX;
+
+
+       planta.style.marginBottom =
+           cultura.jovemY;
+
+
+   }, cultura.crescimento / 2);
+
+
+   setTimeout(()=>{
+
+
+       planta.src =
+           cultura.pronta;
+
+
+       planta.style.width =
+           cultura.adultoWidth;
+
+
+       planta.style.height =
+           cultura.adultoHeight;
+
+
+       planta.style.marginLeft =
+           cultura.adultoX;
+
+
+       planta.style.marginBottom =
+           cultura.adultoY;
+
+
+       terra.dataset.status =
+           "pronto";
+
+
+   }, cultura.crescimento);
+
+
 }
 
-/* ==============================
-   COLHER
-============================== */
+
+/* ==================================
+  COLHER
+================================== */
+
 
 function colher(terra){
 
-    const planta = terra.querySelector(".planta");
 
-    planta.style.transition = "0.3s";
-    planta.style.transform = "translateX(-50%) scale(0)";
-    planta.style.opacity = "0";
+   const planta =
+       terra.querySelector(".planta");
 
-    setTimeout(()=>{
 
-        planta.classList.add("oculto");
-        planta.style.transform = "translateX(-50%) scale(1)";
-        planta.style.opacity = "1";
+   planta.classList.add("colhendo");
 
-        terra.dataset.status = "vazio";
 
-    },300);
+   setTimeout(()=>{
+
+
+       planta.classList.remove("colhendo");
+
+
+       planta.classList.add("oculto");
+
+
+       planta.src = "";
+
+
+       terra.dataset.status = "vazio";
+
+
+       terra.dataset.cultura = "";
+
+
+       modoColheita = false;
+
+
+       cursorFoice.classList.add("oculto");
+
+
+       document.body.classList.remove(
+           "colheita-ativa"
+       );
+
+
+   },300);
+
+
 }
+
+
+/* ==================================
+  PLANTIO E COLHEITA
+================================== */
+
+
+plantacao.addEventListener("mouseover",(e)=>{
+
+
+   const terra =
+       e.target.closest(".terra");
+
+
+   if(!terra) return;
+
+
+   /*
+      PLANTAR
+   */
+
+
+   if(
+       culturaSelecionada &&
+       terra.dataset.status === "vazio"
+   ){
+
+
+       plantar(terra);
+
+
+       return;
+   }
+
+
+   /*
+      COLHER
+   */
+
+
+   if(
+       modoColheita &&
+       terra.dataset.status === "pronto"
+   ){
+
+
+       colher(terra);
+
+
+   }
+
+
+});
+
 
 /* ==============================
    CURSOR
