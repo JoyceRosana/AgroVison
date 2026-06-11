@@ -181,6 +181,7 @@ body.colheita-ativa{
     pointer-events:none;
 
     z-index:10000;
+    transform:translate(-50%,-50%);
 }
 
 .oculto{
@@ -208,7 +209,7 @@ body.colheita-ativa{
 
 .balao{
 
-    position:absolute;
+    position:fixed;
 
     width:80px;
 

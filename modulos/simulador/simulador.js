@@ -20,6 +20,30 @@ let startY;
 let scrollLeft;
 let scrollTop;
 
+function cancelarModos(){
+
+    culturaSelecionada = null;
+
+    modoColheita = false;
+
+    menuPlantio.classList.add("oculto");
+
+    balaoFoice.classList.add("oculto");
+
+    cursorPlantio.classList.add("oculto");
+
+    cursorFoice.classList.add("oculto");
+
+    document.body.classList.remove(
+        "plantio-ativo"
+    );
+
+    document.body.classList.remove(
+        "colheita-ativa"
+    );
+
+}
+
 /* ==================================
    MOVER MAPA
 ================================== */
@@ -252,7 +276,56 @@ for(let lin=0; lin<LINHAS; lin++){
 
     }
 
-}
+    plantacao.addEventListener("click",(e)=>{
+
+    const terra =
+        e.target.closest(".terra");
+
+    if(!terra) return;
+
+    if(
+        terra.dataset.status === "vazio" &&
+        !culturaSelecionada &&
+        !modoColheita
+    ){
+
+        terraSelecionada = terra;
+
+        menuPlantio.style.left =
+            e.clientX + "px";
+
+        menuPlantio.style.top =
+            e.clientY + "px";
+
+        menuPlantio.classList.remove(
+            "oculto"
+        );
+
+        return;
+    }
+
+    if(
+        terra.dataset.status === "pronto" &&
+        !modoColheita
+    ){
+
+        const rect =
+            terra.getBoundingClientRect();
+
+        balaoFoice.style.left =
+            rect.left + "px";
+
+        balaoFoice.style.top =
+            (rect.top - 90) + "px";
+
+        balaoFoice.classList.remove(
+            "oculto"
+        );
+    }
+
+});
+
+
 /* ==================================
    ESCOLHER CULTURA
 ================================== */
@@ -499,29 +572,14 @@ document.addEventListener("mousemove",(e)=>{
 
 document.addEventListener("keydown",(e)=>{
 
-    if(e.key !== "Escape") return;
+    if(e.key === "Escape"){
 
-    culturaSelecionada = null;
+        cancelarModos();
 
-    modoColheita = false;
-
-    menuPlantio.classList.add("oculto");
-
-    balaoFoice.classList.add("oculto");
-
-    cursorPlantio.classList.add("oculto");
-
-    cursorFoice.classList.add("oculto");
-
-    document.body.classList.remove(
-        "plantio-ativo"
-    );
-
-    document.body.classList.remove(
-        "colheita-ativa"
-    );
+    }
 
 });
+
 
 /* ==================================
    CANCELAR CLICANDO FORA
@@ -544,24 +602,58 @@ document.addEventListener("click",(e)=>{
         balao
     ) return;
 
-    culturaSelecionada = null;
+    cancelarModos();
 
+});
+
+
+/* ==================================
+   MOUSE MOVE (CURSORES)
+================================== */
+
+document.addEventListener("mousemove",(e)=>{
+
+    cursorPlantio.style.left =
+        e.clientX + "px";
+
+    cursorPlantio.style.top =
+        e.clientY + "px";
+
+    cursorFoice.style.left =
+        e.clientX + "px";
+
+    cursorFoice.style.top =
+        e.clientY + "px";
+
+});
+
+
+/* ==================================
+   SAIR DA ÁREA (SEGURANÇA)
+================================== */
+
+plantacao.addEventListener("mouseleave",()=>{
+
+    cancelarModos();
+
+});
+
+
+/* ==================================
+   FUNÇÃO CENTRAL (IMPORTANTE)
+================================== */
+
+function cancelarModos(){
+
+    culturaSelecionada = null;
     modoColheita = false;
 
     menuPlantio.classList.add("oculto");
-
     balaoFoice.classList.add("oculto");
 
     cursorPlantio.classList.add("oculto");
-
     cursorFoice.classList.add("oculto");
 
-    document.body.classList.remove(
-        "plantio-ativo"
-    );
-
-    document.body.classList.remove(
-        "colheita-ativa"
-    );
-
-});
+    document.body.classList.remove("plantio-ativo");
+    document.body.classList.remove("colheita-ativa");
+}
