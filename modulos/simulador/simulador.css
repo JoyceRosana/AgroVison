@@ -184,6 +184,37 @@ body.colheita-ativa{
    transform:translateX(-50%) !important;
 }
 
+/* ==========================
+  MENU
+========================== */
+
+
+.menu-plantio{
+   position:fixed;
+
+
+   background:white;
+
+
+   border:2px solid #444;
+
+
+   border-radius:10px;
+
+
+   padding:10px;
+
+
+   z-index:9999;
+}
+
+
+.menu-plantio button{
+   width:100%;
+   margin:4px 0;
+}
+
+
 .cursor{
 position:fixed;
 width:60px;

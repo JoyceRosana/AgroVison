@@ -86,9 +86,6 @@ viewport.addEventListener("mousemove", e => {
 /* ==============================
    CULTURAS
 ============================== */
-
-const culturas = {
-
 const culturas = {
 
 
@@ -272,7 +269,7 @@ const culturas = {
    }
 
 
-};
+}
 
 /* ==============================
    BALÃO (NOVO SISTEMA CENTRAL)
