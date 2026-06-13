@@ -93,7 +93,7 @@ body{
     linear-gradient(to right,
     rgba(255,255,255,0.96) 40%,
     rgba(255,255,255,0.15)),
-    url('....');
+    url('/img/conhecimento/destaque/bioinsumos.png');
 }
 
 .hero-artigo2{
@@ -101,7 +101,7 @@ body{
     linear-gradient(to right,
     rgba(255,255,255,0.96) 40%,
     rgba(255,255,255,0.15)),
-    url('....');    
+    url('/img/conhecimento/destaque/agriculturaCO2.png');    
 }
 
 .hero-artigo3{
@@ -109,7 +109,7 @@ body{
     linear-gradient(to right,
     rgba(255,255,255,0.96) 40%,
     rgba(255,255,255,0.15)),
-    url('....');
+    url('/img/conhecimento/destaque/Rastreabilidade.png');
 }
 
 .hero-content{
@@ -297,15 +297,15 @@ body{
 }
 
 .grid-image-artigo1{
-    background-image:url('img/grid1.jpg');
+    background-image:url('/img/conhecimento/destaque/Biológico.png');
 }
 
 .grid-image-artigo2{
-    background-image:url('img/grid2.jpg');
+    background-image:url('/img/conhecimento/destaque/conservacao.png');
 }
 
 .grid-image-artigo3{
-    background-image:url('img/grid3.jpg');
+    background-image:url('/img/conhecimento/destaque/campotech.png');
 }
 
 /* CONCLUSION */
