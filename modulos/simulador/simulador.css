@@ -207,7 +207,7 @@ body{
 ========================== */
 
 .alface{
-    font-size:13px;
+    font-size:12px;
 
     top:32%;
     left:58px;
@@ -227,15 +227,15 @@ body{
 }
 
 .milho{
-    font-size:13px;
+    font-size:12px;
 
     top:46%;
     left:66px;
 }
 
 .soja{
-    font-size:13px;
+    font-size:12px;
 
-    top:46%;
+    top:45%;
     left:90px;
 }
