@@ -239,39 +239,23 @@ body{
 
 
 .menu-plantio{
+    position:fixed;
 
+    width:170px;
+    height:135px;
 
+    z-index:9999;
 
-    position: fixed;
-
-    width: 250px; 
-
-    height: 180px;
-
-    
-
-    z-index: 9999;
-
+    overflow:hidden;
 }
 
 
 
 .balao-img{
-
-
-
     width:100%;
-
     height: 100%;
-
     object-fit: contain;
-
-
-
     display:block;
-
-
-
     pointer-events:none;
 
 }
@@ -316,47 +300,33 @@ body{
 
 /* TAMANHO DOS EMOJIS */
 
-.alface{
+
+.alface {
     font-size:16px;
+    top: 19%;
+    left: 23%;
 }
 
-.cenoura{
+.tomate {
+    font-size:16px;
+    top: 19%;
+    left: 52%;
+}
+
+.cenoura {
     font-size:14px;
+    top: 19%;
+    left: 38%;
 }
 
-.tomate{
+.milho {
     font-size:16px;
+    top: 48%;
+    left: 23%;
 }
 
-.milho{
-    font-size:16px;
-}
-
-.soja{
+.soja {
     font-size:15px;
-}
-
-.alface{
-    top:28px;
-    left:22px;
-}
-
-.cenoura{
-    top:28px;
-    left:62px;
-}
-
-.tomate{
-    top:28px;
-    left:102px;
-}
-
-.milho{
-    top:82px;
-    left:36px;
-}
-
-.soja{
-    top:82px;
-    left:90px;
+    top: 48%;
+    left: 52%;
 }
