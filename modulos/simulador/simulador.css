@@ -142,68 +142,28 @@ body{
 
     position:absolute;
 
-    width:38px;
-    height:32px;
+    width:34px;
+    height:34px;
 
     border:none;
 
-    background:#fff;
+    border-radius:50%;
 
-    border-radius:30px;
+    background:white;
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    font-size:18px;
+    font-size:16px;
 
     cursor:pointer;
 
     box-shadow:
-        0 3px 0 #d0d0d0,
-        0 4px 8px rgba(0,0,0,.2);
+        0 2px 0 #d0d0d0,
+        0 3px 6px rgba(0,0,0,.2);
 
     transition:.2s;
-}
-
-/* bolhas da nuvem */
-
-.opcao::before{
-
-    content:"";
-
-    position:absolute;
-
-    width:14px;
-    height:14px;
-
-    background:white;
-
-    border-radius:50%;
-
-    top:-4px;
-    left:3px;
-
-    z-index:-1;
-}
-
-.opcao::after{
-
-    content:"";
-
-    position:absolute;
-
-    width:16px;
-    height:16px;
-
-    background:white;
-
-    border-radius:50%;
-
-    top:-5px;
-    right:3px;
-
-    z-index:-1;
 }
 
 .opcao:hover{
