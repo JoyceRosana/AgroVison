@@ -61,7 +61,8 @@ for(let linha = 0; linha < LINHAS; linha++){
 
 plantacao.addEventListener("click",(e)=>{
 
-    const terra = e.target.closest(".terra");
+    const terra =
+    e.target.closest(".terra");
 
     if(!terra) return;
 

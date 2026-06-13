@@ -162,8 +162,6 @@ body{
     object-fit:contain;
 
     display:block;
-
-    pointer-events:none;
 }
 
 /* ==========================
@@ -242,4 +240,8 @@ body{
 
     top:45%;
     left:90px;
+}
+
+.oculto{
+    display:none;
 }
