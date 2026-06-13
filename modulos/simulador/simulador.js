@@ -102,3 +102,9 @@ document.addEventListener("click",(e)=>{
     );
 
 });
+
+viewport.addEventListener("mousedown", () => {
+
+    menuPlantio.classList.add("oculto");
+
+});
