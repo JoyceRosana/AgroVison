@@ -307,26 +307,26 @@ body{
     left: 30px;
 }
 
-.tomate {
-    font-size:16px;
-    top: 19%;
-    left: 40px;
-}
-
 .cenoura {
     font-size:14px;
     top: 19%;
     left: 80px;
 }
 
+.tomate {
+    font-size:16px;
+    top: 19%;
+    left: 120px;
+}
+
 .milho {
     font-size:16px;
     top: 48%;
-    left: 23%;
+    left: 50px;
 }
 
 .soja {
     font-size:15px;
     top: 48%;
-    left: 52%;
+    left: 90;
 }
