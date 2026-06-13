@@ -59,52 +59,45 @@ for(let linha = 0; linha < LINHAS; linha++){
    ABRIR MENU
 ========================== */
 
-plantacao.addEventListener(
-"click",
-(e)=>{
+plantacao.addEventListener("click",(e)=>{
 
-    const terra =
-    e.target.closest(".terra");
+    const terra = e.target.closest(".terra");
 
     if(!terra) return;
 
+    const rect =
+    terra.getBoundingClientRect();
+
     menuPlantio.style.left =
-    (e.clientX - 160) + "px";
+    (rect.left - 35) + "px";
 
     menuPlantio.style.top =
-    (e.clientY - 220) + "px";
+    (rect.top - 150) + "px";
 
     menuPlantio.classList.remove(
         "oculto"
     );
 
-}
-);
+});
 
 /* ==========================
    FECHAR MENU
 ========================== */
 
-document.addEventListener(
-"click",
-(e)=>{
+document.addEventListener("click",(e)=>{
 
-    const terra =
+    const clicouTerra =
     e.target.closest(".terra");
 
-    const menu =
-    e.target.closest(
-        "#menuPlantio"
-    );
+    const clicouMenu =
+    e.target.closest("#menuPlantio");
 
-    if(
-        terra ||
-        menu
-    ) return;
+    if(clicouTerra || clicouMenu){
+        return;
+    }
 
     menuPlantio.classList.add(
         "oculto"
     );
 
-}
-);
+});
