@@ -13,49 +13,33 @@ body{
 
 
 /* ==========================
-
    VIEWPORT
-
 ========================== */
 
-
-
 .viewport{
-
     width:100vw;
-
     height:100vh;
-
     overflow:auto;
-
     cursor:grab;
-
 }
 
 
 
 .viewport:active{
-
     cursor:grabbing;
-
 }
 
 
 
 /* ==========================
-
    MUNDO
-
 ========================== */
 
 
 
 .world{
-
     position:relative;
-
     width:2000px;
-
     height:1200px;
 
 }
@@ -63,49 +47,33 @@ body{
 
 
 /* ==========================
-
    MAPA
-
 ========================== */
 
 
 
 .mapa{
-
     position:absolute;
-
     top:0;
-
     left:0;
-
     width:100%;
-
     height:100%;
-
     object-fit:cover;
-
     z-index:1;
-
 }
 
 
 
 /* ==========================
-
    OBJETOS
-
-========================== */
+========================= */
 
 
 
 .objeto{
-
     position:absolute;
-
     z-index:10;
-
     user-select:none;
-
     pointer-events:none;
 
 }
@@ -113,51 +81,36 @@ body{
 
 
 .galpao{
-
     width:350px;
-
     top:545px;
-
     left:0;
-
 }
 
 
 
 .cooperativa{
-
     width:300px;
-
     top:580px;
-
     left:350px;
-
 }
 
 
 
 .cisterna{
-
     width:300px;
-
     top:440px;
-
     left:630px;
-
 }
 
 
 
 /* ==========================
-
    PLANTAÇÃO
-
 ========================== */
 
 
 
 .plantacao{
-
     position:absolute;
     top:20px;
     left:1220px;
@@ -190,82 +143,100 @@ body{
 /* ==========================
    MENU DE CULTURAS
 ========================== */
+
 .menu-plantio{
     position:fixed;
+
     width:170px;
     height:200px;
+
     z-index:9999;
+
     overflow:hidden;
 }
 
-
-
 .balao-img{
     width:100%;
-    height: 100%;
-    object-fit: contain;
+    height:100%;
+
+    object-fit:contain;
+
     display:block;
+
     pointer-events:none;
-
 }
-
 
 /* ==========================
    BOLINHAS
 ========================== */
 
 .opcao{
+
     position:absolute;
-    width:34px;
-    height:34px;
+
+    width:26px;
+    height:26px;
+
     border:none;
-    border-radius:30%;
+
+    border-radius:50%;
+
     background:white;
+
     display:flex;
     justify-content:center;
     align-items:center;
+
     cursor:pointer;
+
     overflow:hidden;
+
     box-shadow:
         0 2px 0 #d0d0d0,
         0 3px 6px rgba(0,0,0,.2);
+
     transition:.2s;
 }
 
 .opcao:hover{
-    transform:scale(1.00);
+    transform:scale(1);
 }
 
-/* TAMANHO DOS EMOJIS */
+/* ==========================
+   EMOJIS
+========================== */
 
+.alface{
+    font-size:13px;
 
-.alface {
-    font-size:10px;
-    top: 19%;
-    left: 50px;
+    top:23%;
+    left:34px;
 }
 
-.cenoura {
-    font-size:10px;
-    top: 19%;
-    left: 80px;
+.cenoura{
+    font-size:13px;
+
+    top:23%;
+    left:70px;
 }
 
-.tomate {
-    font-size:10px;
-    top: 19%;
-    left: 115px;
+.tomate{
+    font-size:13px;
+
+    top:23%;
+    left:106px;
 }
 
-.milho {
-    font-size:16
-    ppx;
-    top: 48%;
-    left: 50px;
+.milho{
+    font-size:13px;
+
+    top:49%;
+    left:50px;
 }
 
-.soja {
-    font-size:16px;
-    top: 48%;
-    left: 90px;
+.soja{
+    font-size:13px;
+
+    top:49%;
+    left:90px;
 }
