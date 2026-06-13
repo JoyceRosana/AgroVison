@@ -242,7 +242,7 @@ body{
     position:fixed;
 
     width:170px;
-    height:135px;
+    height:155px;
 
     z-index:9999;
 
@@ -295,7 +295,7 @@ body{
 
 .opcao:hover{
 
-    transform:scale(1.15);
+    transform:scale(1.00);
 }
 
 /* TAMANHO DOS EMOJIS */
@@ -320,13 +320,14 @@ body{
 }
 
 .milho {
-    font-size:10px;
+    font-size:16
+    ppx;
     top: 48%;
     left: 50px;
 }
 
 .soja {
-    font-size:12px;
+    font-size:16px;
     top: 48%;
     left: 90px;
 }
