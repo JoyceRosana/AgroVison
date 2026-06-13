@@ -122,8 +122,8 @@ body{
 
     position:fixed;
 
-    width:320px;
-    height:260px;
+    width:220px;
+    height:180px;
 
     z-index:9999;
 }
@@ -142,26 +142,26 @@ body{
 
     position:absolute;
 
-    width:90px;
-    height:70px;
+    width:58px;
+    height:48px;
 
     border:none;
 
-    cursor:pointer;
+    background:#fff;
 
-    font-size:42px;
-
-    background:#ffffff;
-
-    border-radius:40px;
+    border-radius:30px;
 
     display:flex;
     justify-content:center;
     align-items:center;
 
+    font-size:28px;
+
+    cursor:pointer;
+
     box-shadow:
-        0 4px 0 #d0d0d0,
-        0 8px 15px rgba(0,0,0,.25);
+        0 3px 0 #d0d0d0,
+        0 4px 8px rgba(0,0,0,.2);
 
     transition:.2s;
 }
@@ -174,15 +174,15 @@ body{
 
     position:absolute;
 
-    width:30px;
-    height:35px;
+    width:26px;
+    height:26px;
 
     background:white;
 
-    border-radius:40%;
+    border-radius:50%;
 
-    top:-10px;
-    left:10px;
+    top:-8px;
+    left:6px;
 
     z-index:-1;
 }
@@ -193,23 +193,22 @@ body{
 
     position:absolute;
 
-    width:50px;
-    height:50px;
+    width:30px;
+    height:30px;
 
     background:white;
 
     border-radius:50%;
 
-    top:-18px;
-    right:8px;
+    top:-10px;
+    right:6px;
 
     z-index:-1;
 }
-
 .opcao:hover{
 
     transform:scale(1.1);
-    ransition:.2s;
+    transition:.2s;
 }
 
 .opcao:hover{
@@ -220,30 +219,26 @@ body{
 /* POSIÇÕES */
 
 .alface{
-    top:50px;
-    left:65px;
+    top:34px;
+    left:32px;
 }
 
 .tomate{
-    top:50px;
-    right:65px;
+    top:34px;
+    right:32px;
 }
 
 .cenoura{
-    top:115px;
-    left:125px;
+    top:82px;
+    left:81px;
 }
 
 .milho{
-    bottom:45px;
-    left:65px;
+    bottom:32px;
+    left:32px;
 }
 
 .soja{
-    bottom:45px;
-    right:65px;
-}
-
-.oculto{
-    display:none;
+    bottom:32px;
+    right:32px;
 }
