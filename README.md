@@ -165,19 +165,20 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 ### conhecimento/conteudos/clima
 
 * Prompt: "Representação gráfica de diferentes climas agrícolas"
-* Prompt: "Mudanças climáticas impactando a agricultura"
+* Prompt: "solo fértil com mudas saudáveis em primeiro plano e agricultor observando a lavoura ao fundo"
+*  Prompt: "mãos coletando amostra de solo com tubo de teste de pH próximo a uma muda verde, iluminação natural, sem textos."
 * Prompt: "Sistema de irrigação em clima seco"
 * Prompt: "Plantio em condições climáticas favoráveis"
 * Prompt: "Previsão meteorológica aplicada à agricultura"
 
 ### conhecimento/conteudos/irrigacao
 
-* Prompt: "Estufa agrícola com irrigação automatizada"
+* Prompt: "Sistema de irrigação agrícola eficiente"
+* Prompt: "Monitoramento com sistema de irrigação"
 * Prompt: "Cultivo sustentável de hortaliças irrigadas"
-* Prompt: "Sistema moderno de irrigação agrícola"
 * Prompt: "Irrigação eficiente em lavoura de soja"
-* Prompt: "Produtor monitorando sistema de irrigação"
-* Prompt: "Rega controlada em cultivo agrícola"
+*  Prompt: "Rega controlada em cultivo agrícola"
+*  Prompt: "Estufa agrícola com irrigação automatizada"
 
 ### conhecimento/conteudos/pragas
 
@@ -186,20 +187,20 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 * Prompt: "Fungos em folhas de cultivo"
 * Prompt: "Insetos atacando plantação"
 * Prompt: "Plantação saudável livre de pragas"
-* Prompt: "Ilustração de pragas agrícolas comuns"
+* Prompt: ""
 
 ### conhecimento/conteudos/solo
 
-* Prompt: "Solo agrícola com armazenamento de água"
-* Prompt: "Análise de solo agrícola"
-* Prompt: "Textura e fertilidade do solo"
-* Prompt: "pH do solo em gráfico"
-* Prompt: "Perfil de solo agrícola"
-* Prompt: "Comparação de texturas do solo"
+* Prompt: "solo fértil com mudas saudáveis em primeiro plano e agricultor observando a lavoura ao fundo"
+*  Prompt: "mãos coletando amostra de solo com tubo de teste de pH próximo a uma muda verde, iluminação natural, sem textos."
+* Prompt: "TAgricultor analisando uma amostra de solo"
+* Prompt: "Solo escuro fértil recebendo fertilizante próximo às raízes de mudas verdes"
+* Prompt: "Solo úmido retendo água ao redor de plantas saudáveis com gotas visíveis nas folhas"
+* Prompt: ""Vista superior mostrando diferentes tipos de solo lado a lado com pequenas plantas crescendo em cada textura"
 
 ### conhecimento/conteudos/sustentabilidade
 
-* Prompt: "Agro sustentável com energia renovável"
+* Prompt: "Paisagem agrícola sustentável com lavouras, reservatório de água, energia solar, turbinas eólicas e muda crescendo em solo fértil"
 * Prompt: "Profissional de agronomia em campo sustentável"
 * Prompt: "Uso consciente da água na agricultura"
 * Prompt: "Cuidado com a natureza"
@@ -211,6 +212,15 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 * Prompt: "Sensor agrícola inteligente"
 * Prompt: "Inteligência artificial na agricultura"
 * Prompt: "Drone monitorando plantação"
+
+* ### conhecimento/destaque
+
+* Prompt: "Bioinsumos e Controle Biológico"
+* Prompt: "Controle biológico em planta, foco à direita"
+* Prompt: "Agricultura de Baixo Carbono"
+* Prompt: "Agricultura e clima global  "
+* Prompt: "Rastreabilidade e Compliance no Agro"
+* Prompt: "Governança digital no campo"
 
 ### conhecimento
 
