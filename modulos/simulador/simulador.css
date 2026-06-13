@@ -302,31 +302,31 @@ body{
 
 
 .alface {
-    font-size:16px;
+    font-size:10px;
     top: 19%;
-    left: 30px;
+    left: 50px;
 }
 
 .cenoura {
-    font-size:14px;
+    font-size:10px;
     top: 19%;
     left: 80px;
 }
 
 .tomate {
-    font-size:16px;
+    font-size:10px;
     top: 19%;
-    left: 120px;
+    left: 115px;
 }
 
 .milho {
-    font-size:16px;
+    font-size:10px;
     top: 48%;
     left: 50px;
 }
 
 .soja {
-    font-size:15px;
+    font-size:12px;
     top: 48%;
-    left: 90;
+    left: 90px;
 }
