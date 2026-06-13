@@ -118,57 +118,56 @@ body{
    MENU DE CULTURAS
 ========================== */
 
-.menu-plantio{
-
-    position:fixed;
-
-    width:170px;
-    height:135px;
-
-    z-index:9999;
+.menu-plantio {
+    position: fixed;
+    
+    /* Definimos um tamanho fixo para o menu. 
+       Ajuste esses valores (mantendo a proporção) se quiser o balão maior ou menor */
+    width: 250px; 
+    height: 180px;
+    
+    z-index: 9999;
 }
 
-.balao-img{
-
-    width:100%;
-    height: 140;
-
-    display:block;
-
-    pointer-events:none;
+.balao-img {
+    /* Força a imagem de madeira a ocupar o tamanho total do container */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    
+    display: block;
+    pointer-events: none;
 }
 
-.opcao{
-
-    position:absolute;
-
-    width:34px;
-    height:34px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:white;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    font-size:16px;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 2px 0 #d0d0d0,
-        0 3px 6px rgba(0,0,0,.2);
-
-    transition:.2s;
+.opcao {
+    position: absolute;
+    
+    /* Tamanho do clique do botão baseado no tamanho do balão */
+    width: 22%;
+    height: 25%;
+    
+    border: none;
+    background: transparent; /* Deixa invisível para usar a nuvem que já vem na imagem */
+    border-radius: 50%;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    cursor: pointer;
+    box-shadow: none; /* Remove sombras cinzas que quebram o visual */
+    transition: transform .2s;
 }
 
-.opcao:hover{
+.opcao:hover {
+    transform: scale(1.15);
+}
 
-    transform:scale(1.15);
+/* Garante que os emojis/ícones fiquem bonitos dentro da área */
+.opcao img, .opcao span {
+    max-width: 90%;
+    max-height: 90%;
+    font-size: 28px; /* Caso esteja usando emojis de texto */
 }
 
 /* ==========================
@@ -176,26 +175,26 @@ body{
 ========================== */
 
 .alface {
-    top: 19%;
-    left: 23%;
-}
-
-.tomate {
-    top: 19%;
-    left: 52%;
+    top: 15%;
+    left: 39%;
 }
 
 .cenoura {
-    top: 19%;
+    top: 15%;
     left: 38%;
 }
 
+.tomate {
+    top: 15%;
+    left: 56%;
+}
+
 .milho {
-    top: 48%;
-    left: 23%;
+    top: 50%;
+    left: 21%;
 }
 
 .soja {
-    top: 48%;
-    left: 52%;
+    top: 50%;
+    left: 56%;
 }
