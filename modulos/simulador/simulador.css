@@ -1,25 +1,13 @@
 /* ==========================
-
    RESET
-
 ========================== */
-
-
-
 html,
-
 body{
-
     margin:0;
-
     padding:0;
-
     width:100%;
-
     height:100%;
-
     overflow:hidden;
-
 }
 
 
@@ -171,81 +159,42 @@ body{
 .plantacao{
 
     position:absolute;
-
-
-
     top:20px;
-
     left:1220px;
-
-
-
     z-index:20;
-
 }
 
-
-
 /* ==========================
-
    TERRAS
-
 ========================== */
 
 
 
 .terra{
-
     position:absolute;
-
-
-
     width:100px;
-
     height:100px;
-
-
-
     z-index:21;
-
 }
 
 
 
 .terra img{
-
     width:100%;
-
     height:auto;
-
     display:block;
-
-
-
     user-select:none;
-
     pointer-events:none;
-
 }
 
-
-
 /* ==========================
-
    MENU DE CULTURAS
-
 ========================== */
-
-
-
 .menu-plantio{
     position:fixed;
-
     width:170px;
-    height:155px;
-
+    height:200px;
     z-index:9999;
-
     overflow:hidden;
 }
 
@@ -266,35 +215,24 @@ body{
 ========================== */
 
 .opcao{
-
     position:absolute;
-
     width:34px;
     height:34px;
-
     border:none;
-
-    border-radius:50%;
-
+    border-radius:30%;
     background:white;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     cursor:pointer;
-
     overflow:hidden;
-
     box-shadow:
         0 2px 0 #d0d0d0,
         0 3px 6px rgba(0,0,0,.2);
-
     transition:.2s;
 }
 
 .opcao:hover{
-
     transform:scale(1.00);
 }
 
