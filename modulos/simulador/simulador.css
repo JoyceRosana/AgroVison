@@ -113,3 +113,83 @@ body{
     user-select:none;
     pointer-events:none;
 }
+
+/* ==========================
+   MENU DE CULTURAS
+========================== */
+
+.menu-plantio{
+
+    position:fixed;
+
+    width:320px;
+    height:260px;
+
+    z-index:9999;
+}
+
+.balao-img{
+
+    width:100%;
+    height:auto;
+
+    display:block;
+
+    pointer-events:none;
+}
+
+.opcao{
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    border:none;
+
+    background:none;
+
+    cursor:pointer;
+
+    font-size:42px;
+
+    padding:0;
+
+    transition:.2s;
+}
+
+.opcao:hover{
+
+    transform:scale(1.15);
+}
+
+/* POSIÇÕES */
+
+.alface{
+    top:50px;
+    left:65px;
+}
+
+.tomate{
+    top:50px;
+    right:65px;
+}
+
+.cenoura{
+    top:115px;
+    left:125px;
+}
+
+.milho{
+    bottom:45px;
+    left:65px;
+}
+
+.soja{
+    bottom:45px;
+    right:65px;
+}
+
+.oculto{
+    display:none;
+}
