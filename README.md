@@ -201,7 +201,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 ### conhecimento/conteudos/sustentabilidade
 
 * Prompt: "Paisagem agrícola sustentável com lavouras, reservatório de água, energia solar, turbinas eólicas e muda crescendo em solo fértil"
-* Prompt: "Profissional de agronomia em campo sustentável"
+* Prompt: "Etapas de sustentabilidade"
 * Prompt: "Uso consciente da água na agricultura"
 * Prompt: "Cuidado com a natureza"
 * Prompt: "Energia renovável aplicada ao agronegócio"
