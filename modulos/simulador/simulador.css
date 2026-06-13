@@ -78,3 +78,38 @@ body{
     top:440px;
     left:630px;
 }
+
+/* ==========================
+   PLANTAÇÃO
+========================== */
+
+.plantacao{
+    position:absolute;
+
+    top:120px;
+    left:1150px;
+
+    z-index:20;
+}
+
+/* ==========================
+   TERRAS
+========================== */
+
+.terra{
+    position:absolute;
+
+    width:100px;
+    height:100px;
+
+    z-index:21;
+}
+
+.terra img{
+    width:100%;
+    height:auto;
+    display:block;
+
+    user-select:none;
+    pointer-events:none;
+}
