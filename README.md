@@ -182,7 +182,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 ### conhecimento/conteudos/pragas
 
-* Prompt: "Bactérias causadoras de doenças em plantas"
+* Prompt: "Lavoura com folhas atacadas por pragas e agricultor monitorando a plantação"
 * Prompt: "Plantas daninhas em área agrícola"
 * Prompt: "Fungos em folhas de cultivo"
 * Prompt: "Insetos atacando plantação"
@@ -208,7 +208,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 ### conhecimento/conteudos/tecnologia
 
-* Prompt: "GPS aplicado na agricultura"
+* Prompt: "Varios equipamentos teconologicos no agro"
 * Prompt: "Sensor agrícola inteligente"
 * Prompt: "Inteligência artificial na agricultura"
 * Prompt: "Drone monitorando plantação"
