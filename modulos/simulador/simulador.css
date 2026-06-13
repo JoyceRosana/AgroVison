@@ -142,8 +142,8 @@ body{
 
     position:absolute;
 
-    width:58px;
-    height:48px;
+    width:48px;
+    height:38px;
 
     border:none;
 
@@ -155,7 +155,7 @@ body{
     justify-content:center;
     align-items:center;
 
-    font-size:28px;
+    font-size:22px;
 
     cursor:pointer;
 
@@ -174,15 +174,15 @@ body{
 
     position:absolute;
 
-    width:26px;
-    height:26px;
+    width:18px;
+    height:18px;
 
     background:white;
 
     border-radius:50%;
 
-    top:-8px;
-    left:6px;
+    top:-6px;
+    left:4px;;
 
     z-index:-1;
 }
@@ -193,15 +193,15 @@ body{
 
     position:absolute;
 
-    width:30px;
-    height:30px;
+    width:18px;
+    height:18px;
 
     background:white;
 
     border-radius:50%;
 
-    top:-10px;
-    right:6px;
+    top:-7px;
+    right:4px;
 
     z-index:-1;
 }
@@ -219,18 +219,18 @@ body{
 /* POSIÇÕES */
 
 .alface{
-    top:34px;
-    left:25px;
-}
-
-.cenoura{
-    top:34px;
-    left:80px;
+    top:32px;
+    left:32px;
 }
 
 .tomate{
-    top:34px;
-    right:25px;
+    top:32px;
+    right:32px;
+}
+
+.cenoura{
+    top:68px;
+    left:86px;
 }
 
 .milho{
