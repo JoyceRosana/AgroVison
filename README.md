@@ -164,7 +164,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 ### conhecimento/conteudos/clima
 
-* Prompt: "Representação gráfica de diferentes climas agrícolas"
+* Prompt: "Campo agrícola com tempestade à esquerda, lavoura saudável ao centro e seca com irrigação à direita"
 * Prompt: "solo fértil com mudas saudáveis em primeiro plano e agricultor observando a lavoura ao fundo"
 *  Prompt: "mãos coletando amostra de solo com tubo de teste de pH próximo a uma muda verde, iluminação natural, sem textos."
 * Prompt: "Sistema de irrigação em clima seco"
