@@ -245,3 +245,23 @@ body{
 .oculto{
     display:none;
 }
+
+/* ==========================
+   PLANTAS
+========================== */
+
+.planta{
+
+    position:absolute;
+
+    left:50%;
+    bottom:25px;
+
+    transform:translateX(-50%);
+
+    width:50px;
+
+    z-index:50;
+
+    pointer-events:none;
+}

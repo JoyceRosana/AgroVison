@@ -8,6 +8,8 @@ document.getElementById("plantacao");
 const menuPlantio =
 document.getElementById("menuPlantio");
 
+let terraSelecionada = null;
+
 /* ==========================
    GRADE DE TERRAS
 ========================== */
@@ -65,6 +67,7 @@ plantacao.addEventListener("click",(e)=>{
     e.target.closest(".terra");
 
     if(!terra) return;
+    terraSelecionada = terra;
 
     const rect =
     terra.getBoundingClientRect();
@@ -106,5 +109,54 @@ document.addEventListener("click",(e)=>{
 viewport.addEventListener("mousedown", () => {
 
     menuPlantio.classList.add("oculto");
+
+});
+
+/* ==========================
+   PLANTAR
+========================== */
+
+document
+.querySelectorAll(".opcao")
+.forEach(botao => {
+
+    botao.addEventListener(
+    "click",
+    ()=>{
+
+        if(!terraSelecionada)
+        return;
+
+        if(
+        terraSelecionada.querySelector(
+            ".planta"
+        )
+        ){
+            return;
+        }
+
+        const cultura =
+        botao.dataset.cultura;
+
+        const planta =
+        document.createElement("img");
+
+        planta.className =
+        "planta";
+
+        planta.src =
+        "/img/simulador/" +
+        cultura +
+        "1.png";
+
+        terraSelecionada.appendChild(
+            planta
+        );
+
+        menuPlantio.classList.add(
+            "oculto"
+        );
+
+    });
 
 });
