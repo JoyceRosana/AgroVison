@@ -111,14 +111,14 @@ body{
 .plantacao1{
     position:absolute;
     top: 20px;
-    left:1103px;
+    left:1097px;
     z-index:20;
 }
 
 .plantacao2{
     position:absolute;
     top: 850px;
-    left:1600px;
+    left:1100px;
     z-index:20;
 }
 
