@@ -166,7 +166,7 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 * Prompt: "Campo agrícola com tempestade à esquerda, lavoura saudável ao centro e seca com irrigação à direita"
 * Prompt: "solo fértil com mudas saudáveis em primeiro plano e agricultor observando a lavoura ao fundo"
-*  Prompt: "mãos coletando amostra de solo com tubo de teste de pH próximo a uma muda verde, iluminação natural, sem textos."
+*  Prompt: "Clima e agricultura sem texto, fundo transparente"
 * Prompt: "Sistema de irrigação em clima seco"
 * Prompt: "Plantio em condições climáticas favoráveis"
 * Prompt: "Previsão meteorológica aplicada à agricultura"
@@ -209,9 +209,10 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 ### conhecimento/conteudos/tecnologia
 
 * Prompt: "Varios equipamentos teconologicos no agro"
-* Prompt: "Sensor agrícola inteligente"
+* Prompt: "Tecnologia agrícola moderna sem texto, fundo transparente"
 * Prompt: "Inteligência artificial na agricultura"
 * Prompt: "Drone monitorando plantação"
+* 
 
 * ### conhecimento/destaque
 
@@ -243,7 +244,10 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 * Prompt: "Cooperativa para vender e comprar estilo 3D"
 * Prompt: "Broto de milho em solo fértil"
 * Prompt: "Milho jovem em crescimento"
-* Prompt: "Milho adulto pronto para colheita"
+* Prompt: " Ilustração botânica científica de um milho adulto pronto para colheita pouco solo ao redor das raízes, fundo transtaaaprente Milho adulto pronto para colheita"
+*  Prompt: "Ilustração botânica científica de um pequeno broto de alface com 3 folhas, pouco solo ao redor das raízes, fundo transtaaaprente"
+*  Ilustração botânica científica de uma muda de alface jovem com agumas folhas, pouco solo ao redor das raízes, fundo transparente
+*  Ilustração botânica científica de uma muda de alface adulta com várias folhas, pouco solo ao redor das raízes, fundo transparente
 * Prompt: "Broto de soja em solo fértil"
 * Prompt: "Soja jovem em crescimento"
 * Prompt: "Soja adulta com vagens"
