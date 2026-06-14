@@ -125,13 +125,13 @@ body{
 .plantacao3{
     position:absolute;
     top: 800px;
-    left:500px;
+    left:100px;
     z-index:20;
 }
 
 .plantacao4{
     position:absolute;
-    top: 900px;
+    top: 950px;
     left:500px;
     z-index:20;
 }
