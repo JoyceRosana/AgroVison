@@ -262,11 +262,6 @@ function iniciarCrescimento(planta, dados) {
         planta.style.height =
             dados.estagios.jovem.height + "px";
 
-        planta.style.left =
-            dados.estagios.jovem.offsetX + "px";
-
-        planta.style.top =
-            dados.estagios.jovem.offsetY + "px";
 
     }, 30000);
 
@@ -280,12 +275,6 @@ function iniciarCrescimento(planta, dados) {
 
         planta.style.height =
             dados.estagios.adulto.height + "px";
-
-        planta.style.left =
-            dados.estagios.adulto.offsetX + "px";
-
-        planta.style.top =
-            dados.estagios.adulto.offsetY + "px";
 
         planta.dataset.adulta = "true";
 
