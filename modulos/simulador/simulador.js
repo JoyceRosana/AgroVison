@@ -47,6 +47,7 @@ function criarPlantacao(container) {
 
 criarPlantacao(plantacao1);
 criarPlantacao(plantacao2);
+criarPlantacao(plantacao3);
 
 /* ==========================
    CULTURAS
