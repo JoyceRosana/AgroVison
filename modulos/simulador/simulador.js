@@ -217,8 +217,7 @@ document.addEventListener("click", (e) => {
   const rect = terra.getBoundingClientRect();
 
   menuPlantio.style.left = (rect.left - 35) + "px";
-  menuPlantio.style.top = (rect.top - 150) + "px";
-
+  menuPlantio.style.top = (rect.top - 145) + "px";
   menuPlantio.classList.remove("oculto");
 });
 
@@ -226,13 +225,26 @@ document.addEventListener("click", (e) => {
    FECHAR MENU
 ========================== */
 
-document.addEventListener("click", (e) => {
-  const clicouMenu = e.target.closest("#menuPlantio");
-  const clicouTerra = e.target.closest(".terra");
+document.addEventListener("click",(e)=>{
 
-  if (clicouMenu || clicouTerra) return;
+    const clicouMenu =
+        e.target.closest("#menuPlantio");
 
-  menuPlantio.classList.add("oculto");
+    const clicouTerra =
+        e.target.closest(".terra");
+
+    if(clicouMenu || clicouTerra) return;
+
+    menuPlantio.classList.add("oculto");
+
+    modoPlantio = false;
+
+    culturaSelecionada = null;
+
+    document.body.classList.remove(
+        "cursor-plantio"
+    );
+
 });
 
 /* ==========================
@@ -282,15 +294,21 @@ function iniciarCrescimento(planta, dados) {
 
 }
 
+document.querySelectorAll(".opcao").forEach((botao)=>{
 
-document.querySelectorAll(".opcao").forEach((botao) => {
-
-    botao.addEventListener("click", () => {
+    botao.addEventListener("click",()=>{
 
         const cultura = botao.dataset.cultura;
 
-        if (!terraSelecionada) return;
+        culturaSelecionada = cultura;
 
+        modoPlantio = true;
+
+        document.body.classList.add("cursor-plantio");
+
+    });
+
+});
         // já tem planta nessa terra?
         if (terraSelecionada.querySelector(".planta")) return;
 
@@ -323,6 +341,36 @@ document.querySelectorAll(".opcao").forEach((botao) => {
 
         iniciarCrescimento(planta, dados);
 
-    });
+
+
+    document.addEventListener("mouseover",(e)=>{
+
+    if(!modoPlantio) return;
+
+    const terra = e.target.closest(".terra");
+
+    if(!terra) return;
+
+    if(terra.querySelector(".planta")) return;
+
+    const dados = culturas[culturaSelecionada];
+
+    if(!dados) return;
+
+    const planta = document.createElement("img");
+
+    planta.className = "planta";
+
+    planta.src = dados.estagios.broto.src;
+
+    planta.style.width =
+        dados.estagios.broto.width + "px";
+
+    planta.style.height =
+        dados.estagios.broto.height + "px";
+
+    terra.appendChild(planta);
+
+    iniciarCrescimento(planta,dados);
 
 });
