@@ -2,11 +2,9 @@
    REFERÊNCIAS
 ========================== */
 
-const plantacao =
-document.getElementById("plantacao");
-
-const menuPlantio =
-document.getElementById("menuPlantio");
+const plantacao = document.getElementById("plantacao");
+const menuPlantio = document.getElementById("menuPlantio");
+const viewport = document.querySelector(".viewport");
 
 let terraSelecionada = null;
 
@@ -20,46 +18,32 @@ const LINHAS = 11;
 const ESPACO_X = 50;
 const ESPACO_Y = 25;
 
-for(let linha = 0; linha < LINHAS; linha++){
+for (let linha = 0; linha < LINHAS; linha++) {
+  for (let coluna = 0; coluna < COLUNAS; coluna++) {
 
-    for(let coluna = 0; coluna < COLUNAS; coluna++){
+    const terra = document.createElement("div");
+    terra.className = "terra";
 
-        const terra =
-        document.createElement("div");
+    const img = document.createElement("img");
 
-        terra.className = "terra";
+    // ✔ CORRIGIDO: src (não scr)
+    img.src = "/img/simulador/terra.png";
 
-        const img =
-        document.createElement("img");
+    terra.appendChild(img);
 
-        img.scr = "/img/simulador/terra.png";
+    const x = (coluna * ESPACO_X) - (linha * ESPACO_X);
+    const y = (coluna * ESPACO_Y) + (linha * ESPACO_Y);
 
-        terra.appendChild(img);
+    terra.style.left = x + "px";
+    terra.style.top = y + "px";
 
-        const x =
-        (coluna * ESPACO_X) -
-        (linha * ESPACO_X);
-
-        const y =
-        (coluna * ESPACO_Y) +
-        (linha * ESPACO_Y);
-
-        terra.style.left =
-        x + "px";
-
-        terra.style.top =
-        y + "px";
-
-        plantacao.appendChild(terra);
-
-    }
-
+    plantacao.appendChild(terra);
+  }
 }
 
-
-/* ==================================
+/* ==========================
    CULTURAS
-================================== */
+========================== */
 
 const culturas = {
   milho: {
@@ -198,4 +182,78 @@ const culturas = {
   }
 };
 
+/* ==========================
+   ABRIR MENU
+========================== */
 
+plantacao.addEventListener("click", (e) => {
+  const terra = e.target.closest(".terra");
+  if (!terra) return;
+
+  terraSelecionada = terra;
+
+  const rect = terra.getBoundingClientRect();
+
+  menuPlantio.style.left = (rect.left - 35) + "px";
+  menuPlantio.style.top = (rect.top - 150) + "px";
+
+  menuPlantio.classList.remove("oculto");
+});
+
+/* ==========================
+   FECHAR MENU
+========================== */
+
+document.addEventListener("click", (e) => {
+  const clicouTerra = e.target.closest(".terra");
+  const clicouMenu = e.target.closest("#menuPlantio");
+
+  if (clicouTerra || clicouMenu) return;
+
+  menuPlantio.classList.add("oculto");
+});
+
+/* ==========================
+   FECHAR MENU NO DRAG
+========================== */
+
+if (viewport) {
+  viewport.addEventListener("mousedown", () => {
+    menuPlantio.classList.add("oculto");
+  });
+}
+
+/* ==========================
+   PLANTAR
+========================== */
+
+document.querySelectorAll(".opcao").forEach((botao) => {
+  botao.addEventListener("click", () => {
+
+    const cultura = botao.dataset.cultura;
+
+    if (!terraSelecionada) return;
+
+    if (terraSelecionada.querySelector(".planta")) return;
+
+    const dados = culturas[cultura];
+
+    if (!dados) return;
+
+    const planta = document.createElement("img");
+
+    planta.className = "planta";
+
+    planta.src = dados.estagios.broto.src;
+
+    planta.style.width = dados.estagios.broto.width + "px";
+    planta.style.height = dados.estagios.broto.height + "px";
+
+    planta.style.left = dados.estagios.broto.offsetX + "px";
+    planta.style.top = dados.estagios.broto.offsetY + "px";
+
+    terraSelecionada.appendChild(planta);
+
+    menuPlantio.classList.add("oculto");
+  });
+});
