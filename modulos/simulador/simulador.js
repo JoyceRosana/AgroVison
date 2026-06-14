@@ -2,50 +2,19 @@
    REFERÊNCIAS
 ========================== */
 
-const plantacao = document.getElementById("plantacao");
+const plantacao1 = document.getElementById("plantacao1");
 const plantacao2 = document.getElementById("plantacao2");
 
 const menuPlantio = document.getElementById("menuPlantio");
 const viewport = document.querySelector(".viewport");
 
-let terraSelecionada = null;
-
 /* ==========================
-   GRADE DE TERRAS
+   FUNÇÃO CRIAR PLANTAÇÃO
 ========================== */
 
-const COLUNAS = 10;
-const LINHAS = 10;
-
-const ESPACO_X = 50;
-const ESPACO_Y = 25;
-
-for (let linha = 0; linha < LINHAS; linha++) {
-  for (let coluna = 0; coluna < COLUNAS; coluna++) {
-
-    const terra = document.createElement("div");
-    terra.className = "terra";
-
-    const img = document.createElement("img");
-
-    // ✔ CORRIGIDO: src (não scr)
-    img.src = "/img/simulador/terra.png";
-
-    terra.appendChild(img);
-
-    const x = (coluna * ESPACO_X) - (linha * ESPACO_X);
-    const y = (coluna * ESPACO_Y) + (linha * ESPACO_Y);
-
-    terra.style.left = x + "px";
-    terra.style.top = y + "px";
-
-    plantacao.appendChild(terra);
-  }
-}
-
 function criarPlantacao(container) {
-  const COLUNAS = 10;
-  const LINHAS = 11;
+  const COLUNAS = 6;
+  const LINHAS = 6;
 
   const ESPACO_X = 50;
   const ESPACO_Y = 25;
@@ -71,6 +40,13 @@ function criarPlantacao(container) {
     }
   }
 }
+
+/* ==========================
+   CRIAR AS DUAS PLANTAÇÕES
+========================== */
+
+criarPlantacao(plantacao1);
+criarPlantacao(plantacao2);
 
 /* ==========================
    CULTURAS
@@ -217,8 +193,9 @@ const culturas = {
    ABRIR MENU
 ========================== */
 
-plantacao.addEventListener("click", (e) => {
+document.addEventListener("click", (e) => {
   const terra = e.target.closest(".terra");
+
   if (!terra) return;
 
   terraSelecionada = terra;
@@ -236,10 +213,10 @@ plantacao.addEventListener("click", (e) => {
 ========================== */
 
 document.addEventListener("click", (e) => {
-  const clicouTerra = e.target.closest(".terra");
   const clicouMenu = e.target.closest("#menuPlantio");
+  const clicouTerra = e.target.closest(".terra");
 
-  if (clicouTerra || clicouMenu) return;
+  if (clicouMenu || clicouTerra) return;
 
   menuPlantio.classList.add("oculto");
 });
