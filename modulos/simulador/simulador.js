@@ -10,19 +10,29 @@ const plantacao4 = document.getElementById("plantacao4");
 const menuPlantio = document.getElementById("menuPlantio");
 const viewport = document.querySelector(".viewport");
 
+let terraSelecionada = null;
+
+/* ==========================
+   CONFIGURAÇÃO DAS PLANTAÇÕES
+========================== */
+
+const configuracoesPlantacao = {
+  plantacao1: { linhas: 10, colunas: 10 },
+  plantacao2: { linhas: 8, colunas: 6 },
+  plantacao3: { linhas: 4, colunas: 3 },
+  plantacao4: { linhas: 2, colunas: 3 }
+};
+
 /* ==========================
    FUNÇÃO CRIAR PLANTAÇÃO
 ========================== */
 
-function criarPlantacao(container) {
-  const COLUNAS = 6;
-  const LINHAS = 6;
-
+function criarPlantacao(container, config) {
   const ESPACO_X = 50;
   const ESPACO_Y = 25;
 
-  for (let linha = 0; linha < LINHAS; linha++) {
-    for (let coluna = 0; coluna < COLUNAS; coluna++) {
+  for (let linha = 0; linha < config.linhas; linha++) {
+    for (let coluna = 0; coluna < config.colunas; coluna++) {
 
       const terra = document.createElement("div");
       terra.className = "terra";
@@ -44,13 +54,13 @@ function criarPlantacao(container) {
 }
 
 /* ==========================
-   CRIAR AS DUAS PLANTAÇÕES
+   CRIAR PLANTAÇÕES
 ========================== */
 
-criarPlantacao(plantacao1);
-criarPlantacao(plantacao2);
-criarPlantacao(plantacao3);
-criarPlantacao(plantacao4);
+criarPlantacao(plantacao1, configuracoesPlantacao.plantacao1);
+criarPlantacao(plantacao2, configuracoesPlantacao.plantacao2);
+criarPlantacao(plantacao3, configuracoesPlantacao.plantacao3);
+criarPlantacao(plantacao4, configuracoesPlantacao.plantacao4);
 
 /* ==========================
    CULTURAS
