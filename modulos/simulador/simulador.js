@@ -20,7 +20,7 @@ const configuracoesPlantacao = {
   plantacao1: { linhas: 10, colunas: 10 },
   plantacao2: { linhas: 10, colunas: 7 },
   plantacao3: { linhas: 5, colunas: 4 },
-  plantacao4: { linhas: 5, colunas: 3 }
+  plantacao4: { linhas: 4, colunas: 3 }
 };
 
 /* ==========================
