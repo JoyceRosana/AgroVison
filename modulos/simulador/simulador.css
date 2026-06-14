@@ -112,7 +112,7 @@ body{
 
 .plantacao{
     position:absolute;
-    top:200px;
+    top: 1px;
     left:1220px;
     z-index:20;
 }
