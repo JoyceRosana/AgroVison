@@ -13,7 +13,7 @@ let terraSelecionada = null;
 ========================== */
 
 const COLUNAS = 10;
-const LINHAS = 11;
+const LINHAS = 10;
 
 const ESPACO_X = 50;
 const ESPACO_Y = 25;
