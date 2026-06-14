@@ -108,11 +108,16 @@ body{
    PLANTAÇÃO
 ========================== */
 
-
-
 .plantacao{
     position:absolute;
     top: 20px;
+    left:1100px;
+    z-index:20;
+}
+
+.plantacao2{
+    position:absolute;
+    top: 800px;
     left:1100px;
     z-index:20;
 }
