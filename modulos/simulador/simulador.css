@@ -117,21 +117,21 @@ body{
 
 .plantacao2{
     position:absolute;
-    top: 750px;
-    left:1500px;
+    top: 850px;
+    left:1600px;
     z-index:20;
 }
 
 .plantacao3{
     position:absolute;
-    top: 900px;
+    top: 800px;
     left:500px;
     z-index:20;
 }
 
 .plantacao4{
     position:absolute;
-    top: 300px;
+    top: 900px;
     left:500px;
     z-index:20;
 }
