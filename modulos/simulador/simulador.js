@@ -4,6 +4,8 @@
 
 const plantacao1 = document.getElementById("plantacao1");
 const plantacao2 = document.getElementById("plantacao2");
+const plantacao3 = document.getElementById("plantacao3");
+const plantacao4 = document.getElementById("plantacao4");
 
 const menuPlantio = document.getElementById("menuPlantio");
 const viewport = document.querySelector(".viewport");
