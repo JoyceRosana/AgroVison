@@ -117,14 +117,14 @@ body{
 
 .plantacao2{
     position:absolute;
-    top: 650px;
-    left: 1590px;
+    top: 700px;
+    left: 1550px;
     z-index:20;
 }
 
 .plantacao3{
     position:absolute;
-    top: 890px;
+    top: 910px;
     left:290px;
     z-index:20;
 }
@@ -132,7 +132,7 @@ body{
 .plantacao4{
     position:absolute;
     top: 947px;
-    left:540px;
+    left:535px;
     z-index:20;
 }
 
