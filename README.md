@@ -201,18 +201,20 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 ### conhecimento/conteudos/sustentabilidade
 
 * Prompt: "Paisagem agrícola sustentável com lavouras, reservatório de água, energia solar, turbinas eólicas e muda crescendo em solo fértil"
-* Prompt: "Etapas de sustentabilidade"
-* Prompt: "Uso consciente da água na agricultura"
+* Prompt: "etapas da sustentabilidade"
+* Prompt: "Linha evolutiva de uma planta crescendo em fases, ambiente agrícola moderno, realista, sem texto."
+* Prompt: "Mãos protegendo uma gota gigante de água com ecossistema sustentável dentro, realista, sem texto"
 * Prompt: "Cuidado com a natureza"
-* Prompt: "Energia renovável aplicada ao agronegócio"
+* Prompt: "Floresta exuberante com nascente, cachoeira e biodiversidade protegida, realista, sem texto."
 
 ### conhecimento/conteudos/tecnologia
 
 * Prompt: "Varios equipamentos teconologicos no agro"
 * Prompt: "Tecnologia agrícola moderna sem texto, fundo transparente"
+* Prompt: "diversas teconologias"
 * Prompt: "Inteligência artificial na agricultura"
 * Prompt: "Drone monitorando plantação"
-* 
+* Prompt: "gps na fazenda"
 
 * ### conhecimento/destaque
 
