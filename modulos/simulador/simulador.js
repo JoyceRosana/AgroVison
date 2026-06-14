@@ -249,33 +249,91 @@ if (viewport) {
    PLANTAR
 ========================== */
 
+function iniciarCrescimento(planta, dados) {
+
+    // FASE JOVEM
+    setTimeout(() => {
+
+        planta.src = dados.estagios.jovem.src;
+
+        planta.style.width =
+            dados.estagios.jovem.width + "px";
+
+        planta.style.height =
+            dados.estagios.jovem.height + "px";
+
+        planta.style.left =
+            dados.estagios.jovem.offsetX + "px";
+
+        planta.style.top =
+            dados.estagios.jovem.offsetY + "px";
+
+    }, dados.crescimento / 2);
+
+
+    // FASE ADULTA
+    setTimeout(() => {
+
+        planta.src = dados.estagios.adulto.src;
+
+        planta.style.width =
+            dados.estagios.adulto.width + "px";
+
+        planta.style.height =
+            dados.estagios.adulto.height + "px";
+
+        planta.style.left =
+            dados.estagios.adulto.offsetX + "px";
+
+        planta.style.top =
+            dados.estagios.adulto.offsetY + "px";
+
+        planta.dataset.adulta = "true";
+
+    }, dados.crescimento);
+}
+
+
 document.querySelectorAll(".opcao").forEach((botao) => {
-  botao.addEventListener("click", () => {
 
-    const cultura = botao.dataset.cultura;
+    botao.addEventListener("click", () => {
 
-    if (!terraSelecionada) return;
+        const cultura = botao.dataset.cultura;
 
-    if (terraSelecionada.querySelector(".planta")) return;
+        if (!terraSelecionada) return;
 
-    const dados = culturas[cultura];
+        // impede plantar em terra ocupada
+        if (terraSelecionada.querySelector(".planta")) return;
 
-    if (!dados) return;
+        const dados = culturas[cultura];
 
-    const planta = document.createElement("img");
+        if (!dados) return;
 
-    planta.className = "planta";
+        const planta = document.createElement("img");
 
-    planta.src = dados.estagios.broto.src;
+        planta.className = "planta";
 
-    planta.style.width = dados.estagios.broto.width + "px";
-    planta.style.height = dados.estagios.broto.height + "px";
+        // BROTO
+        planta.src = dados.estagios.broto.src;
 
-    planta.style.left = dados.estagios.broto.offsetX + "px";
-    planta.style.top = dados.estagios.broto.offsetY + "px";
+        planta.style.width =
+            dados.estagios.broto.width + "px";
 
-    terraSelecionada.appendChild(planta);
+        planta.style.height =
+            dados.estagios.broto.height + "px";
 
-    menuPlantio.classList.add("oculto");
-  });
+        planta.style.left =
+            dados.estagios.broto.offsetX + "px";
+
+        planta.style.top =
+            dados.estagios.broto.offsetY + "px";
+
+        terraSelecionada.appendChild(planta);
+
+        menuPlantio.classList.add("oculto");
+
+        iniciarCrescimento(planta, dados);
+
+    });
+
 });
