@@ -199,106 +199,94 @@ const culturas = {
 };
 
 
+
+
+
 /* ==========================
    ABRIR MENU
 ========================== */
 
-plantacao.addEventListener("click",(e)=>{
+plantacao.addEventListener("click", (e) => {
+  const terra = e.target.closest(".terra");
 
-    const terra =
-    e.target.closest(".terra");
+  if (!terra) return;
 
-    if(!terra) return;
-    terraSelecionada = terra;
+  terraSelecionada = terra;
 
-    const rect =
-    terra.getBoundingClientRect();
+  const rect = terra.getBoundingClientRect();
 
-    menuPlantio.style.left =
-    (rect.left - 35) + "px";
+  menuPlantio.style.left = (rect.left - 35) + "px";
+  menuPlantio.style.top = (rect.top - 150) + "px";
 
-    menuPlantio.style.top =
-    (rect.top - 150) + "px";
-
-    menuPlantio.classList.remove(
-        "oculto"
-    );
-
+  menuPlantio.classList.remove("oculto");
 });
+
 
 /* ==========================
    FECHAR MENU
 ========================== */
 
-document.addEventListener("click",(e)=>{
+document.addEventListener("click", (e) => {
+  const clicouTerra = e.target.closest(".terra");
+  const clicouMenu = e.target.closest("#menuPlantio");
 
-    const clicouTerra =
-    e.target.closest(".terra");
+  if (clicouTerra || clicouMenu) return;
 
-    const clicouMenu =
-    e.target.closest("#menuPlantio");
-
-    if(clicouTerra || clicouMenu){
-        return;
-    }
-
-    menuPlantio.classList.add(
-        "oculto"
-    );
-
+  menuPlantio.classList.add("oculto");
 });
+
+
+/* ⚠️ CORREÇÃO IMPORTANTE:
+   você NÃO tinha isso declarado no seu código
+*/
+
+const viewport = document.querySelector(".viewport");
 
 viewport.addEventListener("mousedown", () => {
-
-    menuPlantio.classList.add("oculto");
-
+  menuPlantio.classList.add("oculto");
 });
+
 
 /* ==========================
    PLANTAR
 ========================== */
 
-document
-.querySelectorAll(".opcao")
-.forEach(botao => {
+document.querySelectorAll(".opcao").forEach((botao) => {
+  botao.addEventListener("click", () => {
 
-    botao.addEventListener(
-    "click",
-    ()=>{
+    const cultura = botao.dataset.cultura;
 
-        if(!terraSelecionada)
-        return;
+    console.log("cultura escolhida:", cultura);
+    console.log("terra selecionada:", terraSelecionada);
 
-        if(
-        terraSelecionada.querySelector(
-            ".planta"
-        )
-        ){
-            return;
-        }
+    if (!terraSelecionada) return;
 
-        const cultura =
-        botao.dataset.cultura;
+    // impede plantar duas vezes na mesma terra
+    if (terraSelecionada.querySelector(".planta")) return;
 
-        const planta =
-        document.createElement("img");
+    const dados = culturas[cultura];
 
-        planta.className =
-        "planta";
+    if (!dados) {
+      console.log("cultura não existe no objeto culturas");
+      return;
+    }
 
-        planta.src =
-        "/img/simulador/" +
-        cultura +
-        "1.png";
+    const planta = document.createElement("img");
 
-        terraSelecionada.appendChild(
-            planta
-        );
+    planta.className = "planta";
 
-        menuPlantio.classList.add(
-            "oculto"
-        );
+    planta.src = dados.estagios.broto.src;
 
-    });
+    planta.style.width = dados.estagios.broto.width + "px";
+    planta.style.height = dados.estagios.broto.height + "px";
 
+    planta.style.left = dados.estagios.broto.offsetX + "px";
+    planta.style.top = dados.estagios.broto.offsetY + "px";
+
+    terraSelecionada.appendChild(planta);
+
+    menuPlantio.classList.add("oculto");
+  });
 });
+
+    
