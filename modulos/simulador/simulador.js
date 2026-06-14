@@ -18,7 +18,7 @@ let terraSelecionada = null;
 
 const configuracoesPlantacao = {
   plantacao1: { linhas: 10, colunas: 10 },
-  plantacao2: { linhas: 8, colunas: 6 },
+  plantacao2: { linhas: 10, colunas: 7 },
   plantacao3: { linhas: 4, colunas: 3 },
   plantacao4: { linhas: 2, colunas: 3 }
 };
