@@ -251,7 +251,7 @@ if (viewport) {
 
 function iniciarCrescimento(planta, dados) {
 
-    // FASE JOVEM
+    // BROTO -> JOVEM (30s)
     setTimeout(() => {
 
         planta.src = dados.estagios.jovem.src;
@@ -268,10 +268,9 @@ function iniciarCrescimento(planta, dados) {
         planta.style.top =
             dados.estagios.jovem.offsetY + "px";
 
-    }, dados.crescimento / 2);
+    }, 30000);
 
-
-    // FASE ADULTA
+    // JOVEM -> ADULTA (mais 30s)
     setTimeout(() => {
 
         planta.src = dados.estagios.adulto.src;
@@ -290,7 +289,8 @@ function iniciarCrescimento(planta, dados) {
 
         planta.dataset.adulta = "true";
 
-    }, dados.crescimento);
+    }, 60000);
+
 }
 
 
@@ -302,7 +302,7 @@ document.querySelectorAll(".opcao").forEach((botao) => {
 
         if (!terraSelecionada) return;
 
-        // impede plantar em terra ocupada
+        // já tem planta nessa terra?
         if (terraSelecionada.querySelector(".planta")) return;
 
         const dados = culturas[cultura];
@@ -313,7 +313,7 @@ document.querySelectorAll(".opcao").forEach((botao) => {
 
         planta.className = "planta";
 
-        // BROTO
+        // FASE BROTO
         planta.src = dados.estagios.broto.src;
 
         planta.style.width =
