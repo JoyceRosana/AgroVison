@@ -72,21 +72,21 @@ const culturas = {
     estagios: {
       broto: {
         src: "/img/simulador/milho_broto.png",
-        width: 80,
+        width: 60,
         height: 90,
         offsetX: -12,
         offsetY: 0
       },
       jovem: {
         src: "/img/simulador/milho_jovem.png",
-        width: 120,
+        width: 60,
         height: 140,
         offsetX: 0,
         offsetY: 0
       },
       adulto: {
         src: "/img/simulador/milho_adulto.png",
-        width: 150,
+        width: 60,
         height: 180,
         offsetX: -10,
         offsetY: 0
@@ -106,15 +106,15 @@ const culturas = {
       },
       jovem: {
         src: "/img/simulador/soja_jovem.png",
-        width: 120,
-        height: 140,
+        width: 80,
+        height: 90,
         offsetX: 0,
         offsetY: 0
       },
       adulto: {
         src: "/img/simulador/soja_adulto.png",
-        width: 150,
-        height: 180,
+        width: 80,
+        height: 90,
         offsetX: -10,
         offsetY: 0
       }
@@ -133,15 +133,15 @@ const culturas = {
       },
       jovem: {
         src: "/img/simulador/tomate_jovem.png",
-        width: 120,
-        height: 140,
+        width: 80,
+        height: 90,
         offsetX: 0,
         offsetY: 0
       },
       adulto: {
         src: "/img/simulador/tomate_adulto.png",
-        width: 150,
-        height: 180,
+        width: 80,
+        height: 90,
         offsetX: -10,
         offsetY: 0
       }
@@ -160,15 +160,15 @@ const culturas = {
       },
       jovem: {
         src: "/img/simulador/cenoura_jovem.png",
-        width: 120,
-        height: 140,
+        width: 80,
+        height: 90,
         offsetX: 0,
         offsetY: 0
       },
       adulto: {
         src: "/img/simulador/cenoura_adulto.png",
-        width: 150,
-        height: 180,
+        width: 80,
+        height: 90,
         offsetX: -10,
         offsetY: 0
       }
@@ -187,15 +187,15 @@ const culturas = {
       },
       jovem: {
         src: "/img/simulador/alface_jovem.png",
-        width: 120,
-        height: 140,
+        width: 80,
+        height: 90,
         offsetX: 0,
         offsetY: 0
       },
       adulto: {
         src: "/img/simulador/alface_adulto.png",
-        width: 150,
-        height: 180,
+        width: 80,
+        height: 90,
         offsetX: -10,
         offsetY: 0
       }
