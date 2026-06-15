@@ -2,19 +2,16 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador Agro Vision - Sistema Persistente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Simulador Agro Vision - Sistema Avançado</title>
     <style>
         :root {
             --wood-dark: #5c3a21;
             --wood-light: #cd853f;
             --gold: #ffd700;
-            --bg-filter: none;
-            --bg-color-blend: transparent;
-            --zoom-factor: 1;
         }
 
-        /* ACESSIBILIDADE - MODOS VISUAIS CRIAÇÃO */
+        /* ACESSIBILIDADE */
         body.modo-escuro {
             filter: grayscale(1) invert(0.9) !important;
             background-color: #000 !important;
@@ -31,8 +28,10 @@
         * {
             box-sizing: border-box;
             user-select: none;
+            -webkit-user-select: none;
             margin: 0;
             padding: 0;
+            touch-action: none; /* Bloqueia scroll nativo do browser no mobile */
         }
 
         body, html {
@@ -71,20 +70,27 @@
             letter-spacing: 1px;
         }
 
-        .btn-ui {
+        /* BOTÃO DE ENGRENAGEM CANTO SUPERIOR DIREITO */
+        .btn-config-gear {
+            position: fixed;
+            top: 22px;
+            right: 25px;
+            width: 40px;
+            height: 20px;
             background: linear-gradient(135deg, #4a3329, #27140b);
-            border: 2px solid var(--wood-light);
+            border: 1px solid var(--wood-light);
             color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 5100;
             transition: all 0.2s;
         }
-        .btn-ui:hover {
+        .btn-config-gear:hover {
             background: var(--wood-light);
-            transform: translateY(-1px);
         }
 
         .hud-display {
@@ -92,8 +98,27 @@
             gap: 25px;
             font-size: 18px;
             font-weight: bold;
+            margin-right: 60px;
         }
-        .hud-item { display: flex; align-items: center; gap: 8px; }
+
+        /* ALERTA VISUAL DE CHUVA */
+        #rain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(41, 128, 185, 0.15);
+            pointer-events: none;
+            z-index: 4000;
+            display: none;
+        }
+        #rain-indicator {
+            background: #2980b9;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            display: none;
+        }
 
         /* VIEWPORT DO JOGO */
         #game-viewport {
@@ -116,12 +141,15 @@
             transform: translate(-15px, -15px);
         }
 
-        /* MAPA INTERATIVO */
+        /* MAPA RURAL SEM IMAGEM */
         #farm-map {
             width: 3000px;
             height: 2000px;
-            background-image: url('/img/simulador/mapa.png');
-            background-size: cover;
+            background-color: #27ae60;
+            background-image: 
+                linear-gradient(90deg, transparent 48%, #8e6239 48%, #8e6239 52%, transparent 52%),
+                linear-gradient(0deg, transparent 48%, #8e6239 48%, #8e6239 52%, transparent 52%);
+            background-size: 100% 100%;
             position: absolute;
             top: 0; left: 0;
             transform-origin: 0 0;
@@ -137,41 +165,44 @@
         .objeto:hover { transform: scale(1.03); }
         .objeto img { width: 100%; height: auto; pointer-events: none; }
         
-        .galpao { width: 350px; top: 545px; left: 0; }
-        .cooperativa { width: 300px; top: 580px; left: 350px; }
-        .cisterna { width: 300px; top: 440px; left: 630px; }
+        .galpao { width: 350px; top: 545px; left: 60px; }
+        .cooperativa { width: 300px; top: 580px; left: 430px; }
+        .cisterna { width: 300px; top: 440px; left: 750px; }
 
-        /* PLANTAÇÕES */
+        /* PLANTAÇÕES ORGANIZADAS */
         .grid-plantacao {
             display: grid;
             grid-template-columns: repeat(4, 85px);
             grid-gap: 12px;
-            background: rgba(45, 30, 15, 0.4);
+            background: rgba(40, 26, 13, 0.6);
             padding: 15px;
             border-radius: 12px;
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 3px solid var(--wood-dark);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
-        .plantacao1 { position: absolute; top: 20px; left: 1097px; z-index: 20; }
-        .plantacao2 { position: absolute; top: 800px; left: 1550px; z-index: 20; }
-        .plantacao3 { position: absolute; top: 865px; left: 285px; z-index: 20; }
-        .plantacao4 { position: absolute; top: 947px; left: 525px; z-index: 20; }
+        
+        .plantacao1 { position: absolute; top: 150px; left: 1150px; z-index: 20; }
+        .plantacao2 { position: absolute; top: 150px; left: 1600px; z-index: 20; }
+        .plantacao3 { position: absolute; top: 850px; left: 1150px; z-index: 20; }
+        .plantacao4 { position: absolute; top: 850px; left: 1600px; z-index: 20; }
 
         .plot {
             width: 85px;
             height: 85px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px dashed rgba(255,255,255,0.3);
-            border-radius: 8px;
+            background: #4a3319;
+            border: 2px solid #3a220f;
+            border-radius: 6px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
-        .plot:hover { background: rgba(255, 255, 255, 0.15); }
+        .plot:hover { background: #5c3f21; border-color: var(--wood-light); }
         .plot.wet {
-            background: rgba(41, 128, 185, 0.3) !important;
+            background: #224466 !important;
             border-color: #3498db !important;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
         .plot-plant-img {
@@ -184,9 +215,10 @@
         /* BALÃO DE MADEIRA */
         .wood-balloon {
             position: absolute;
-            background-image: url('img/simulador/balao_madeira.png');
-            background-size: 100% 100%;
-            padding: 25px 20px 35px 20px;
+            background-color: #dfb887;
+            border: 4px solid var(--wood-dark);
+            border-radius: 10px;
+            padding: 15px;
             z-index: 1000;
             display: flex;
             gap: 12px;
@@ -221,7 +253,8 @@
             padding: 25px;
             z-index: 6000;
             display: none;
-            min-width: 420px;
+            width: 90%;
+            max-width: 520px;
             color: #3a2210;
             box-shadow: 0 20px 60px rgba(0,0,0,0.7);
         }
@@ -255,7 +288,6 @@
         }
         .btn-action:hover { background: #219653; }
 
-        /* TEXTOS FLUTUANTES */
         .floating-text {
             position: absolute;
             color: #fff;
@@ -271,7 +303,6 @@
             100% { opacity: 0; transform: translateY(-90px); }
         }
 
-        /* PAINEL DE CONFIGURAÇÕES E SISTEMA DE CONTINUIDADE */
         .config-layout {
             display: flex;
             gap: 15px;
@@ -295,7 +326,7 @@
         
         .code-box {
             width: 100%;
-            height: 80px;
+            height: 70px;
             margin-top: 5px;
             font-family: monospace;
             font-size: 11px;
@@ -311,26 +342,36 @@
             grid-gap: 10px;
             margin-top: 10px;
         }
+
+        /* RESPONSIVIDADE ADAPTATIVA SMARTPHONES/TABLETS */
+        @media (max-width: 600px) {
+            .config-layout { flex-direction: column; height: 400px; }
+            .config-sidebar { width: 100%; border-right: none; border-bottom: 2px solid var(--wood-dark); flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .modal-panel { max-width: 95%; padding: 15px; }
+            .brand-title { font-size: 16px; }
+            .hud-display { font-size: 14px; }
+        }
     </style>
 </head>
 <body>
 
+    <div id="rain-overlay"></div>
+
     <div id="top-bar">
         <div class="brand-group">
             <span class="brand-title">AGRO VISION</span>
-            <button class="btn-ui" onclick="openConfigModal()">⚙️ Configurações</button>
+            <div id="rain-indicator">🌧️ CHOVENDO AGORA</div>
             <div class="hud-item" style="color: var(--gold); font-size: 20px; margin-left: 10px;">
-                💰 Saldo: $<span id="hud-money">100</span>
+                💰 Saldo: $<span id="hud-money">120</span>
             </div>
         </div>
 
         <div style="display: flex; align-items: center; gap: 20px;">
             <div id="active-mode-indicator" style="color: var(--gold); font-weight: bold; font-size: 14px;"></div>
-            <div class="hud-display">
-                <div class="hud-item">💧 Cisterna: <span id="hud-water">100</span>L</div>
-            </div>
         </div>
     </div>
+
+    <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
 
     <img id="custom-cursor" src="" alt="Cursor Especial">
 
@@ -369,15 +410,15 @@
 
     <div id="modal-cisterna" class="modal-panel">
         <div class="modal-header"><span>Estação de Filtragem</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
-        <p style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: #2c3e50;">Ciclo Ecológico: Rio → Captação → Filtro → Irrigação</p>
-        <div class="item-row">
-            <span>Volume de Água Tratada:</span>
-            <span id="modal-water-label" style="color:#2980b9;">100L</span>
+        <p style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: #2c3e50;">Ciclo Ecológico: Chuva/Rio → Captação → Filtro → Irrigação</p>
+        <div class="item-row" style="background: rgba(41, 128, 185, 0.2);">
+            <span>Reservatório de Água Filtrada:</span>
+            <span id="modal-water-label" style="color:#1f618d; font-size:20px;">100L</span>
         </div>
-        <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Iniciar Sucção e Filtragem Automatizada</button>
+        <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Ligar Bombas Hidráulicas (+50L)</button>
     </div>
 
-    <div id="modal-config" class="modal-panel" style="min-width: 600px;">
+    <div id="modal-config" class="modal-panel" style="max-width: 650px;">
         <div class="modal-header">
             <span>Painel de Gerenciamento Integrado</span>
             <span class="close-btn" onclick="closeModals()">&times;</span>
@@ -385,23 +426,22 @@
         
         <div class="config-layout">
             <div class="config-sidebar">
-                <button class="btn-ui" style="width:100%; text-align:left;" onclick="switchTab('tab-inicio')">🏠 Início</button>
-                <button class="btn-ui" style="width:100%; text-align:left; color:#5cb85c;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
-                <button class="btn-ui" style="width:100%; text-align:left;" onclick="switchTab('tab-save')">💾 Continuidade</button>
-                <button class="btn-ui" style="width:100%; text-align:left;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
+                <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">🏠 Início</button>
+                <button class="btn-action" style="width:100%; text-align:left; background:#27ae60;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
+                <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
+                <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
             </div>
 
             <div class="config-content">
-                
                 <div id="tab-inicio" class="tab-pane active">
                     <h3>Retornar à Operação</h3>
-                    <p style="margin-top:10px; font-size:14px;">O simulador continua rodando em tempo real em segundo plano. Clique no botão abaixo para fechar o painel e voltar para as terras.</p>
+                    <p style="margin-top:10px; font-size:14px;">O simulador continua rodando em segundo plano. Clique no botão abaixo para voltar ao mapa.</p>
                     <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">Voltar ao Mapa da Fazenda</button>
                 </div>
 
                 <div id="tab-agrovision" class="tab-pane">
-                    <h3>Agro Vision Central v2.5</h3>
-                    <p style="margin-top:8px; font-size:13px; line-height:1.4;">Este módulo representa a identidade corporativa e técnica do projeto. Desenvolvido para simular com precisão a cadeia lógica do agronegócio sustentável através da otimização de ciclos produtivos: Planejamento, Insumos, Irrigação Técnica, Estocagem Segura e Escoamento de Safra.</p>
+                    <h3>Agro Vision Central v2.6</h3>
+                    <p style="margin-top:8px; font-size:13px; line-height:1.4;">Desenvolvido para simular com precisão a cadeia lógica do agronegócio sustentável e controle automatizado de recursos.</p>
                     <div style="margin-top:15px; padding:10px; background:rgba(0,0,0,0.05); border-radius:6px; font-size:12px; font-weight:bold;">
                         Status do Core: Conectado e Persistente
                     </div>
@@ -409,58 +449,51 @@
 
                 <div id="tab-save" class="tab-pane">
                     <h3>Persistência de Dados (Save System)</h3>
-                    <p style="font-size:12px; margin-top:4px;">Gere ou cole o hash criptográfico para garantir a continuidade da fazenda.</p>
-                    
                     <div style="margin-top:12px;">
                         <button class="btn-action" style="background:#8e44ad; width:100%;" onclick="generateSaveCode()">Gerar Código de Salvamento Único</button>
-                        <textarea id="save-code-output" class="code-box" readonly placeholder="Seu código de progresso aparecerá aqui..."></textarea>
+                        <textarea id="save-code-output" class="code-box" readonly placeholder="Seu código aparecerá aqui..."></textarea>
                     </div>
-
                     <div style="margin-top:15px; border-top:1px dashed var(--wood-dark); padding-top:10px;">
                         <span style="font-size:13px; font-weight:bold;">Restaurar Partida Existente:</span>
-                        <textarea id="save-code-input" class="code-box" placeholder="Cole o código de salvamento gerado anteriormente aqui..."></textarea>
+                        <textarea id="save-code-input" class="code-box" placeholder="Cole o código gerado aqui..."></textarea>
                         <button class="btn-action" style="background:#d35400; width:100%; margin-top:5px;" onclick="loadSaveCode()">Injetar Código e Reconstruir Estado</button>
                     </div>
                 </div>
 
                 <div id="tab-acessibilidade" class="tab-pane">
                     <h3>Controle de Estímulos e Visão</h3>
-                    
                     <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
                     <div style="display:flex; gap:10px; margin-top:5px;">
-                        <button class="btn-ui" style="flex:1;" onclick="changeZoom(0.1)">Aumentar (+) </button>
-                        <button class="btn-ui" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
-                        <button class="btn-ui" style="flex:1;" onclick="resetZoom()">Padrão (100%)</button>
+                        <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
+                        <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
                     </div>
-
                     <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
                     <div class="acc-grid">
-                        <button class="btn-ui" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro (P&B)</button>
-                        <button class="btn-ui" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura (Suave)</button>
-                        <button class="btn-ui" style="background:#fff; color:#000;" onclick="applyVisualMode('clear')">Modo Claro Padrão</button>
+                        <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
+                        <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
+                        <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
     <script>
-        /* MODELO DE DADOS SERIALIZÁVEL (ESTADO ÚNICO DO JOGO) */
         const CROPS = {
-            milho:   { name: "Milho",   seedPrice: 5,  sellPrice: 15, seedSellPrice: 3, growTime: 6,   img_broto: "img/simulador/milho_broto.png",   img_jovem: "img/simulador/milho_jovem.png",   img_adulte: "img/simulador/milho_adulto.png" },
-            soja:    { name: "Soja",    seedPrice: 8,  sellPrice: 22, seedSellPrice: 5, growTime: 10,  img_broto: "img/simulador/soja_broto.png",    img_jovem: "img/simulador/soja_jovem.png",    img_adulte: "img/simulador/soja_adulto.png" },
-            tomate:  { name: "Tomate",  seedPrice: 12, sellPrice: 35, seedSellPrice: 8, growTime: 14,  img_broto: "img/simulador/tomate_broto.png",  img_jovem: "img/simulador/tomate_jovem.png",  img_adulte: "img/simulador/tomate_adulto.png" },
-            cenoura: { name: "Cenoura", seedPrice: 4,  sellPrice: 12, seedSellPrice: 2, growTime: 5,   img_broto: "img/simulador/cenoura_broto.png", img_jovem: "img/simulador/cenoura_jovem.png", img_adulte: "img/simulador/cenoura_adulto.png" },
-            alface:  { name: "Alface",  seedPrice: 3,  sellPrice: 9,  seedSellPrice: 1, growTime: 4,   img_broto: "img/simulador/alface_broto.png",  img_jovem: "img/simulador/alface_jovem.png",  img_adulte: "img/simulador/alface_adulto.png" }
+            milho:   { name: "Milho",   seedPrice: 5,  sellPrice: 15, seedSellPrice: 3, growTime: 6,   img_broto: "/img/simulador/milho_broto.png",   img_jovem: "/img/simulador/milho_jovem.png",   img_adulte: "/img/simulador/milho_adulto.png" },
+            soja:    { name: "Soja",    seedPrice: 8,  sellPrice: 22, seedSellPrice: 5, growTime: 10,  img_broto: "/img/simulador/soja_broto.png",    img_jovem: "/img/simulador/soja_jovem.png",    img_adulte: "/img/simulador/soja_adulto.png" },
+            tomate:  { name: "Tomate",  seedPrice: 12, sellPrice: 35, seedSellPrice: 8, growTime: 14,  img_broto: "/img/simulador/tomate_broto.png",  img_jovem: "/img/simulador/tomate_jovem.png",  img_adulte: "/img/simulador/tomate_adulto.png" },
+            cenoura: { name: "Cenoura", seedPrice: 4,  sellPrice: 12, seedSellPrice: 2, growTime: 5,   img_broto: "/img/simulador/cenoura_broto.png", img_jovem: "/img/simulador/cenoura_jovem.png", img_adulte: "/img/simulador/cenoura_adulto.png" },
+            alface:  { name: "Alface",  seedPrice: 3,  sellPrice: 9,  seedSellPrice: 1, growTime: 4,   img_broto: "/img/simulador/alface_broto.png",  img_jovem: "/img/simulador/alface_jovem.png",  img_adulte: "/img/simulador/alface_adulto.png" }
         };
 
         let gameState = {
             money: 120,
-            water: 100,
+            water: 100, // Armazenada exclusivamente na Cisterna
+            maxWater: 200,
             inventory: { milho: 0, soja: 0, tomate: 0, cenoura: 0, alface: 0 },
             seeds: { milho: 5, soja: 5, tomate: 5, cenoura: 5, alface: 5 },
-            plots: {}, // Dicionário populado dinamicamente
+            plots: {},
             currentMode: 'normal',
             selectedCrop: null,
             activeBalloonPlotId: null
@@ -468,7 +501,7 @@
 
         let currentZoom = 1;
 
-        // Construção dos Lotes nas coordenadas fornecidas no CSS
+        // Construção geométrica dos Lotes
         let plotGlobalCounter = 1;
         ['p1', 'p2', 'p3', 'p4'].forEach(zoneId => {
             const container = document.getElementById(zoneId);
@@ -477,28 +510,28 @@
                 p.className = 'plot';
                 p.dataset.id = plotGlobalCounter;
                 container.appendChild(p);
-
                 gameState.plots[plotGlobalCounter] = { id: plotGlobalCounter, crop: null, stage: 0, timer: 0, isWet: false };
                 plotGlobalCounter++;
             }
         });
 
-        /* DRAG AND DROP DO MAPA RURAL */
+        /* MOTOR UNIFICADO DE TOQUE E DESLIZAMENTO (POINTER EVENTS - SUPORTA DEDO E MOUSE) */
         const viewport = document.getElementById('game-viewport');
         const map = document.getElementById('farm-map');
         let isDragging = false, startX, startY, mapPosX = -400, mapPosY = -300;
 
         map.style.transform = `translate(${mapPosX}px, ${mapPosY}px) scale(${currentZoom})`;
 
-        viewport.addEventListener('mousedown', (e) => {
-            if (e.target.closest('.wood-balloon') || e.target.closest('.modal-panel') || e.target.closest('.objeto') || e.target.closest('.plot')) return;
+        viewport.addEventListener('pointerdown', (e) => {
+            if (e.target.closest('.wood-balloon') || e.target.closest('.modal-panel') || e.target.closest('.objeto') || e.target.closest('.plot') || e.target.closest('.btn-config-gear')) return;
             isDragging = true;
             viewport.style.cursor = 'grabbing';
             startX = e.clientX - mapPosX;
             startY = e.clientY - mapPosY;
+            viewport.setPointerCapture(e.pointerId); // Garante captura contínua do rastro de movimento
         });
 
-        window.addEventListener('mousemove', (e) => {
+        viewport.addEventListener('pointermove', (e) => {
             if (gameState.currentMode !== 'normal') {
                 const cursor = document.getElementById('custom-cursor');
                 cursor.style.left = e.clientX + 'px';
@@ -508,31 +541,29 @@
             mapPosX = e.clientX - startX;
             mapPosY = e.clientY - startY;
             
-            // Limitações de borda do espaço rural
             mapPosX = Math.min(0, Math.max(window.innerWidth - (3000 * currentZoom), mapPosX));
             mapPosY = Math.min(0, Math.max(window.innerHeight - (2000 * currentZoom), mapPosY));
             renderMapTransform();
         });
 
-        window.addEventListener('mouseup', () => {
+        viewport.addEventListener('pointerup', (e) => {
             isDragging = false;
             if(gameState.currentMode === 'normal') viewport.style.cursor = 'grab';
+            viewport.releasePointerCapture(e.pointerId);
         });
 
         function renderMapTransform() {
             map.style.transform = `translate(${mapPosX}px, ${mapPosY}px) scale(${currentZoom})`;
         }
 
-        /* MOTOR DE GERENCIAMENTO DAS ABAS DE CONFIGURAÇÃO */
         function switchTab(tabId) {
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
         }
 
-        /* MECÂNICA DE FLUXO CONTÍNUO E INTERAÇÕES COGNITIVAS */
+        /* MECÂNICA INTERATIVA DAS PLANTAÇÕES */
         document.querySelectorAll('.plot').forEach(plot => {
             const id = plot.dataset.id;
-
             plot.addEventListener('click', (e) => {
                 e.stopPropagation();
                 if (gameState.currentMode !== 'normal') return;
@@ -547,7 +578,7 @@
                 }
             });
 
-            plot.addEventListener('mouseenter', () => {
+            plot.addEventListener('pointerenter', () => {
                 if (gameState.currentMode === 'planting' && !gameState.plots[id].crop) {
                     executePlanting(id, plot);
                 } else if (gameState.currentMode === 'harvesting' && gameState.plots[id].crop && gameState.plots[id].stage === 3) {
@@ -581,12 +612,10 @@
                     <div class="crop-option" onclick="startContinuousPlanting('${k}')">
                         <img src="${CROPS[k].img_adulte}">
                         <div>${CROPS[k].name}</div>
-                        <div style="font-size:9px; color:#555;">Sementes: ${gameState.seeds[k]}</div>
                     </div>`;
             }
             balloon.innerHTML = html;
             
-            // Posicionamento modular considerando os quadrantes relativos do mapa
             balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
             balloon.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop) + 'px';
             document.getElementById('balloon-layer').appendChild(balloon);
@@ -599,9 +628,9 @@
             const balloon = document.createElement('div');
             balloon.className = 'wood-balloon';
             balloon.innerHTML = `
-                <div class="harvest-option" onclick="startContinuousHarvest()" style="flex-direction:row; gap:10px; padding:10px 15px;">
-                    <img src="img/simulador/foice.png" style="width:32px; height:32px;">
-                    <div style="align-self:center; font-size:13px;">Equipar Foice</div>
+                <div class="harvest-option" onclick="startContinuousHarvest()">
+                    <img src="/img/simulador/foice.png">
+                    <div>Equipar Foice</div>
                 </div>`;
             
             balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
@@ -611,18 +640,17 @@
 
         function startContinuousPlanting(cropKey) {
             if (gameState.seeds[cropKey] <= 0) {
-                alert(`Sem sementes de ${CROPS[cropKey].name}! Compre suprimentos na Cooperativa.`);
+                alert(`Sem sementes de ${CROPS[cropKey].name}! Adquira na Cooperativa.`);
                 closeActiveBalloon();
                 return;
             }
             gameState.currentMode = 'planting';
             gameState.selectedCrop = cropKey;
-            
-            document.getElementById('active-mode-indicator').innerText = `MODO CONTINUO: Semeando ${CROPS[cropKey].name}`;
+            document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
             viewport.className = 'mode-planting';
             
             const cursor = document.getElementById('custom-cursor');
-            cursor.src = 'img/simulador/maozinha.png';
+            cursor.src = '/img/simulador/maozinha.png';
             cursor.style.display = 'block';
 
             executePlanting(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
@@ -631,11 +659,11 @@
 
         function startContinuousHarvest() {
             gameState.currentMode = 'harvesting';
-            document.getElementById('active-mode-indicator').innerText = "MODO CONTINUO: Colheita Automática com Foice";
+            document.getElementById('active-mode-indicator').innerText = "COLHENDO COM FOICE";
             viewport.className = 'mode-harvesting';
 
             const cursor = document.getElementById('custom-cursor');
-            cursor.src = 'img/simulador/foice.png';
+            cursor.src = '/img/simulador/foice.png';
             cursor.style.display = 'block';
 
             executeHarvest(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
@@ -648,15 +676,11 @@
             document.getElementById('active-mode-indicator').innerText = "";
             document.getElementById('custom-cursor').style.display = 'none';
             viewport.className = '';
-            viewport.style.cursor = 'grab';
         }
 
         function executePlanting(id, plotElement) {
             const cropKey = gameState.selectedCrop;
-            if (!cropKey || gameState.seeds[cropKey] <= 0) {
-                if (cropKey && gameState.seeds[cropKey] <= 0) exitSpecialModes();
-                return;
-            }
+            if (!cropKey || gameState.seeds[cropKey] <= 0) return;
             gameState.seeds[cropKey]--;
             gameState.plots[id] = { id: id, crop: cropKey, stage: 1, timer: 0, isWet: false };
             plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
@@ -667,10 +691,10 @@
                 gameState.water -= 10;
                 gameState.plots[id].isWet = true;
                 plotElement.classList.add('wet');
-                updateHUD();
-                createFloatingText("💧 Crescimento Acelerado!", plotElement);
+                createFloatingText("💧 Regado!", plotElement);
+                updateCisternaLabel();
             } else {
-                alert("Reservatório da Cisterna vazio! Realize o bombeamento na estação.");
+                alert("Reservatório da Cisterna vazio! Aguarde a chuva ou ligue as bombas.");
             }
         }
 
@@ -678,10 +702,8 @@
             const data = gameState.plots[id];
             if (!data.crop || data.stage < 3) return;
 
-            const cropKey = data.crop;
-            gameState.inventory[cropKey] += 3; // Envia para o estoque estruturado do Galpão
-
-            createFloatingText(`+3 ${CROPS[cropKey].name} no Galpão`, plotElement);
+            gameState.inventory[data.crop] += 3;
+            createFloatingText(`+3 ${CROPS[data.crop].name}`, plotElement);
 
             gameState.plots[id] = { id: id, crop: null, stage: 0, timer: 0, isWet: false };
             plotElement.innerHTML = '';
@@ -698,13 +720,11 @@
             setTimeout(() => el.remove(), 1200);
         }
 
-        /* ENGINE CENTRAL DE CRESCIMENTO (CICLO DO TEMPO REAL) */
+        /* CICLO ECOLÓGICO: LOOP DE CRESCIMENTO E ENGINE DE CHUVA (A CADA 10 MINUTOS) */
         setInterval(() => {
             for (let id in gameState.plots) {
                 let plotData = gameState.plots[id];
                 if (plotData.crop && plotData.stage < 3) {
-                    
-                    // Lógica ambiental da Cisterna: se irrigada, o crescimento dobra o avanço por segundo
                     let speedFactor = plotData.isWet ? 2 : 1;
                     plotData.timer += speedFactor;
                     
@@ -725,7 +745,36 @@
             }
         }, 1000);
 
-        /* GERENCIAMENTO DE STRUTURAS DO MUNDO */
+        // Disparador de Chuva Periódica (A cada 10 Minutos = 600000ms)
+        setInterval(() => {
+            triggerRainCycle();
+        }, 600000);
+
+        function triggerRainCycle() {
+            document.getElementById('rain-overlay').style.display = 'block';
+            document.getElementById('rain-indicator').style.display = 'block';
+
+            // Armazena e filtra a água na cisterna automaticamente
+            gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
+            updateCisternaLabel();
+
+            // Molha e acelera todas as plantações vivas instantaneamente
+            for (let id in gameState.plots) {
+                if (gameState.plots[id].crop && gameState.plots[id].stage < 3) {
+                    gameState.plots[id].isWet = true;
+                    const el = document.querySelector(`.plot[data-id="${id}"]`);
+                    if(el) el.classList.add('wet');
+                }
+            }
+
+            // Desliga o efeito após 30 segundos
+            setTimeout(() => {
+                document.getElementById('rain-overlay').style.display = 'none';
+                document.getElementById('rain-indicator').style.display = 'none';
+            }, 30000);
+        }
+
+        /* ESTRUTURAS DO MUNDO */
         function openGalpao() {
             closeActiveBalloon(); exitSpecialModes();
             const container = document.getElementById('stock-list');
@@ -749,17 +798,28 @@
         function renderCooperativa() {
             const container = document.getElementById('market-list');
             container.innerHTML = '';
+
+            // Bloco Exclusivo de Venda de Água da Cisterna
+            container.innerHTML += `
+                <div class="item-row" style="background:#d4e6f1; border:2px solid #2980b9; flex-direction:column; align-items:stretch; gap:6px; margin-bottom:15px;">
+                    <div style="display:flex; justify-content:between; font-weight:bold; color:#1b4f72;">
+                        <span>🚰 Exportação Hídrica (Cisterna)</span>
+                    </div>
+                    <button class="btn-action" style="background:#2980b9; font-size:12px;" onclick="sellWaterResource()">Vender 10L de Água Potável Filtrada (+$20)</button>
+                </div>
+            `;
+
             for (let k in CROPS) {
                 container.innerHTML += `
                     <div class="item-row" style="flex-direction: column; align-items: stretch; gap: 8px; font-size:13px;">
                         <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,0,0,0.1); padding-bottom:3px;">
-                            <strong>${CROPS[k].name} (Sementes: ${gameState.seeds[k]} | Galpão: ${gameState.inventory[k]})</strong>
+                            <strong>${CROPS[k].name} (Sementes: ${gameState.seeds[k]})</strong>
                         </div>
                         <div style="display:flex; gap:6px;">
                             <button class="btn-action" style="flex:1; font-size:11px; background:#2980b9;" onclick="buySeed('${k}')">Comprar Semente (-$${CROPS[k].seedPrice})</button>
                             <button class="btn-action" style="flex:1; font-size:11px; background:#d35400;" onclick="sellSeed('${k}')">Vender Semente (+$${CROPS[k].seedSellPrice})</button>
                         </div>
-                        <button class="btn-action" style="font-size:12px; width:100%;" onclick="sellCrop('${k}')">Liquidar Estoque do Galpão (+$${CROPS[k].sellPrice}/ud)</button>
+                        <button class="btn-action" style="font-size:12px; width:100%;" onclick="sellCrop('${k}')">Liquidar Estoque no Galpão (+$${CROPS[k].sellPrice}/ud)</button>
                     </div>`;
             }
         }
@@ -768,14 +828,14 @@
             if (gameState.money >= CROPS[key].seedPrice) {
                 gameState.money -= CROPS[key].seedPrice; gameState.seeds[key]++;
                 updateHUD(); renderCooperativa();
-            } else { alert("Recursos monetários insuficientes!"); }
+            } else { alert("Saldo insuficiente!"); }
         }
 
         function sellSeed(key) {
             if (gameState.seeds[key] > 0) {
                 gameState.seeds[key]--; gameState.money += CROPS[key].seedSellPrice;
                 updateHUD(); renderCooperativa();
-            } else { alert("Você não possui sementes disponíveis para transação!"); }
+            } else { alert("Sem sementes!"); }
         }
 
         function sellCrop(key) {
@@ -783,121 +843,106 @@
                 gameState.money += gameState.inventory[key] * CROPS[key].sellPrice;
                 gameState.inventory[key] = 0;
                 updateHUD(); renderCooperativa();
-            } else { alert("O galpão não possui unidades estocadas desta cultura."); }
+            } else { alert("Estoque vazio no galpão."); }
+        }
+
+        function sellWaterResource() {
+            if (gameState.water >= 10) {
+                gameState.water -= 10;
+                gameState.money += 20;
+                updateHUD();
+                renderCooperativa();
+            } else {
+                alert("Água insuficiente na cisterna para exportação comercial.");
+            }
         }
 
         function openCisterna() {
             closeActiveBalloon(); exitSpecialModes();
-            document.getElementById('modal-water-label').innerText = gameState.water + "L";
+            updateCisternaLabel();
             openModal('modal-cisterna');
         }
 
-        function refillWaterSystem() {
-            gameState.water = 100;
-            document.getElementById('modal-water-label').innerText = "100L";
-            updateHUD();
+        function updateCisternaLabel() {
+            document.getElementById('modal-water-label').innerText = gameState.water + "L / " + gameState.maxWater + "L";
         }
 
-        /* SISTEMA DE CONTINUIDADE CRIPTOGRÁFICO (SAVE & LOAD) */
-        function generateSaveCode() {
-            // Empacota todo o estado atual de variáveis e dicionários complexos em uma estrutura limpa
-            const payload = {
-                m: gameState.money,
-                w: gameState.water,
-                i: gameState.inventory,
-                s: gameState.seeds,
-                p: {}
-            };
+        function refillWaterSystem() {
+            if(gameState.water < gameState.maxWater) {
+                gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
+                updateCisternaLabel();
+            } else {
+                alert("Reservatório completamente cheio!");
+            }
+        }
 
-            // Extrai dados cruciais de cada lote para evitar lixo computacional na string final
+        /* SISTEMA DE CONTINUIDADE COMPLETO */
+        function generateSaveCode() {
+            const payload = {
+                m: gameState.money, w: gameState.water, i: gameState.inventory, s: gameState.seeds, p: {}
+            };
             for(let id in gameState.plots) {
                 payload.p[id] = {
-                    c: gameState.plots[id].crop,
-                    s: gameState.plots[id].stage,
-                    t: gameState.plots[id].timer,
-                    w: gameState.plots[id].isWet
+                    c: gameState.plots[id].crop, s: gameState.plots[id].stage, t: gameState.plots[id].timer, w: gameState.plots[id].isWet
                 };
             }
-
-            // Codificação serializada segura em Base64 para gerar uma hash única estável
-            const jsonString = JSON.stringify(payload);
-            const rawCode = btoa(unescape(encodeURIComponent(jsonString)));
-            
+            const rawCode = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
             document.getElementById('save-code-output').value = rawCode;
         }
 
         function loadSaveCode() {
             const rawInput = document.getElementById('save-code-input').value.trim();
-            if(!rawInput) { alert("Por favor, insira um código de persistência válido."); return; }
-
+            if(!rawInput) return;
             try {
-                // Decodificação estruturada da Hash de dados
-                const decodedString = decodeURIComponent(escape(atob(rawInput)));
-                const data = JSON.parse(decodedString);
-
-                // Injeção de dados diretos nas variáveis globais
+                const data = JSON.parse(decodeURIComponent(escape(atob(rawInput))));
                 gameState.money = data.m;
                 gameState.water = data.w;
                 gameState.inventory = data.i;
                 gameState.seeds = data.s;
 
-                // Reconstrução física e visual de cada lote de terra do simulador
                 for(let id in data.p) {
                     gameState.plots[id] = {
-                        id: parseInt(id),
-                        crop: data.p[id].c,
-                        stage: data.p[id].s,
-                        timer: data.p[id].t,
-                        isWet: data.p[id].w
+                        id: parseInt(id), crop: data.p[id].c, stage: data.p[id].s, timer: data.p[id].t, isWet: data.p[id].w
                     };
-
                     const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
                     plotEl.classList.remove('wet');
-                    
-                    // Renderiza o asset gráfico correspondente ao estágio salvo
                     if(data.p[id].c) {
                         let cropKey = data.p[id].c;
                         let stg = data.p[id].s;
                         let imgUrl = CROPS[cropKey].img_broto;
                         if(stg === 2) imgUrl = CROPS[cropKey].img_jovem;
                         if(stg === 3) imgUrl = CROPS[cropKey].img_adulte;
-
                         plotEl.innerHTML = `<img class="plot-plant-img" src="${imgUrl}">`;
                         if(data.p[id].w) plotEl.classList.add('wet');
                     } else {
                         plotEl.innerHTML = '';
                     }
                 }
-
                 updateHUD();
-                alert("Mundo Rural e Linha do Tempo reconstruídos com sucesso!");
+                alert("Fazenda carregada!");
                 closeModals();
             } catch (err) {
-                alert("Falha na integridade dos dados. O código está corrompido ou é inválido.");
-                console.error(err);
+                alert("Código inválido.");
             }
         }
 
-        /* ACESSIBILIDADE MOTOR */
+        /* ACESSIBILIDADE */
         function changeZoom(amount) {
-            currentZoom = Math.min(1.5, Math.max(0.6, currentZoom + amount));
+            currentZoom = Math.min(1.4, Math.max(0.5, currentZoom + amount));
             renderMapTransform();
         }
-        function resetZoom() { currentZoom = 1; renderMapTransform(); }
 
         function applyVisualMode(mode) {
-            document.body.className = ''; // Limpa filtros
+            document.body.className = '';
             if (mode === 'dark') document.body.classList.add('modo-escuro');
             if (mode === 'reading') document.body.classList.add('modo-leitura');
         }
 
-        /* AUXILIARES DE INTERFACE */
         function openConfigModal() { openModal('modal-config'); switchTab('tab-inicio'); }
         function openModal(id) { closeModals(); document.getElementById(id).classList.add('active'); }
         function closeModals() { document.querySelectorAll('.modal-panel').forEach(m => m.classList.remove('active')); }
         function updateHUD() {
             document.getElementById('hud-money').innerText = gameState.money;
-            document.getElementById('hud-water').innerText = gameState.water;
         }
 
         updateHUD();

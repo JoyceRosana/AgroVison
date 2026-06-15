@@ -1,138 +1,132 @@
-/* ========================================
-   CONTAINER
-======================================== */
+/* ==========================
+   BASE DO SISTEMA
+========================== */
 
-.container {
-    width: 92%;
-    max-width: 1400px;
-    margin: 0 auto;
+:root{
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --panel: #f2f2f2;
+  --shadow: rgba(0,0,0,0.15);
 }
 
-/* ========================================
-   HEADER
-======================================== */
+/* ==========================
+   ESTILO GLOBAL NORMAL
+========================== */
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 999;
-    backdrop-filter: blur(12px);
-    background: rgba(255,255,255,0.08);
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    transition: .3s;
+body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  transition: all 0.3s ease;
 }
 
-/* ========================================
-   NAVBAR
-======================================== */
-
-.nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 24px 0;
+/* imagens não quebram no modo */
+img{
+  transition: filter 0.3s ease, transform 0.3s ease;
 }
 
-/* ========================================
-   LOGO
-======================================== */
+/* ==========================
+   MODO ESCURO (preto e branco)
+========================== */
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 2rem;
-    font-weight: 800;
-    color: #16351f;
+body.modo-escuro{
+  --bg: #000000;
+  --text: #ffffff;
+  --panel: #111111;
 }
 
-/* ========================================
-   MENU
-======================================== */
-
-nav ul {
-    display: flex;
-    align-items: center;
-    gap: 35px;
-    list-style: none;
+body.modo-escuro img{
+  filter: grayscale(100%) brightness(0.6);
 }
 
-nav a {
-    text-decoration: none;
-    color: #16351f;
-    font-size: 1rem;
-    font-weight: 600;
-    position: relative;
-    transition: .3s;
+/* ==========================
+   MODO LEITURA (alaranjado suave)
+========================== */
+
+body.modo-leitura{
+  --bg: #2b1d10;
+  --text: #ffd6a0;
+  --panel: #3a2412;
 }
 
-/* LINHA MENU */
-
-nav a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 0;
-    height: 2px;
-    background: #2E7D32;
-    transition: .3s;
+body.modo-leitura img{
+  filter: sepia(60%) brightness(0.9) saturate(1.2);
 }
 
-nav a:hover::after {
-    width: 100%;
+/* ==========================
+   ZOOM GLOBAL
+========================== */
+
+body.zoom-1{
+  transform: scale(1);
+  transform-origin: top left;
 }
 
-nav a.active::after {
-    width: 100%;
+body.zoom-2{
+  transform: scale(1.1);
+  transform-origin: top left;
 }
 
-/* FOOTER */
-
-footer {
-    width: 100%;
-    background: #052e16;
-    color: white;
-    padding: 20px 10px;
+body.zoom-3{
+  transform: scale(1.2);
+  transform-origin: top left;
 }
 
-.footer-grid {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ==========================
+   BOTÃO DE ACESSIBILIDADE
+========================== */
+
+#btnAcessibilidade{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#ffffff;
+  border:none;
+  box-shadow:0 4px 10px var(--shadow);
+  cursor:pointer;
+  z-index:99999;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.footer-brand {
-    text-align: center;
-    max-width: 700px;
+#btnAcessibilidade img{
+  width:40px;
+  height:40px;
 }
 
-.footer-brand h3 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
+/* ==========================
+   PAINEL DE ACESSIBILIDADE
+========================== */
+
+#painelAcessibilidade{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:220px;
+  background:var(--panel);
+  border-radius:10px;
+  padding:10px;
+  box-shadow:0 4px 10px var(--shadow);
+  display:none;
+  z-index:99999;
 }
 
-.footer-brand p {
-    color: #d1d5db;
-    line-height: 1.8;
+#painelAcessibilidade button{
+  width:100%;
+  margin:5px 0;
+  padding:8px;
+  border:none;
+  cursor:pointer;
+  border-radius:6px;
+  background:#ddd;
+  font-weight:bold;
 }
 
-.copyright {
-    border-top: 1px solid rgba(255,255,255,.15);
-    margin-top: 30px;
-    padding-top: 20px;
-    text-align: center;
-    color: #94a3b8;
-}
-
-/* RESPONSIVO FOOTER */
-
-@media(max-width: 768px) {
-    .footer-brand h3 {
-        font-size: 1.2rem;
-    }
+#painelAcessibilidade button:hover{
+  background:#bbb;
 }
