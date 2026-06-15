@@ -59,7 +59,10 @@ criarPlantacao(plantacao1, configuracoesPlantacao.plantacao1);
 criarPlantacao(plantacao2, configuracoesPlantacao.plantacao2);
 criarPlantacao(plantacao3, configuracoesPlantacao.plantacao3);
 criarPlantacao(plantacao4, configuracoesPlantacao.plantacao4);
-
+console.log("plantacao1 =", plantacao1);
+console.log("plantacao2 =", plantacao2);
+console.log("plantacao3 =", plantacao3);
+console.log("plantacao4 =", plantacao4);
 /* ==========================
    CULTURAS
 ========================== */
@@ -364,39 +367,6 @@ document.querySelectorAll(".opcao").forEach((botao)=>{
     });
 
 });
-        // já tem planta nessa terra?
-        if (terraSelecionada.querySelector(".planta")) return;
-
-        const dados = culturas[cultura];
-
-        if (!dados) return;
-
-        const planta = document.createElement("img");
-
-        planta.className = "planta";
-
-        // FASE BROTO
-        planta.src = dados.estagios.broto.src;
-
-        planta.style.width =
-            dados.estagios.broto.width + "px";
-
-        planta.style.height =
-            dados.estagios.broto.height + "px";
-
-        planta.style.left =
-            dados.estagios.broto.offsetX + "px";
-
-        planta.style.top =
-            dados.estagios.broto.offsetY + "px";
-
-        terraSelecionada.appendChild(planta);
-
-        menuPlantio.classList.add("oculto");
-
-        iniciarCrescimento(planta, dados);
-
-
 
     document.addEventListener("mouseover",(e)=>{
 
