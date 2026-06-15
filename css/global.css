@@ -1,16 +1,16 @@
 /* ==========================
-   BASE DO SISTEMA
+   VARIÁVEIS BASE
 ========================== */
 
 :root{
-  --bg: #ffffff;
-  --text: #1a1a1a;
-  --panel: #f2f2f2;
-  --shadow: rgba(0,0,0,0.15);
+  --bg:#ffffff;
+  --text:#1a1a1a;
+  --panel:#f2f2f2;
+  --shadow:rgba(0,0,0,0.15);
 }
 
 /* ==========================
-   ESTILO GLOBAL NORMAL
+   BASE
 ========================== */
 
 body{
@@ -18,12 +18,13 @@ body{
   padding:0;
   background:var(--bg);
   color:var(--text);
-  transition: all 0.3s ease;
+  transition:all 0.3s ease;
+  transform-origin: top left;
 }
 
-/* imagens não quebram no modo */
+/* imagens globais */
 img{
-  transition: filter 0.3s ease, transform 0.3s ease;
+  transition: filter 0.3s ease;
 }
 
 /* ==========================
@@ -31,9 +32,9 @@ img{
 ========================== */
 
 body.modo-escuro{
-  --bg: #000000;
-  --text: #ffffff;
-  --panel: #111111;
+  --bg:#000;
+  --text:#fff;
+  --panel:#111;
 }
 
 body.modo-escuro img{
@@ -41,71 +42,60 @@ body.modo-escuro img{
 }
 
 /* ==========================
-   MODO LEITURA (alaranjado suave)
+   MODO LEITURA (alaranjado)
 ========================== */
 
 body.modo-leitura{
-  --bg: #2b1d10;
-  --text: #ffd6a0;
-  --panel: #3a2412;
+  --bg:#2b1d10;
+  --text:#ffd6a0;
+  --panel:#3a2412;
 }
 
 body.modo-leitura img{
-  filter: sepia(60%) brightness(0.9) saturate(1.2);
+  filter: sepia(60%) saturate(1.2) brightness(0.9);
 }
 
 /* ==========================
    ZOOM GLOBAL
 ========================== */
 
-body.zoom-1{
-  transform: scale(1);
-  transform-origin: top left;
-}
-
-body.zoom-2{
-  transform: scale(1.1);
-  transform-origin: top left;
-}
-
-body.zoom-3{
-  transform: scale(1.2);
-  transform-origin: top left;
-}
+body.zoom-1{ transform: scale(1); }
+body.zoom-2{ transform: scale(1.1); }
+body.zoom-3{ transform: scale(1.2); }
 
 /* ==========================
-   BOTÃO DE ACESSIBILIDADE
+   BOTÃO ACESSIBILIDADE
 ========================== */
 
 #btnAcessibilidade{
   position:fixed;
-  bottom:20px;
+  top:20px;
   right:20px;
   width:60px;
   height:60px;
   border-radius:50%;
-  background:#ffffff;
+  background:#fff;
   border:none;
   box-shadow:0 4px 10px var(--shadow);
   cursor:pointer;
-  z-index:99999;
+  z-index:999999;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
 #btnAcessibilidade img{
-  width:40px;
-  height:40px;
+  width:38px;
+  height:38px;
 }
 
 /* ==========================
-   PAINEL DE ACESSIBILIDADE
+   PAINEL
 ========================== */
 
 #painelAcessibilidade{
   position:fixed;
-  bottom:90px;
+  top:90px;
   right:20px;
   width:220px;
   background:var(--panel);
@@ -113,7 +103,7 @@ body.zoom-3{
   padding:10px;
   box-shadow:0 4px 10px var(--shadow);
   display:none;
-  z-index:99999;
+  z-index:999999;
 }
 
 #painelAcessibilidade button{
@@ -121,8 +111,8 @@ body.zoom-3{
   margin:5px 0;
   padding:8px;
   border:none;
-  cursor:pointer;
   border-radius:6px;
+  cursor:pointer;
   background:#ddd;
   font-weight:bold;
 }
