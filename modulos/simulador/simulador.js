@@ -37,6 +37,7 @@ function criarPlantacao(container, config) {
 
       const img = document.createElement("img");
       img.src = "img/simulador/terra.png";
+      terra.style.border = "2px solid red";
       terra.appendChild(img);
 
       const x = (coluna * ESPACO_X) - (linha * ESPACO_X);
