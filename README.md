@@ -240,7 +240,6 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 
 ### simulador
 
-* Prompt: "Mapa interativo de fazenda em 2D"
 * Prompt: "Cisterna para armazenamento de água estilo 3D"
 * Prompt: "Armazém para o armazenamento de produtos, água e sementes estilo 3D"
 * Prompt: "Cooperativa para vender e comprar estilo 3D"
@@ -253,8 +252,6 @@ Abaixo estão os prompts utilizados para cada grupo de imagens:
 * Prompt: "Broto de soja em solo fértil"
 * Prompt: "Soja jovem em crescimento"
 * Prompt: "Soja adulta com vagens"
-* Prompt: "cartoon de terra para plantar"
-* Prompt: "luva branca 3D"
 * Prompt: "foice para colher 3D"
 
 ### sobre/geral
