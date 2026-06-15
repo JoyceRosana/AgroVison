@@ -10,8 +10,6 @@ const plantacao4 = document.getElementById("plantacao4");
 const menuPlantio = document.getElementById("menuPlantio");
 const viewport = document.querySelector(".viewport");
 
-let terraSelecionada = null;
-
 /* ==========================
    CONFIGURAÇÃO DAS PLANTAÇÕES
 ========================== */
@@ -67,9 +65,17 @@ criarPlantacao(plantacao4, configuracoesPlantacao.plantacao4);
 ========================== */
 
 const culturas = {
+
   milho: {
-    crescimento: 15000,
+
+    recompensa: 4,
+    emoji: "🌽",
+
+    crescimentoJovem: 60000,
+    crescimentoAdulto: 120000,
+
     estagios: {
+
       broto: {
         src: "/img/simulador/milho_broto.png",
         width: 60,
@@ -77,6 +83,7 @@ const culturas = {
         offsetX: -12,
         offsetY: 0
       },
+
       jovem: {
         src: "/img/simulador/milho_jovem.png",
         width: 60,
@@ -84,6 +91,7 @@ const culturas = {
         offsetX: 0,
         offsetY: 0
       },
+
       adulto: {
         src: "/img/simulador/milho_adulto.png",
         width: 60,
@@ -91,12 +99,21 @@ const culturas = {
         offsetX: -10,
         offsetY: 0
       }
+
     }
+
   },
 
   soja: {
-    crescimento: 15000,
+
+    recompensa: 5,
+    emoji: "🌱",
+
+    crescimentoJovem: 60000,
+    crescimentoAdulto: 120000,
+
     estagios: {
+
       broto: {
         src: "/img/simulador/soja_broto.png",
         width: 80,
@@ -104,6 +121,7 @@ const culturas = {
         offsetX: -12,
         offsetY: 0
       },
+
       jovem: {
         src: "/img/simulador/soja_jovem.png",
         width: 80,
@@ -111,6 +129,7 @@ const culturas = {
         offsetX: 0,
         offsetY: 0
       },
+
       adulto: {
         src: "/img/simulador/soja_adulto.png",
         width: 80,
@@ -118,12 +137,21 @@ const culturas = {
         offsetX: -10,
         offsetY: 0
       }
+
     }
+
   },
 
   tomate: {
-    crescimento: 15000,
+
+    recompensa: 4,
+    emoji: "🍅",
+
+    crescimentoJovem: 45000,
+    crescimentoAdulto: 90000,
+
     estagios: {
+
       broto: {
         src: "/img/simulador/tomate_broto.png",
         width: 80,
@@ -131,6 +159,7 @@ const culturas = {
         offsetX: -12,
         offsetY: 0
       },
+
       jovem: {
         src: "/img/simulador/tomate_jovem.png",
         width: 80,
@@ -138,6 +167,7 @@ const culturas = {
         offsetX: 0,
         offsetY: 0
       },
+
       adulto: {
         src: "/img/simulador/tomate_adulto.png",
         width: 80,
@@ -145,12 +175,21 @@ const culturas = {
         offsetX: -10,
         offsetY: 0
       }
+
     }
+
   },
 
   cenoura: {
-    crescimento: 15000,
+
+    recompensa: 2,
+    emoji: "🥕",
+
+    crescimentoJovem: 45000,
+    crescimentoAdulto: 90000,
+
     estagios: {
+
       broto: {
         src: "/img/simulador/cenoura_broto.png",
         width: 80,
@@ -158,6 +197,7 @@ const culturas = {
         offsetX: -12,
         offsetY: 0
       },
+
       jovem: {
         src: "/img/simulador/cenoura_jovem.png",
         width: 80,
@@ -165,6 +205,7 @@ const culturas = {
         offsetX: 0,
         offsetY: 0
       },
+
       adulto: {
         src: "/img/simulador/cenoura_adulto.png",
         width: 80,
@@ -172,12 +213,21 @@ const culturas = {
         offsetX: -10,
         offsetY: 0
       }
+
     }
+
   },
 
   alface: {
-    crescimento: 15000,
+
+    recompensa: 2,
+    emoji: "🥬",
+
+    crescimentoJovem: 30000,
+    crescimentoAdulto: 60000,
+
     estagios: {
+
       broto: {
         src: "/img/simulador/alface_broto.png",
         width: 80,
@@ -185,6 +235,7 @@ const culturas = {
         offsetX: -12,
         offsetY: 0
       },
+
       jovem: {
         src: "/img/simulador/alface_jovem.png",
         width: 80,
@@ -192,6 +243,7 @@ const culturas = {
         offsetX: 0,
         offsetY: 0
       },
+
       adulto: {
         src: "/img/simulador/alface_adulto.png",
         width: 80,
@@ -199,8 +251,11 @@ const culturas = {
         offsetX: -10,
         offsetY: 0
       }
+
     }
+
   }
+
 };
 
 /* ==========================
