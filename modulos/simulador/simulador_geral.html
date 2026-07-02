@@ -180,60 +180,56 @@
        .cooperativa { width: 700px; top: 500px; left: 2300px; }
        .cisterna { width: 500px; top: 600px; left: 10px; }
 
-
 /* ==========================
    PLANTAÇÃO SUPERIOR
+   20 x 7 = 140 terras
    ========================== */
 
 .grid-superior{
     position:absolute;
 
-    /* Logo acima da estrada */
+    /* logo acima da estrada */
     top:320px;
     left:620px;
 
     display:grid;
     grid-template-columns:repeat(20,85px);
-    grid-template-rows:repeat(5,85px);
+    grid-template-rows:repeat(7,85px);
 
     gap:12px;
     padding:15px;
 
     background:rgba(40,26,13,.6);
-
     border:3px solid var(--wood-dark);
     border-radius:12px;
-
     box-shadow:0 6px 12px rgba(0,0,0,.3);
-
     z-index:20;
 }
 
+
 /* ==========================
    PLANTAÇÃO INFERIOR
+   28 x 10 = 280 terras
    ========================== */
 
 .grid-inferior{
     position:absolute;
 
-    /* Logo abaixo da estrada */
+    /* logo abaixo da estrada */
     top:980px;
     left:120px;
 
     display:grid;
-    grid-template-columns:repeat(30,85px);
-    grid-template-rows:repeat(8,85px);
+    grid-template-columns:repeat(28,85px);
+    grid-template-rows:repeat(10,85px);
 
     gap:12px;
     padding:15px;
 
     background:rgba(40,26,13,.6);
-
     border:3px solid var(--wood-dark);
     border-radius:12px;
-
     box-shadow:0 6px 12px rgba(0,0,0,.3);
-
     z-index:20;
 }
 
@@ -586,9 +582,6 @@
 
 
        let currentZoom = 0.7; // Começa um pouco mais afastado para ver toda a grande plantação
-
-
-       // CONSTRUÇÃO DA MEGA GRADE UNIFICADA: 20 linhas x 20 colunas = 400 lotes
        
       
        const superior = document.getElementById("plantacao-superior");
@@ -598,24 +591,24 @@ let id = 1;
 
 /* ==========================
    SUPERIOR
-   20 x 5 = 100 terras
+   20 x 7 = 140 terras
    ========================== */
 
-for(let i=0;i<100;i++){
+for (let i = 0; i < 140; i++) {
 
-    const plot=document.createElement("div");
+    const plot = document.createElement("div");
 
-    plot.className="plot";
-    plot.dataset.id=id;
+    plot.className = "plot";
+    plot.dataset.id = id;
 
     superior.appendChild(plot);
 
-    gameState.plots[id]={
-        id:id,
-        crop:null,
-        stage:0,
-        timer:0,
-        isWet:false
+    gameState.plots[id] = {
+        id: id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
     };
 
     id++;
@@ -624,29 +617,28 @@ for(let i=0;i<100;i++){
 
 /* ==========================
    INFERIOR
-   30 x 8 = 240 terras
+   28 x 10 = 280 terras
    ========================== */
 
-for(let i=0;i<240;i++){
+for (let i = 0; i < 280; i++) {
 
-    const plot=document.createElement("div");
+    const plot = document.createElement("div");
 
-    plot.className="plot";
-    plot.dataset.id=id;
+    plot.className = "plot";
+    plot.dataset.id = id;
 
     inferior.appendChild(plot);
 
-    gameState.plots[id]={
-        id:id,
-        crop:null,
-        stage:0,
-        timer:0,
-        isWet:false
+    gameState.plots[id] = {
+        id: id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
     };
 
     id++;
-}
-
+    }
 
        /* MOTOR DE TOQUE E ARRRASTO (POINTER EVENTS) */
        const viewport = document.getElementById('game-viewport');
