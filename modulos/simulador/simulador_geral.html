@@ -267,8 +267,8 @@
 }
 
 .plot-plant-img{
-    width:95%;     /* um pouco maior */
-    height:95%;
+    width:150%;     /* um pouco maior */
+    height:150%;
     object-fit:contain;
     pointer-events:none;
 }
@@ -565,11 +565,11 @@
 
    <script>
        const CROPS = {
-           milho:   { name: "Milho",   seedPrice: 5,  sellPrice: 15, seedSellPrice: 3, growTime: 6,   img_broto: "/img/simulador/milho_broto.png",   img_jovem: "/img/simulador/milho_jovem.png",   img_adulte: "/img/simulador/milho_adulto.png" },
-           soja:    { name: "Soja",    seedPrice: 8,  sellPrice: 22, seedSellPrice: 5, growTime: 10,  img_broto: "/img/simulador/soja_broto.png",    img_jovem: "/img/simulador/soja_jovem.png",    img_adulte: "/img/simulador/soja_adulto.png" },
-           tomate:  { name: "Tomate",  seedPrice: 12, sellPrice: 35, seedSellPrice: 8, growTime: 14,  img_broto: "/img/simulador/tomate_broto.png",  img_jovem: "/img/simulador/tomate_jovem.png",  img_adulte: "/img/simulador/tomate_adulto.png" },
-           cenoura: { name: "Cenoura", seedPrice: 4,  sellPrice: 12, seedSellPrice: 2, growTime: 5,   img_broto: "/img/simulador/cenoura_broto.png", img_jovem: "/img/simulador/cenoura_jovem.png", img_adulte: "/img/simulador/cenoura_adulto.png" },
-           alface:  { name: "Alface",  seedPrice: 3,  sellPrice: 9,  seedSellPrice: 1, growTime: 4,   img_broto: "/img/simulador/alface_broto.png",  img_jovem: "/img/simulador/alface_jovem.png",  img_adulte: "/img/simulador/alface_adulto.png" }
+           milho:   { name: "Milho",   seedPrice: 5,  sellPrice: 15, seedSellPrice: 3, stageTime: 20, img_broto:"/img/simulador/milho_broto.png",   img_jovem: "/img/simulador/milho_jovem.png",   img_adulte: "/img/simulador/milho_adulto.png" },
+           soja:    { name: "Soja",    seedPrice: 8,  sellPrice: 22, seedSellPrice: 5, stageTime: 25,  img_broto: "/img/simulador/soja_broto.png",    img_jovem: "/img/simulador/soja_jovem.png",    img_adulte: "/img/simulador/soja_adulto.png" },
+           tomate:  { name: "Tomate",  seedPrice: 12, sellPrice: 35, seedSellPrice: 8, growTime: 15,  img_broto: "/img/simulador/tomate_broto.png",  img_jovem: "/img/simulador/tomate_jovem.png",  img_adulte: "/img/simulador/tomate_adulto.png" },
+           cenoura: { name: "Cenoura", seedPrice: 4,  sellPrice: 12, seedSellPrice: 2, growTime: 18,   img_broto: "/img/simulador/cenoura_broto.png", img_jovem: "/img/simulador/cenoura_jovem.png", img_adulte: "/img/simulador/cenoura_adulto.png" },
+           alface:  { name: "Alface",  seedPrice: 3,  sellPrice: 9,  seedSellPrice: 1, growTime: 15,   img_broto: "/img/simulador/alface_broto.png",  img_jovem: "/img/simulador/alface_jovem.png",  img_adulte: "/img/simulador/alface_adulto.png" }
        };
 
 
@@ -884,27 +884,15 @@ viewport.addEventListener('pointermove', (e) => {
        }
 
 
-       function executeHarvest(id, plotElement) {
-    const plot = gameState.plots[id];
-    if (!plot.crop || plot.stage < 3) return;
+function executeHarvest(id, plotElement) {
+    const data = gameState.plots[id];
+    if (!data.crop || data.stage < 3) return;
 
-    const crop = CROPS[plot.crop];
+    const crop = CROPS[data.crop];
 
-    // 💰 valor pode ser personalizado por planta
-    const rewardMap = {
-        soja: 45,
-        milho: 15,
-        tomate: 35,
-        cenoura: 12,
-        alface: 9
-    };
+    gameState.inventory[data.crop] += 3;
 
-    const reward = rewardMap[plot.crop] || crop.sellPrice;
-
-    gameState.inventory[plot.crop] += 3;
-    gameState.money += reward;
-
-    createFloatingText(`+${reward}`, plotElement);
+    createFloatingText(`+3 ${crop.name}`, plotElement);
 
     gameState.plots[id] = {
         id,
@@ -934,30 +922,32 @@ viewport.addEventListener('pointermove', (e) => {
 
 setInterval(() => {
     for (let id in gameState.plots) {
-        const plot = gameState.plots[id];
-        if (!plot.crop) continue;
+        const p = gameState.plots[id];
+        if (!p.crop || p.stage >= 3) continue;
 
-        const crop = CROPS[plot.crop];
-        const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
-        if (!plotEl) continue;
+        const crop = CROPS[p.crop];
 
-        const stageTime = crop.growTime / 3;
+        // irrigado = cresce mais rápido
+        const speed = p.isWet ? 2 : 1;
 
-        const speed = plot.isWet ? 2 : 1;
-        plot.timer += speed;
+        p.timer += speed;
 
-        // 🌱 estágio 1 → 2
-        if (plot.timer >= stageTime && plot.stage === 1) {
-            plot.stage = 2;
-            plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
+        const el = document.querySelector(`.plot[data-id="${id}"]`);
+
+        const t = crop.stageTime;
+
+        // Fase 2
+        if (p.stage === 1 && p.timer >= t) {
+            p.stage = 2;
+            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
         }
 
-        // 🌿 estágio 2 → 3 (adulto)
-        if (plot.timer >= stageTime * 2 && plot.stage === 2) {
-            plot.stage = 3;
-            plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
-            plot.isWet = false;
-            plotEl.classList.remove('wet');
+        // Fase 3 (adulto)
+        else if (p.stage === 2 && p.timer >= t * 2) {
+            p.stage = 3;
+            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+            p.isWet = false;
+            el.classList.remove('wet');
         }
     }
 }, 1000);
