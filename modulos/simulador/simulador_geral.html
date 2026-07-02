@@ -740,29 +740,41 @@ viewport.addEventListener('pointermove', (e) => {
 
 
        function openPlantingBalloon(id, plotElement) {
-           closeActiveBalloon();
-           gameState.activeBalloonPlotId = id;
+    closeActiveBalloon();
+    gameState.activeBalloonPlotId = id;
 
+    const balloon = document.createElement('div');
+    balloon.className = 'wood-balloon';
 
-           const balloon = document.createElement('div');
-           balloon.className = 'wood-balloon';
+    const frag = document.createDocumentFragment();
 
+    for (const k in CROPS) {
+        const option = document.createElement('div');
+        option.className = 'crop-option';
+        option.onclick = () => startContinuousPlanting(k);
 
-           let html = '';
-           for (let k in CROPS) {
-               html += `
-                   <div class="crop-option" onclick="startContinuousPlanting('${k}')">
-                       <img src="${CROPS[k].img_adulte}">
-                       <div>${CROPS[k].name}</div>
-                   </div>`;
-           }
-           balloon.innerHTML = html;
-          
-           balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
-           balloon.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop) + 'px';
-           document.getElementById('balloon-layer').appendChild(balloon);
-       }
+        const img = document.createElement('img');
+        img.src = CROPS[k].img_adulte;
 
+        const label = document.createElement('div');
+        label.textContent = CROPS[k].name;
+
+        option.appendChild(img);
+        option.appendChild(label);
+
+        frag.appendChild(option);
+    }
+
+    balloon.appendChild(frag);
+
+    const rect = plotElement.getBoundingClientRect();
+
+    balloon.style.position = "absolute";
+    balloon.style.left = `${rect.left + window.scrollX + 40}px`;
+    balloon.style.top = `${rect.top + window.scrollY}px`;
+
+    document.getElementById('balloon-layer').appendChild(balloon);
+}
 
        function openHarvestBalloon(id, plotElement) {
            closeActiveBalloon();
