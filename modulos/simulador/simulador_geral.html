@@ -181,21 +181,22 @@
        .cisterna { width: 500px; top: 600px; left: 10px; }
 
 
-       /* ==========================
+/* ==========================
    PLANTAÇÃO SUPERIOR
    ========================== */
 
 .grid-superior{
     position:absolute;
-    top:120px;
-    left:760px;   /* ajuste conforme o mapa */
+
+    /* Logo acima da estrada */
+    top:320px;
+    left:620px;
 
     display:grid;
-    grid-template-columns:repeat(18,85px);
-    grid-template-rows:repeat(7,85px);
+    grid-template-columns:repeat(20,85px);
+    grid-template-rows:repeat(5,85px);
 
     gap:12px;
-
     padding:15px;
 
     background:rgba(40,26,13,.6);
@@ -208,7 +209,6 @@
     z-index:20;
 }
 
-
 /* ==========================
    PLANTAÇÃO INFERIOR
    ========================== */
@@ -216,16 +216,15 @@
 .grid-inferior{
     position:absolute;
 
-    top:1050px;      /* abaixo da estrada */
+    /* Logo abaixo da estrada */
+    top:980px;
     left:120px;
 
     display:grid;
-
-    grid-template-columns:repeat(25,85px);
-    grid-template-rows:repeat(10,85px);
+    grid-template-columns:repeat(30,85px);
+    grid-template-rows:repeat(8,85px);
 
     gap:12px;
-
     padding:15px;
 
     background:rgba(40,26,13,.6);
@@ -597,15 +596,22 @@ const inferior = document.getElementById("plantacao-inferior");
 
 let id = 1;
 
-// 18 x 7 = 126 terras
-for(let i=0;i<18*7;i++){
-    const p=document.createElement("div");
-    p.className="plot";
-    p.dataset.id=id;
-    superior.appendChild(p);
+/* ==========================
+   SUPERIOR
+   20 x 5 = 100 terras
+   ========================== */
+
+for(let i=0;i<100;i++){
+
+    const plot=document.createElement("div");
+
+    plot.className="plot";
+    plot.dataset.id=id;
+
+    superior.appendChild(plot);
 
     gameState.plots[id]={
-        id,
+        id:id,
         crop:null,
         stage:0,
         timer:0,
@@ -615,15 +621,23 @@ for(let i=0;i<18*7;i++){
     id++;
 }
 
-// 25 x 10 = 250 terras
-for(let i=0;i<25*10;i++){
-    const p=document.createElement("div");
-    p.className="plot";
-    p.dataset.id=id;
-    inferior.appendChild(p);
+
+/* ==========================
+   INFERIOR
+   30 x 8 = 240 terras
+   ========================== */
+
+for(let i=0;i<240;i++){
+
+    const plot=document.createElement("div");
+
+    plot.className="plot";
+    plot.dataset.id=id;
+
+    inferior.appendChild(plot);
 
     gameState.plots[id]={
-        id,
+        id:id,
         crop:null,
         stage:0,
         timer:0,
