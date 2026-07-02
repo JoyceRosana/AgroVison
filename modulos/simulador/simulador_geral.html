@@ -777,22 +777,26 @@ viewport.addEventListener('pointermove', (e) => {
 }
 
        function openHarvestBalloon(id, plotElement) {
-           closeActiveBalloon();
-           gameState.activeBalloonPlotId = id;
+    closeActiveBalloon();
+    gameState.activeBalloonPlotId = id;
 
+    const balloon = document.createElement('div');
+    balloon.className = 'wood-balloon';
 
-           const balloon = document.createElement('div');
-           balloon.className = 'wood-balloon';
-           balloon.innerHTML = `
-               <div class="harvest-option" onclick="startContinuousHarvest()">
-                   <img src="/img/simulador/foice.png">
-                   <div>Equipar Foice</div>
-               </div>`;
-          
-           balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
-           balloon.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop) + 'px';
-           document.getElementById('balloon-layer').appendChild(balloon);
-       }
+    balloon.innerHTML = `
+        <div class="harvest-option" onclick="startContinuousHarvest()">
+            <img src="/img/simulador/foice.png">
+            <div>Equipar Foice</div>
+        </div>
+    `;
+
+    const rect = plotElement.getBoundingClientRect();
+
+    balloon.style.left = `${rect.left + window.scrollX + 40}px`;
+    balloon.style.top = `${rect.top + window.scrollY}px`;
+
+    document.getElementById('balloon-layer').appendChild(balloon);
+}
 
 
        function startContinuousPlanting(cropKey) {
@@ -886,31 +890,36 @@ viewport.addEventListener('pointermove', (e) => {
        }
 
 
-       /* LOOP DE CRESCIMENTO E SISTEMA DE CHUVA AUTOMÁTICO (10 MINUTOS) */
-       setInterval(() => {
-           for (let id in gameState.plots) {
-               let plotData = gameState.plots[id];
-               if (plotData.crop && plotData.stage < 3) {
-                   let speedFactor = plotData.isWet ? 2 : 1;
-                   plotData.timer += speedFactor;
-                  
-                   let targetTime = CROPS[plotData.crop].growTime;
-                   const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
+       
+setInterval(() => {
+    for (let id in gameState.plots) {
+        const plotData = gameState.plots[id];
+        if (!plotData.crop) continue;
 
+        const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
+        if (!plotEl) continue;
 
-                   if (plotData.stage === 1 && plotData.timer >= targetTime / 2) {
-                       plotData.stage = 2;
-                       plotEl.innerHTML = `<img class="plot-plant-img" src="${CROPS[plotData.crop].img_jovem}">`;
-                   }
-                   else if (plotData.stage === 2 && plotData.timer >= targetTime) {
-                       plotData.stage = 3;
-                       plotEl.innerHTML = `<img class="plot-plant-img" src="${CROPS[plotData.crop].img_adulte}">`;
-                       plotEl.classList.remove('wet');
-                       plotData.isWet = false;
-                   }
-               }
-           }
-       }, 1000);
+        const crop = CROPS[plotData.crop];
+        const targetTime = crop.growTime;
+
+        const speedFactor = plotData.isWet ? 2 : 1;
+        plotData.timer += speedFactor;
+
+        // 🔥 ESTÁGIO 2
+        if (plotData.timer >= targetTime / 2 && plotData.stage < 2) {
+            plotData.stage = 2;
+            plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
+        }
+
+        // 🔥 ESTÁGIO 3 (ADULTO)
+        if (plotData.timer >= targetTime && plotData.stage < 3) {
+            plotData.stage = 3;
+            plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+            plotEl.classList.remove('wet');
+            plotData.isWet = false;
+        }
+    }
+}, 1000);
 
 
        setInterval(() => {
