@@ -885,18 +885,38 @@ viewport.addEventListener('pointermove', (e) => {
 
 
        function executeHarvest(id, plotElement) {
-           const data = gameState.plots[id];
-           if (!data.crop || data.stage < 3) return;
+    const plot = gameState.plots[id];
+    if (!plot.crop || plot.stage < 3) return;
 
+    const crop = CROPS[plot.crop];
 
-           gameState.inventory[data.crop] += 3;
-           createFloatingText(`+3 ${CROPS[data.crop].name}`, plotElement);
+    // 💰 valor pode ser personalizado por planta
+    const rewardMap = {
+        soja: 45,
+        milho: 15,
+        tomate: 35,
+        cenoura: 12,
+        alface: 9
+    };
 
+    const reward = rewardMap[plot.crop] || crop.sellPrice;
 
-           gameState.plots[id] = { id: id, crop: null, stage: 0, timer: 0, isWet: false };
-           plotElement.innerHTML = '';
-           plotElement.classList.remove('wet');
-       }
+    gameState.inventory[plot.crop] += 3;
+    gameState.money += reward;
+
+    createFloatingText(`+${reward}`, plotElement);
+
+    gameState.plots[id] = {
+        id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
+    };
+
+    plotElement.innerHTML = '';
+    plotElement.classList.remove('wet');
+}
 
 
        function createFloatingText(text, plotElement) {
@@ -910,33 +930,34 @@ viewport.addEventListener('pointermove', (e) => {
        }
 
 
-       
+              /* LOOP */
+
 setInterval(() => {
     for (let id in gameState.plots) {
-        const plotData = gameState.plots[id];
-        if (!plotData.crop) continue;
+        const plot = gameState.plots[id];
+        if (!plot.crop) continue;
 
+        const crop = CROPS[plot.crop];
         const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
         if (!plotEl) continue;
 
-        const crop = CROPS[plotData.crop];
-        const targetTime = crop.growTime;
+        const stageTime = crop.growTime / 3;
 
-        const speedFactor = plotData.isWet ? 2 : 1;
-        plotData.timer += speedFactor;
+        const speed = plot.isWet ? 2 : 1;
+        plot.timer += speed;
 
-        // 🔥 ESTÁGIO 2
-        if (plotData.timer >= targetTime / 2 && plotData.stage < 2) {
-            plotData.stage = 2;
+        // 🌱 estágio 1 → 2
+        if (plot.timer >= stageTime && plot.stage === 1) {
+            plot.stage = 2;
             plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
         }
 
-        // 🔥 ESTÁGIO 3 (ADULTO)
-        if (plotData.timer >= targetTime && plotData.stage < 3) {
-            plotData.stage = 3;
+        // 🌿 estágio 2 → 3 (adulto)
+        if (plot.timer >= stageTime * 2 && plot.stage === 2) {
+            plot.stage = 3;
             plotEl.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+            plot.isWet = false;
             plotEl.classList.remove('wet');
-            plotData.isWet = false;
         }
     }
 }, 1000);
