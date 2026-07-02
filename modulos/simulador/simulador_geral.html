@@ -694,59 +694,99 @@ for (let i = 0; i < 224; i++) {
            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
            document.getElementById(tabId).classList.add('active');
        }
-       /* MECÂNICA INTERATIVA (VERSÃO CORRIGIDA E ÚNICA) */
-
 function bindPlotEvents() {
     document.querySelectorAll('.plot').forEach(plot => {
         const id = plot.dataset.id;
 
         plot.onclick = (e) => {
             e.stopPropagation();
-            if (gameState.currentMode !== 'normal') return;
 
             const data = gameState.plots[id];
 
+            // PLANTAR
             if (!data.crop) {
-                openPlantingBalloon(id, plot);
-            } 
-            else if (data.stage === 3) {
-                openHarvestBalloon(id, plot);
-            } 
-            else {
-                irrigatePlot(id, plot);
-            }
-        };
-
-        plot.onpointerenter = () => {
-            const data = gameState.plots[id];
-
-            if (gameState.currentMode === 'planting' && !data.crop) {
-                executePlanting(id, plot);
+                showPlantMenu(id, plot);
+                return;
             }
 
-            if (gameState.currentMode === 'harvesting' && data.crop && data.stage === 3) {
-                executeHarvest(id, plot);
+            // COLHER
+            if (data.stage === 3) {
+                harvestCrop(id, plot);
+                return;
             }
+
+            // IRRIGAR
+            irrigatePlot(id, plot);
         };
     });
+    function showPlantMenu(id, plot) {
+    const container = document.getElementById("balloon-layer");
+    container.innerHTML = "";
 
-    map.onclick = (e) => {
-        if (!e.target.closest('.plot') && !e.target.closest('.wood-balloon')) {
-            closeActiveBalloon();
-            exitSpecialModes();
-        }
-    };
+    const balloon = document.createElement("div");
+    balloon.className = "wood-balloon";
+    balloon.style.left = plot.offsetLeft + "px";
+    balloon.style.top = plot.offsetTop + "px";
+
+    for (let key in CROPS) {
+        balloon.innerHTML += `
+            <div class="crop-option" onclick="plantCrop('${id}', '${key}')">
+                <img src="${CROPS[key].img_broto}">
+                ${CROPS[key].name}
+            </div>
+        `;
+    }
+
+    container.appendChild(balloon);
+    gameState.activeBalloonPlotId = id;
+}
+}
+function plantCrop(id, cropKey) {
+    const plot = gameState.plots[id];
+    const el = document.querySelector(`.plot[data-id="${id}"]`);
+
+    if (gameState.seeds[cropKey] <= 0) return alert("Sem sementes!");
+
+    gameState.seeds[cropKey]--;
+    plot.crop = cropKey;
+    plot.stage = 1;
+    plot.timer = 0;
+
+    el.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
+
+    closeActiveBalloon();
+    updateHUD();
+}
+function harvestCrop(id, plot) {
+    const data = gameState.plots[id];
+    const el = document.querySelector(`.plot[data-id="${id}"]`);
+
+    gameState.inventory[data.crop]++;
+
+    plot.crop = null;
+    plot.stage = 0;
+    plot.timer = 0;
+
+    el.innerHTML = "";
+
+    updateHUD();
 }
 
-/* FECHA BALÃO */
+function irrigatePlot(id, plot) {
+    const data = gameState.plots[id];
+
+    if (gameState.water <= 0) return;
+
+    gameState.water--;
+    data.isWet = true;
+
+    plot.classList.add("wet");
+    updateCisternaLabel();
+}
 function closeActiveBalloon() {
-    document.getElementById('balloon-layer').innerHTML = '';
+    document.getElementById("balloon-layer").innerHTML = "";
     gameState.activeBalloonPlotId = null;
 }
-
-/* INICIALIZA EVENTOS */
-bindPlotEvents();
-
        /* LOOP DE CRESCIMENTO E SISTEMA DE CHUVA AUTOMÁTICO (10 MINUTOS) */
        setInterval(() => {
            for (let id in gameState.plots) {
