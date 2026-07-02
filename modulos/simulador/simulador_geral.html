@@ -447,9 +447,6 @@
    <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
 
 
-   <img id="custom-cursor" src="/img/simulador/cursor.png" alt="Cursor Especial">
-
-
    <div id="game-viewport">
        <div id="farm-map">
           
@@ -661,20 +658,6 @@ for (let i = 0; i < 224; i++) {
        });
 
 
-       viewport.addEventListener('pointermove', (e) => {
-           if (gameState.currentMode !== 'normal') {
-               const cursor = document.getElementById('custom-cursor');
-               cursor.style.left = e.clientX + 'px';
-               cursor.style.top = e.clientY + 'px';
-           }
-           if (!isDragging) return;
-           mapPosX = e.clientX - startX;
-           mapPosY = e.clientY - startY;
-          
-           mapPosX = Math.min(0, Math.max(window.innerWidth - (3000 * currentZoom), mapPosX));
-           mapPosY = Math.min(0, Math.max(window.innerHeight - (2000 * currentZoom), mapPosY));
-           renderMapTransform();
-       });
 
 
        viewport.addEventListener('pointerup', (e) => {
@@ -792,11 +775,6 @@ for (let i = 0; i < 224; i++) {
            gameState.selectedCrop = cropKey;
            document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
            viewport.className = 'mode-planting';
-          
-           const cursor = document.getElementById('custom-cursor');
-           cursor.src = '/img/simulador/maozinha.png';
-           cursor.style.display = 'block';
-
 
            executePlanting(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
            closeActiveBalloon();
@@ -823,7 +801,6 @@ for (let i = 0; i < 224; i++) {
            gameState.currentMode = 'normal';
            gameState.selectedCrop = null;
            document.getElementById('active-mode-indicator').innerText = "";
-           document.getElementById('custom-cursor').style.display = 'none';
            viewport.className = '';
        }
 
