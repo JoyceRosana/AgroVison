@@ -934,6 +934,186 @@ function createFloatingText(text, plotElement) {
     setTimeout(() => el.remove(), 1200);
 }
 
+       /* MECÂNICA INTERATIVA DAS PLANTAÇÕES */
+       document.querySelectorAll('.plot').forEach(plot => {
+           const id = plot.dataset.id;
+           plot.addEventListener('click', (e) => {
+               e.stopPropagation();
+               if (gameState.currentMode !== 'normal') return;
+
+
+               const data = gameState.plots[id];
+               if (!data.crop) {
+                   openPlantingBalloon(id, plot);
+               } else if (data.stage === 3) {
+                   openHarvestBalloon(id, plot);
+               } else if (data.stage < 3 && !data.isWet) {
+                   irrigatePlot(id, plot);
+               }
+           });
+
+
+           plot.addEventListener('pointerenter', () => {
+               if (gameState.currentMode === 'planting' && !gameState.plots[id].crop) {
+                   executePlanting(id, plot);
+               } else if (gameState.currentMode === 'harvesting' && gameState.plots[id].crop && gameState.plots[id].stage === 3) {
+                   executeHarvest(id, plot);
+               }
+           });
+       });
+
+
+       map.addEventListener('click', (e) => {
+           if (!e.target.closest('.plot') && !e.target.closest('.wood-balloon')) {
+               closeActiveBalloon();
+               exitSpecialModes();
+           }
+       });
+
+
+       function closeActiveBalloon() {
+           document.getElementById('balloon-layer').innerHTML = '';
+           gameState.activeBalloonPlotId = null;
+       }
+
+
+       function openPlantingBalloon(id, plotElement) {
+           closeActiveBalloon();
+           gameState.activeBalloonPlotId = id;
+
+
+           const balloon = document.createElement('div');
+           balloon.className = 'wood-balloon';
+
+
+           let html = '';
+           for (let k in CROPS) {
+               html += `
+                   <div class="crop-option" onclick="startContinuousPlanting('${k}')">
+                       <img src="${CROPS[k].img_adulte}">
+                       <div>${CROPS[k].name}</div>
+                   </div>`;
+           }
+           balloon.innerHTML = html;
+          
+           balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
+           balloon.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop) + 'px';
+           document.getElementById('balloon-layer').appendChild(balloon);
+       }
+
+
+       function openHarvestBalloon(id, plotElement) {
+           closeActiveBalloon();
+           gameState.activeBalloonPlotId = id;
+
+
+           const balloon = document.createElement('div');
+           balloon.className = 'wood-balloon';
+           balloon.innerHTML = `
+               <div class="harvest-option" onclick="startContinuousHarvest()">
+                   <img src="/img/simulador/foice.png">
+                   <div>Equipar Foice</div>
+               </div>`;
+          
+           balloon.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + 'px';
+           balloon.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop) + 'px';
+           document.getElementById('balloon-layer').appendChild(balloon);
+       }
+
+
+       function startContinuousPlanting(cropKey) {
+           if (gameState.seeds[cropKey] <= 0) {
+               alert(`Sem sementes de ${CROPS[cropKey].name}! Compre na Cooperativa.`);
+               closeActiveBalloon();
+               return;
+           }
+           gameState.currentMode = 'planting';
+           gameState.selectedCrop = cropKey;
+           document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
+           viewport.className = 'mode-planting';
+          
+           const cursor = document.getElementById('custom-cursor');
+           cursor.src = '/img/simulador/maozinha.png';
+           cursor.style.display = 'block';
+
+
+           executePlanting(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
+           closeActiveBalloon();
+       }
+
+
+       function startContinuousHarvest() {
+           gameState.currentMode = 'harvesting';
+           document.getElementById('active-mode-indicator').innerText = "COLHENDO COM FOICE";
+           viewport.className = 'mode-harvesting';
+
+
+           const cursor = document.getElementById('custom-cursor');
+           cursor.src = '/img/simulador/foice.png';
+           cursor.style.display = 'block';
+
+
+           executeHarvest(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
+           closeActiveBalloon();
+       }
+
+
+       function exitSpecialModes() {
+           gameState.currentMode = 'normal';
+           gameState.selectedCrop = null;
+           document.getElementById('active-mode-indicator').innerText = "";
+           document.getElementById('custom-cursor').style.display = 'none';
+           viewport.className = '';
+       }
+
+
+       function executePlanting(id, plotElement) {
+           const cropKey = gameState.selectedCrop;
+           if (!cropKey || gameState.seeds[cropKey] <= 0) return;
+           gameState.seeds[cropKey]--;
+           gameState.plots[id] = { id: id, crop: cropKey, stage: 1, timer: 0, isWet: false };
+           plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
+       }
+
+
+       function irrigatePlot(id, plotElement) {
+           if (gameState.water >= 10) {
+               gameState.water -= 10;
+               gameState.plots[id].isWet = true;
+               plotElement.classList.add('wet');
+               createFloatingText("💧 Regado!", plotElement);
+               updateCisternaLabel();
+           } else {
+               alert("Cisterna vazia! Aguarde a chuva ou ligue as bombas.");
+           }
+       }
+
+
+       function executeHarvest(id, plotElement) {
+           const data = gameState.plots[id];
+           if (!data.crop || data.stage < 3) return;
+
+
+           gameState.inventory[data.crop] += 3;
+           createFloatingText(`+3 ${CROPS[data.crop].name}`, plotElement);
+
+
+           gameState.plots[id] = { id: id, crop: null, stage: 0, timer: 0, isWet: false };
+           plotElement.innerHTML = '';
+           plotElement.classList.remove('wet');
+       }
+
+
+       function createFloatingText(text, plotElement) {
+           const el = document.createElement('div');
+           el.className = 'floating-text';
+           el.innerText = text;
+           el.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 10) + 'px';
+           el.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop + 10) + 'px';
+           map.appendChild(el);
+           setTimeout(() => el.remove(), 1200);
+       }
+
        /* LOOP DE CRESCIMENTO E SISTEMA DE CHUVA AUTOMÁTICO (10 MINUTOS) */
        setInterval(() => {
            for (let id in gameState.plots) {
