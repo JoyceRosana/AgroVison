@@ -664,19 +664,18 @@ for (let i = 0; i < 224; i++) {
        });
 
 
-       viewport.addEventListener('pointermove', (e) => {
-           if (gameState.currentMode !== 'normal') {
-        
-           }}
+viewport.addEventListener('pointermove', (e) => {
 
-           if (!isDragging) return;
-           mapPosX = e.clientX - startX;
-           mapPosY = e.clientY - startY;
-          
-           mapPosX = Math.min(0, Math.max(window.innerWidth - (3000 * currentZoom), mapPosX));
-           mapPosY = Math.min(0, Math.max(window.innerHeight - (2000 * currentZoom), mapPosY));
-           renderMapTransform();
-       });
+    if (!isDragging) return;
+
+    mapPosX = e.clientX - startX;
+    mapPosY = e.clientY - startY;
+
+    mapPosX = Math.min(0, Math.max(window.innerWidth - (3000 * currentZoom), mapPosX));
+    mapPosY = Math.min(0, Math.max(window.innerHeight - (2000 * currentZoom), mapPosY));
+
+    renderMapTransform();
+});
 
 
        viewport.addEventListener('pointerup', (e) => {
