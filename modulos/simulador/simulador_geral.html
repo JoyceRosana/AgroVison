@@ -276,53 +276,35 @@
 
        /* BALÃO DE MADEIRA */
        .wood-balloon {
-    padding: 6px;
-    gap: 6px;
-    transform: translate(-50%, -100%);
-    font-size: 12px;
-    position: absolute;
-    background-color: #dfb887;
-    border: 4px solid var(--wood-dark);
-    border-radius: 10px;
-    z-index: 1000;
-    display: flex;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
+           position: absolute;
+           background-color: #dfb887;
+           border: 4px solid var(--wood-dark);
+           border-radius: 10px;
+           padding: 15px;
+           z-index: 1000;
+           display: flex;
+           gap: 12px;
+           transform: translate(-50%, -105%);
+           box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+       }
 
-#balloon-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 2000;
-}
-
-/* IMPORTANTE: permitir clique nos balões */
-.wood-balloon,
-.wood-balloon * {
-    pointer-events: auto;
-}
 
        .crop-option, .harvest-option {
-    background: rgba(255, 248, 220, 0.9);
-    border: 2px solid var(--wood-dark);
-    border-radius: 8px;
-    padding: 4px;
-    cursor: pointer;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    font-size: 10px;
-    font-weight: bold;
-
-    min-width: 55px;
-}
+           background: rgba(255, 248, 220, 0.9);
+           border: 2px solid var(--wood-dark);
+           border-radius: 8px;
+           padding: 6px;
+           cursor: pointer;
+           display: flex;
+           flex-direction: column;
+           align-items: center;
+           font-size: 11px;
+           font-weight: bold;
+           min-width: 70px;
+       }
        .crop-option:hover, .harvest-option:hover { background: var(--gold); }
-.crop-option img, .harvest-option img {width: 22px; height: 22px; object-fit: contain; }
+       .crop-option img { width: 32px; height: 32px; object-fit: contain; }
+
 
        /* INTERFACES MODAIS */
        .modal-panel {
@@ -465,6 +447,9 @@
    <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
 
 
+   <img id="custom-cursor" src="" alt="Cursor Especial">
+
+
    <div id="game-viewport">
        <div id="farm-map">
           
@@ -599,20 +584,63 @@
 
 
        let currentZoom = 0.7; // Começa um pouco mais afastado para ver toda a grande plantação
-
-
-       // CONSTRUÇÃO DA MEGA GRADE UNIFICADA: 20 linhas x 20 colunas = 400 lotes
-       const container = document.getElementById('mega-p');
-       let totalPlots = 20 * 20;
+       
       
-       for(let i = 1; i <= totalPlots; i++) {
-           const p = document.createElement('div');
-           p.className = 'plot';
-           p.dataset.id = i;
-           container.appendChild(p);
-           gameState.plots[i] = { id: i, crop: null, stage: 0, timer: 0, isWet: false };
-       }
+       const superior = document.getElementById("plantacao-superior");
+const inferior = document.getElementById("plantacao-inferior");
 
+let id = 1;
+
+/* ==========================
+   SUPERIOR
+   17 x 6 = 102 terras
+   ========================== */
+
+for (let i = 0; i < 102; i++) {
+
+    const plot = document.createElement("div");
+
+    plot.className = "plot";
+    plot.dataset.id = id;
+
+    superior.appendChild(plot);
+
+    gameState.plots[id] = {
+        id: id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
+    };
+
+    id++;
+}
+
+
+/* ==========================
+   INFERIOR
+   28 x 8 = 224 terras
+   ========================== */
+
+for (let i = 0; i < 224; i++) {
+
+    const plot = document.createElement("div");
+
+    plot.className = "plot";
+    plot.dataset.id = id;
+
+    inferior.appendChild(plot);
+
+    gameState.plots[id] = {
+        id: id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
+    };
+
+    id++;
+}
 
        /* MOTOR DE TOQUE E ARRRASTO (POINTER EVENTS) */
        const viewport = document.getElementById('game-viewport');
@@ -1074,6 +1102,5 @@
 
        updateHUD();
    </script>
-
 </body>
 </html>
