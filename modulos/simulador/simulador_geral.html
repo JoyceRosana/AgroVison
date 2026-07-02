@@ -690,9 +690,8 @@ for (let i = 0; i < 224; i++) {
 
 
 /* MECÂNICA INTERATIVA DAS PLANTAÇÕES */
-
 document.querySelectorAll('.plot').forEach(plot => {
-    const id = Number(plot.dataset.id);
+    const id = plot.dataset.id;
 
     plot.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -701,51 +700,39 @@ document.querySelectorAll('.plot').forEach(plot => {
 
         const data = gameState.plots[id];
 
-        if (!data) return;
-
-        // sem planta → abre menu de plantio
+        // vazio → abre plantio
         if (!data.crop) {
             openPlantingBalloon(id, plot);
-        }
-        // planta pronta → colheita
-        else if (data.stage === 3) {
+
+        // maduro → colheita
+        } else if (data.stage === 3) {
             openHarvestBalloon(id, plot);
-        }
-        // planta em crescimento → irrigação
-        else if (data.stage < 3) {
+
+        // crescido mas não maduro → irrigação
+        } else if (data.stage < 3) {
             irrigatePlot(id, plot);
         }
     });
 
     plot.addEventListener('pointerenter', () => {
-        if (gameState.currentMode !== 'planting' &&
-            gameState.currentMode !== 'harvesting') return;
-
         const data = gameState.plots[id];
-        if (!data) return;
 
-        // plantio contínuo
-        if (gameState.currentMode === 'planting') {
-            if (!data.crop && gameState.selectedCrop) {
-                executePlanting(id, plot);
-            }
-        }
+        if (gameState.currentMode === 'planting' && !data.crop) {
+            executePlanting(id, plot);
 
-        // colheita contínua
-        if (gameState.currentMode === 'harvesting') {
-            if (data.crop && data.stage === 3) {
-                executeHarvest(id, plot);
-            }
+        } else if (
+            gameState.currentMode === 'harvesting' &&
+            data.crop &&
+            data.stage === 3
+        ) {
+            executeHarvest(id, plot);
         }
     });
 });
 
 
 map.addEventListener('click', (e) => {
-    if (
-        !e.target.closest('.plot') &&
-        !e.target.closest('.wood-balloon')
-    ) {
+    if (!e.target.closest('.plot') && !e.target.closest('.wood-balloon')) {
         closeActiveBalloon();
         exitSpecialModes();
     }
@@ -753,11 +740,13 @@ map.addEventListener('click', (e) => {
 
 
 function closeActiveBalloon() {
-    document.getElementById('balloon-layer').innerHTML = '';
+    const layer = document.getElementById('balloon-layer');
+    layer.innerHTML = '';
     gameState.activeBalloonPlotId = null;
 }
 
 
+/* BALÃO DE PLANTIO */
 function openPlantingBalloon(id, plotElement) {
     closeActiveBalloon();
     gameState.activeBalloonPlotId = id;
@@ -766,6 +755,7 @@ function openPlantingBalloon(id, plotElement) {
     balloon.className = 'wood-balloon';
 
     let html = '';
+
     for (let k in CROPS) {
         html += `
             <div class="crop-option" onclick="startContinuousPlanting('${k}')">
@@ -787,16 +777,18 @@ function openPlantingBalloon(id, plotElement) {
 }
 
 
+/* BALÃO DE COLHEITA */
 function openHarvestBalloon(id, plotElement) {
     closeActiveBalloon();
     gameState.activeBalloonPlotId = id;
 
     const balloon = document.createElement('div');
     balloon.className = 'wood-balloon';
+
     balloon.innerHTML = `
         <div class="harvest-option" onclick="startContinuousHarvest()">
             <img src="/img/simulador/foice.png">
-            <div>Equipar Foice</div>
+            <div>Colher</div>
         </div>
     `;
 
@@ -810,9 +802,10 @@ function openHarvestBalloon(id, plotElement) {
 }
 
 
+/* MODO PLANTAR */
 function startContinuousPlanting(cropKey) {
     if (gameState.seeds[cropKey] <= 0) {
-        alert(`Sem sementes de ${CROPS[cropKey].name}! Compre na Cooperativa.`);
+        alert(`Sem sementes de ${CROPS[cropKey].name}! Compre na cooperativa.`);
         closeActiveBalloon();
         return;
     }
@@ -825,54 +818,50 @@ function startContinuousPlanting(cropKey) {
 
     viewport.className = 'mode-planting';
 
-    if (gameState.activeBalloonPlotId != null) {
-        const el = document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`);
-        if (el) executePlanting(gameState.activeBalloonPlotId, el);
-    }
+    const firstPlot = document.querySelector(
+        `.plot[data-id="${gameState.activeBalloonPlotId}"]`
+    );
+
+    executePlanting(gameState.activeBalloonPlotId, firstPlot);
 
     closeActiveBalloon();
 }
 
 
+/* MODO COLHER */
 function startContinuousHarvest() {
     gameState.currentMode = 'harvesting';
 
     document.getElementById('active-mode-indicator').innerText =
-        "COLHENDO COM FOICE";
+        "COLHEITA ATIVA";
 
     viewport.className = 'mode-harvesting';
 
-    const cursor = document.getElementById('custom-cursor');
-    cursor.src = '/img/simulador/foice.png';
-    cursor.style.display = 'block';
+    const firstPlot = document.querySelector(
+        `.plot[data-id="${gameState.activeBalloonPlotId}"]`
+    );
 
-    if (gameState.activeBalloonPlotId != null) {
-        const el = document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`);
-        if (el) executeHarvest(gameState.activeBalloonPlotId, el);
-    }
+    executeHarvest(gameState.activeBalloonPlotId, firstPlot);
 
     closeActiveBalloon();
 }
 
 
+/* SAIR DO MODO ESPECIAL */
 function exitSpecialModes() {
     gameState.currentMode = 'normal';
     gameState.selectedCrop = null;
 
     document.getElementById('active-mode-indicator').innerText = "";
     viewport.className = '';
-
-    const cursor = document.getElementById('custom-cursor');
-    if (cursor) cursor.style.display = 'none';
 }
 
 
+/* PLANTIO */
 function executePlanting(id, plotElement) {
     const cropKey = gameState.selectedCrop;
-
     if (!cropKey) return;
     if (gameState.seeds[cropKey] <= 0) return;
-    if (!plotElement) return;
 
     gameState.seeds[cropKey]--;
 
@@ -889,24 +878,24 @@ function executePlanting(id, plotElement) {
 }
 
 
+/* IRRIGAÇÃO */
 function irrigatePlot(id, plotElement) {
-    const data = gameState.plots[id];
-    if (!data) return;
-
-    if (gameState.water >= 10) {
-        gameState.water -= 10;
-        data.isWet = true;
-
-        plotElement.classList.add('wet');
-        createFloatingText("💧 Regado!", plotElement);
-
-        updateCisternaLabel();
-    } else {
-        alert("Cisterna vazia!");
+    if (gameState.water < 10) {
+        alert("Água insuficiente!");
+        return;
     }
+
+    gameState.water -= 10;
+    gameState.plots[id].isWet = true;
+
+    plotElement.classList.add('wet');
+
+    createFloatingText("💧 Regado!", plotElement);
+    updateCisternaLabel();
 }
 
 
+/* COLHEITA */
 function executeHarvest(id, plotElement) {
     const data = gameState.plots[id];
     if (!data || data.stage < 3) return;
@@ -923,20 +912,22 @@ function executeHarvest(id, plotElement) {
         isWet: false
     };
 
-    plotElement.innerHTML = "";
+    plotElement.innerHTML = '';
     plotElement.classList.remove('wet');
 }
 
 
+/* TEXTO FLUTUANTE */
 function createFloatingText(text, plotElement) {
     const el = document.createElement('div');
     el.className = 'floating-text';
     el.innerText = text;
 
-    el.style.left =
-        (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 10) + 'px';
-    el.style.top =
-        (plotElement.offsetTop + plotElement.parentElement.offsetTop + 10) + 'px';
+    const rect = plotElement.getBoundingClientRect();
+    const mapRect = document.getElementById("farm-map").getBoundingClientRect();
+
+    el.style.left = (rect.left - mapRect.left + 10) + "px";
+    el.style.top = (rect.top - mapRect.top + 10) + "px";
 
     map.appendChild(el);
 
