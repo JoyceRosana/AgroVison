@@ -354,6 +354,13 @@
        }
        .btn-action:hover { background: #219653; }
 
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: monospace;
+    font-size: 14px;
+}
 
        .floating-text {
            position: absolute;
@@ -445,10 +452,6 @@
 
 
    <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
-
-
-   <img id="custom-cursor" src="" alt="Cursor Especial">
-
 
    <div id="game-viewport">
        <div id="farm-map">
@@ -663,10 +666,9 @@ for (let i = 0; i < 224; i++) {
 
        viewport.addEventListener('pointermove', (e) => {
            if (gameState.currentMode !== 'normal') {
-               const cursor = document.getElementById('custom-cursor');
-               cursor.style.left = e.clientX + 'px';
-               cursor.style.top = e.clientY + 'px';
-           }
+        
+           }}
+
            if (!isDragging) return;
            mapPosX = e.clientX - startX;
            mapPosY = e.clientY - startY;
@@ -792,10 +794,7 @@ for (let i = 0; i < 224; i++) {
            gameState.selectedCrop = cropKey;
            document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
            viewport.className = 'mode-planting';
-          
-           const cursor = document.getElementById('custom-cursor');
-           cursor.src = '/img/simulador/maozinha.png';
-           cursor.style.display = 'block';
+        
 
 
            executePlanting(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
@@ -935,18 +934,29 @@ for (let i = 0; i < 224; i++) {
 
        /* CONSTRUÇÕES E MERCADO */
        function openGalpao() {
-           closeActiveBalloon(); exitSpecialModes();
-           const container = document.getElementById('stock-list');
-           container.innerHTML = '';
-           for (let k in gameState.inventory) {
-               container.innerHTML += `
-                   <div class="item-row">
-                       <span>🥬 Recurso: ${CROPS[k].name}</span>
-                       <span>${gameState.inventory[k]} estocados</span>
-                   </div>`;
-           }
-           openModal('modal-galpao');
-       }
+    closeActiveBalloon();
+    exitSpecialModes();
+
+    const container = document.getElementById('stock-list');
+    container.innerHTML = '';
+
+    for (let k in gameState.inventory) {
+        const row = document.createElement('div');
+        row.className = 'item-row';
+
+        row.innerHTML = `
+            <span>${CROPS[k].name}</span>
+            <span>
+                sementes: ${gameState.seeds[k]} |
+                estoque: ${gameState.inventory[k]}
+            </span>
+        `;
+
+        container.appendChild(row);
+    }
+
+    openModal('modal-galpao');
+}
 
 
        function openCooperativa() {
