@@ -583,18 +583,17 @@
 
        let currentZoom = 0.7; // Começa um pouco mais afastado para ver toda a grande plantação
        
-      
-       const superior = document.getElementById("plantacao-superior");
+      const superior = document.getElementById("plantacao-superior");
 const inferior = document.getElementById("plantacao-inferior");
 
 let id = 1;
 
 /* ==========================
    SUPERIOR
-   20 x 7 = 140 terras
+   18 x 6 = 108 terras
    ========================== */
 
-for (let i = 0; i < 140; i++) {
+for (let i = 0; i < 108; i++) {
 
     const plot = document.createElement("div");
 
@@ -617,10 +616,10 @@ for (let i = 0; i < 140; i++) {
 
 /* ==========================
    INFERIOR
-   28 x 10 = 280 terras
+   28 x 8 = 224 terras
    ========================== */
 
-for (let i = 0; i < 280; i++) {
+for (let i = 0; i < 224; i++) {
 
     const plot = document.createElement("div");
 
@@ -638,8 +637,7 @@ for (let i = 0; i < 280; i++) {
     };
 
     id++;
-    }
-
+}
        /* MOTOR DE TOQUE E ARRRASTO (POINTER EVENTS) */
        const viewport = document.getElementById('game-viewport');
        const map = document.getElementById('farm-map');
