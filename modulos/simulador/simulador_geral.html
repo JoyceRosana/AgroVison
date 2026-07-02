@@ -182,19 +182,19 @@
 
 /* ==========================
    PLANTAÇÃO SUPERIOR
-   20 x 7 = 140 terras
+   18 x 6 = 108 terras
+   acima da estrada (2px)
    ========================== */
 
 .grid-superior{
     position:absolute;
 
-    /* logo acima da estrada */
-    top:320px;
+    top: calc(320px - 2px); /* 2px acima da estrada */
     left:620px;
 
     display:grid;
-    grid-template-columns:repeat(20,85px);
-    grid-template-rows:repeat(7,85px);
+    grid-template-columns:repeat(18,85px);
+    grid-template-rows:repeat(6,85px);
 
     gap:12px;
     padding:15px;
@@ -209,19 +209,21 @@
 
 /* ==========================
    PLANTAÇÃO INFERIOR
-   28 x 10 = 280 terras
+   28 x 8 = 224 terras
+   abaixo da estrada (2px)
    ========================== */
 
 .grid-inferior{
     position:absolute;
 
-    /* logo abaixo da estrada */
-    top:980px;
+    top: calc(320px + 85px * 6 + 24px + 2px); 
+    /* começa logo abaixo da superior + estrada + 2px */
+
     left:120px;
 
     display:grid;
     grid-template-columns:repeat(28,85px);
-    grid-template-rows:repeat(10,85px);
+    grid-template-rows:repeat(8,85px);
 
     gap:12px;
     padding:15px;
