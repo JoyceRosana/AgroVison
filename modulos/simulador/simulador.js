@@ -1749,3 +1749,271 @@ function hasInventory(crop){
 /*==================================================
 = FIM DA PARTE 5
 ==================================================*/
+
+// 6. CISTERNA (ÁGUA / SISTEMA HÍDRICO)
+
+function openCisterna() {
+    closeActiveBalloon();
+    exitSpecialModes();
+    updateCisternaLabel();
+    openModal('modal-cisterna');
+}
+
+function updateCisternaLabel() {
+    const el = document.getElementById('modal-water-label');
+    el.innerText = `${gameState.water}L / ${gameState.maxWater}L`;
+}
+
+function irrigatePlot(id, plotElement) {
+    const plot = gameState.plots[id];
+    if (!plot || plot.isWet) return;
+
+    if (gameState.water < 10) {
+        alert("Água insuficiente.");
+        return;
+    }
+
+    gameState.water -= 10;
+    plot.isWet = true;
+    plotElement.classList.add('wet');
+
+    createFloatingText("💧 Regado!", plotElement);
+    updateCisternaLabel();
+}
+
+function refillWaterSystem() {
+    if (gameState.water >= gameState.maxWater) {
+        alert("Reservatório cheio!");
+        return;
+    }
+
+    gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
+    updateCisternaLabel();
+}
+
+// 7. COOPERATIVA (MERCADO)
+
+function openCooperativa() {
+    closeActiveBalloon();
+    exitSpecialModes();
+    renderCooperativa();
+    openModal('modal-cooperativa');
+}
+
+function renderCooperativa() {
+    const container = document.getElementById('market-list');
+    container.innerHTML = "";
+
+    container.innerHTML += `
+        <div class="item-row">
+            <button class="btn-action" onclick="sellWaterResource()">
+                Vender 10L de Água (+$20)
+            </button>
+        </div>
+    `;
+
+    for (let k in CROPS) {
+        container.innerHTML += `
+            <div class="item-row">
+                <strong>${CROPS[k].name}</strong>
+                <button onclick="buySeed('${k}')">Comprar (-$${CROPS[k].seedPrice})</button>
+                <button onclick="sellSeed('${k}')">Vender (+$${CROPS[k].seedSellPrice})</button>
+                <button onclick="sellCrop('${k}')">Liquidar Estoque</button>
+            </div>
+        `;
+    }
+}
+
+function buySeed(key) {
+    if (gameState.money < CROPS[key].seedPrice) return alert("Sem dinheiro.");
+
+    gameState.money -= CROPS[key].seedPrice;
+    gameState.seeds[key]++;
+    updateHUD();
+    renderCooperativa();
+}
+
+function sellSeed(key) {
+    if (gameState.seeds[key] <= 0) return alert("Sem sementes.");
+
+    gameState.seeds[key]--;
+    gameState.money += CROPS[key].seedSellPrice;
+    updateHUD();
+    renderCooperativa();
+}
+
+function sellCrop(key) {
+    if (gameState.inventory[key] <= 0) return alert("Sem estoque.");
+
+    gameState.money += gameState.inventory[key] * CROPS[key].sellPrice;
+    gameState.inventory[key] = 0;
+
+    updateHUD();
+    renderCooperativa();
+}
+
+function sellWaterResource() {
+    if (gameState.water < 10) return alert("Água insuficiente.");
+
+    gameState.water -= 10;
+    gameState.money += 20;
+
+    updateHUD();
+    updateCisternaLabel();
+    renderCooperativa();
+}
+
+// 8. GALPÃO + HUD
+
+function openGalpao() {
+    closeActiveBalloon();
+    exitSpecialModes();
+
+    const container = document.getElementById("stock-list");
+    container.innerHTML = "";
+
+    for (let k in gameState.inventory) {
+        container.innerHTML += `
+            <div class="item-row">
+                <span>${CROPS[k].name}</span>
+                <span>
+                    sementes: ${gameState.seeds[k]} |
+                    estoque: ${gameState.inventory[k]}
+                </span>
+            </div>
+        `;
+    }
+
+    openModal("modal-galpao");
+}
+
+function updateHUD() {
+    document.getElementById("hud-money").innerText = gameState.money;
+}
+
+// 9. SAVE / LOAD
+
+function generateSaveCode() {
+    const payload = {
+        m: gameState.money,
+        w: gameState.water,
+        i: gameState.inventory,
+        s: gameState.seeds,
+        p: {}
+    };
+
+    for (let id in gameState.plots) {
+        const p = gameState.plots[id];
+        payload.p[id] = {
+            c: p.crop,
+            s: p.stage,
+            t: p.timer,
+            w: p.isWet
+        };
+    }
+
+    const code = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    document.getElementById("save-code-output").value = code;
+}
+
+function loadSaveCode() {
+    const input = document.getElementById("save-code-input").value.trim();
+    if (!input) return;
+
+    try {
+        const data = JSON.parse(decodeURIComponent(escape(atob(input))));
+
+        gameState.money = data.m;
+        gameState.water = data.w;
+        gameState.inventory = data.i;
+        gameState.seeds = data.s;
+
+        for (let id in data.p) {
+            if (!gameState.plots[id]) continue;
+
+            gameState.plots[id] = {
+                id: Number(id),
+                crop: data.p[id].c,
+                stage: data.p[id].s,
+                timer: data.p[id].t,
+                isWet: data.p[id].w
+            };
+
+            const el = document.querySelector(`.plot[data-id="${id}"]`);
+            if (!el) continue;
+
+            const p = gameState.plots[id];
+
+            if (!p.crop) {
+                el.innerHTML = "";
+                continue;
+            }
+
+            const crop = CROPS[p.crop];
+            let img = crop.img_broto;
+
+            if (p.stage === 2) img = crop.img_jovem;
+            if (p.stage === 3) img = crop.img_adulte;
+
+            el.innerHTML = `<img class="plot-plant-img" src="${img}">`;
+
+            el.classList.toggle("wet", p.isWet);
+        }
+
+        updateHUD();
+        alert("Partida restaurada.");
+        closeModals();
+
+    } catch {
+        alert("Código inválido.");
+    }
+}
+
+// 10. INICIALIZAÇÃO + EVENTOS
+
+window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("galpao").addEventListener("click", openGalpao);
+    document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+    document.getElementById("cisterna").addEventListener("click", openCisterna);
+
+    updateHUD();
+    updateCisternaLabel();
+});
+
+function openModal(id) {
+    closeModals();
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+}
+
+function closeModals() {
+    document.querySelectorAll(".modal-panel").forEach(m => m.classList.remove("active"));
+}
+
+function closeActiveBalloon() {
+    document.getElementById("balloon-layer").innerHTML = "";
+    gameState.activeBalloonPlotId = null;
+}
+
+function exitSpecialModes() {
+    gameState.currentMode = "normal";
+    gameState.selectedCrop = null;
+
+    document.getElementById("active-mode-indicator").innerText = "";
+    document.getElementById("custom-cursor").style.display = "none";
+
+    document.getElementById("game-viewport").className = "";
+}
+
+function createFloatingText(text, el) {
+    const div = document.createElement("div");
+    div.className = "floating-text";
+    div.innerText = text;
+
+    div.style.left = el.offsetLeft + "px";
+    div.style.top = el.offsetTop + "px";
+
+    document.getElementById("farm-map").appendChild(div);
+
+    setTimeout(() => div.remove(), 1200);
+}
