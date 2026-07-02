@@ -180,20 +180,21 @@
        .cooperativa { width: 700px; top: 500px; left: 2300px; }
        .cisterna { width: 500px; top: 600px; left: 10px; }
 
+
 /* ==========================
    PLANTAÇÃO SUPERIOR
-   18 x 6 = 108 terras
-   acima da estrada (2px)
+   17 x 6 = 102 terras
+   10px acima da estrada
    ========================== */
 
 .grid-superior{
     position:absolute;
 
-    top: calc(320px - 2px); /* 2px acima da estrada */
+    top: calc(320px - 10px);
     left:620px;
 
     display:grid;
-    grid-template-columns:repeat(18,85px);
+    grid-template-columns:repeat(17,85px);
     grid-template-rows:repeat(6,85px);
 
     gap:12px;
@@ -210,14 +211,13 @@
 /* ==========================
    PLANTAÇÃO INFERIOR
    28 x 8 = 224 terras
-   abaixo da estrada (2px)
+   10px abaixo da estrada
    ========================== */
 
 .grid-inferior{
     position:absolute;
 
-    top: calc(320px + 85px * 6 + 24px + 20px); 
-    /* começa logo abaixo da superior + estrada + 20px */
+    top: calc(320px + 85px * 6 + 24px + 10px);
 
     left:120px;
 
@@ -585,17 +585,18 @@
 
        let currentZoom = 0.7; // Começa um pouco mais afastado para ver toda a grande plantação
        
-      const superior = document.getElementById("plantacao-superior");
+      
+       const superior = document.getElementById("plantacao-superior");
 const inferior = document.getElementById("plantacao-inferior");
 
 let id = 1;
 
 /* ==========================
    SUPERIOR
-   18 x 6 = 108 terras
+   17 x 6 = 102 terras
    ========================== */
 
-for (let i = 0; i < 108; i++) {
+for (let i = 0; i < 102; i++) {
 
     const plot = document.createElement("div");
 
@@ -640,6 +641,7 @@ for (let i = 0; i < 224; i++) {
 
     id++;
 }
+
        /* MOTOR DE TOQUE E ARRRASTO (POINTER EVENTS) */
        const viewport = document.getElementById('game-viewport');
        const map = document.getElementById('farm-map');
