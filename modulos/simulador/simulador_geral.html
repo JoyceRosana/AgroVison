@@ -700,19 +700,23 @@ viewport.addEventListener('pointermove', (e) => {
        document.querySelectorAll('.plot').forEach(plot => {
            const id = plot.dataset.id;
            plot.addEventListener('click', (e) => {
-               e.stopPropagation();
-               if (gameState.currentMode !== 'normal') return;
+    e.stopPropagation();
 
+    const data = gameState.plots[id];
 
-               const data = gameState.plots[id];
-               if (!data.crop) {
-                   openPlantingBalloon(id, plot);
-               } else if (data.stage === 3) {
-                   openHarvestBalloon(id, plot);
-               } else if (data.stage < 3 && !data.isWet) {
-                   irrigatePlot(id, plot);
-               }
-           });
+    if (gameState.currentMode !== 'normal') return;
+
+    if (!data.crop) {
+        openPlantingBalloon(id, plot);
+    } 
+    else if (data.stage === 3) {
+        openHarvestBalloon(id, plot);
+    } 
+    else if (data.stage < 3 && !data.isWet) {
+        irrigatePlot(id, plot);
+    }
+});
+
 
 
            plot.addEventListener('pointerenter', () => {
@@ -843,12 +847,28 @@ viewport.addEventListener('pointermove', (e) => {
 
 
        function executePlanting(id, plotElement) {
-           const cropKey = gameState.selectedCrop;
-           if (!cropKey || gameState.seeds[cropKey] <= 0) return;
-           gameState.seeds[cropKey]--;
-           gameState.plots[id] = { id: id, crop: cropKey, stage: 1, timer: 0, isWet: false };
-           plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
-       }
+    const cropKey = gameState.selectedCrop;
+
+    if (!cropKey) return;
+    if (gameState.seeds[cropKey] <= 0) return;
+
+    const plot = gameState.plots[id];
+
+    // 🔒 trava: só planta se estiver vazio
+    if (plot.crop) return;
+
+    gameState.seeds[cropKey]--;
+
+    gameState.plots[id] = {
+        id: id,
+        crop: cropKey,
+        stage: 1,
+        timer: 0,
+        isWet: false
+    };
+
+    plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
+}
 
 
        function irrigatePlot(id, plotElement) {
@@ -1016,6 +1036,9 @@ setInterval(() => {
            }
        }
 
+document.getElementById("galpao").addEventListener("click", openGalpao);
+document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+document.getElementById("cisterna").addEventListener("click", openCisterna); 
 
        function buySeed(key) {
            if (gameState.money >= CROPS[key].seedPrice) {
@@ -1058,7 +1081,6 @@ setInterval(() => {
            openModal('modal-cisterna');
        }
 
-
        function updateCisternaLabel() {
            document.getElementById('modal-water-label').innerText = gameState.water + "L / " + gameState.maxWater + "L";
        }
@@ -1071,6 +1093,11 @@ setInterval(() => {
            } else { alert("Reservatório cheio!"); }
        }
 
+       window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("galpao").addEventListener("click", openGalpao);
+    document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+    document.getElementById("cisterna").addEventListener("click", openCisterna);
+});
 
        /* CONFIGURAÇÕES E SALVAMENTO */
        function generateSaveCode() {
@@ -1125,9 +1152,17 @@ setInterval(() => {
 
 
        function openConfigModal() { openModal('modal-config'); switchTab('tab-inicio'); }
-       function openModal(id) { closeModals(); document.getElementById(id).classList.add('active'); }
-       function closeModals() { document.querySelectorAll('.modal-panel').forEach(m => m.classList.remove('active')); }
-       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
+       function openModal(id) {
+    closeModals();
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+}
+
+function closeModals() {
+    document.querySelectorAll('.modal-panel').forEach(m => {
+        m.classList.remove('active');
+    });
+}       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
 
 
        updateHUD();
