@@ -303,7 +303,8 @@
            min-width: 70px;
        }
        .crop-option:hover, .harvest-option:hover { background: var(--gold); }
-       .crop-option img .harvest-option img { width: 20px; height: 20px; object-fit: contain; }
+       .crop-option img { width: 32px; height: 32px; object-fit: contain; }
+        .harvest-option img { width: 20px; height: 20px; object-fit: contain; }
 
 
        /* INTERFACES MODAIS */
@@ -773,11 +774,13 @@ viewport.addEventListener('pointermove', (e) => {
 
     const rect = plotElement.getBoundingClientRect();
 
-    balloon.style.position = "absolute";
-    balloon.style.left = `${rect.left + window.scrollX + 40}px`;
-    balloon.style.top = `${rect.top + window.scrollY}px`;
+    balloon.style.left =
+    (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 40) + "px";
 
-    document.getElementById('balloon-layer').appendChild(balloon);
+balloon.style.top =
+    (plotElement.offsetTop + plotElement.parentElement.offsetTop) + "px";
+
+document.getElementById("balloon-layer").appendChild(balloon);
 }
 
        function openHarvestBalloon(id, plotElement) {
@@ -936,19 +939,26 @@ setInterval(() => {
 
         const t = crop.stageTime;
 
-        // Fase 2
-        if (p.stage === 1 && p.timer >= t) {
-            p.stage = 2;
-            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
-        }
+        /if (plotData.stage === 1 && plotData.timer >= targetTime) {
 
-        // Fase 3 (adulto)
-        else if (p.stage === 2 && p.timer >= t * 2) {
-            p.stage = 3;
-            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
-            p.isWet = false;
-            el.classList.remove('wet');
-        }
+    plotData.stage = 2;
+    plotData.timer = 0;
+
+    plotEl.innerHTML =
+        `<img class="plot-plant-img" src="${CROPS[plotData.crop].img_jovem}">`;
+
+}
+
+else if (plotData.stage === 2 && plotData.timer >= targetTime) {
+
+    plotData.stage = 3;
+    plotData.timer = 0;
+
+    plotEl.innerHTML =
+        `<img class="plot-plant-img" src="${CROPS[plotData.crop].img_adulte}">`;
+
+    plotEl.classList.remove("wet");
+    plotData.isWet = false;
     }
 }, 1000);
 
@@ -1175,8 +1185,12 @@ function closeModals() {
     });
 }       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
 
-
+document.getElementById("galpao").onclick = openGalpao;
+document.getElementById("cooperativa").onclick = openCooperativa;
+document.getElementById("cisterna").onclick = openCisterna;
        updateHUD();
+
+       
    </script>
 </body>
 </html>
