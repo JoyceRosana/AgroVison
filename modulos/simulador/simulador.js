@@ -1,22 +1,5 @@
-"use strict";
-
 /*==================================================
-=
-=  AGRO VISION
-=  simulador.js
-=
-=  PARTE 1
-=
-=  ✔ Configuração
-=  ✔ Estado do jogo
-=  ✔ Criação automática das terras
-=
-==================================================*/
-
-
-
-/*==================================================
-= 1. CONFIGURAÇÃO DO JOGO
+= 1. CONFIGURAÇÃO DAS CULTURAS
 ==================================================*/
 
 const CROPS = {
@@ -86,138 +69,136 @@ const CROPS = {
 
 
 /*==================================================
-= CONFIGURAÇÕES GERAIS
+= 2. CONFIGURAÇÕES GERAIS
 ==================================================*/
 
 const GAME = {
 
-    TOTAL_SUPERIOR:102,
+    TOTAL_SUPERIOR: 102,
+    TOTAL_INFERIOR: 224,
+    TOTAL_PLOTS: 326,
 
-    TOTAL_INFERIOR:224,
+    MAP_WIDTH: 3000,
+    MAP_HEIGHT: 2000,
 
-    TOTAL_PLOTS:326,
+    INITIAL_MONEY: 120,
 
-    MAP_WIDTH:3000,
+    INITIAL_WATER: 100,
+    MAX_WATER: 200,
 
-    MAP_HEIGHT:2000,
+    WATER_PER_IRRIGATION: 10,
 
-    INITIAL_MONEY:120,
+    WATER_SELL_AMOUNT: 10,
+    WATER_SELL_PRICE: 20,
 
-    INITIAL_WATER:100,
-
-    MAX_WATER:200,
-
-    WATER_PER_IRRIGATION:10,
-
-    WATER_SELL:10,
-
-    WATER_SELL_PRICE:20,
-
-    RAIN_INTERVAL:600000,
-
-    RAIN_DURATION:30000,
-
-    RAIN_WATER_GAIN:50
+    RAIN_INTERVAL: 600000,
+    RAIN_DURATION: 30000,
+    RAIN_WATER_GAIN: 50
 
 };
 
 
 
 /*==================================================
-= 2. ESTADO DO JOGO
+= 3. ESTADO GLOBAL DO JOGO
 ==================================================*/
 
-let gameState={
+let gameState = {
 
-    money:GAME.INITIAL_MONEY,
+    money: GAME.INITIAL_MONEY,
 
-    water:GAME.INITIAL_WATER,
+    water: GAME.INITIAL_WATER,
 
-    maxWater:GAME.MAX_WATER,
+    maxWater: GAME.MAX_WATER,
 
-    currentMode:"normal",
+    currentMode: "normal",
 
-    selectedCrop:null,
+    selectedCrop: null,
 
-    activeBalloon:null,
+    activeBalloon: null,
 
-    inventory:{
+    inventory: {
 
-        milho:0,
-        soja:0,
-        tomate:0,
-        alface:0,
-        cenoura:0
-
-    },
-
-    seeds:{
-
-        milho:5,
-        soja:5,
-        tomate:5,
-        alface:5,
-        cenoura:5
+        milho: 0,
+        soja: 0,
+        tomate: 0,
+        alface: 0,
+        cenoura: 0
 
     },
 
-    plots:{}
+    seeds: {
+
+        milho: 5,
+        soja: 5,
+        tomate: 5,
+        alface: 5,
+        cenoura: 5
+
+    },
+
+    plots: {}
 
 };
 
 
 
 /*==================================================
-= 3. VARIÁVEIS GLOBAIS
+= 4. REFERÊNCIAS DOS ELEMENTOS
 ==================================================*/
 
-let viewport;
-let map;
+let viewport = null;
+let map = null;
 
-let superiorGrid;
-let inferiorGrid;
-
-let currentZoom=0.7;
-
-let mapX=-100;
-let mapY=-50;
-
-let dragging=false;
-
-let dragStartX=0;
-let dragStartY=0;
+let superiorGrid = null;
+let inferiorGrid = null;
 
 
 
 /*==================================================
-= REFERÊNCIAS DOS ELEMENTOS HTML
+= 5. CONTROLE DO MAPA
 ==================================================*/
 
-function cacheElements(){
+let currentZoom = 0.7;
 
-    viewport=document.getElementById("game-viewport");
+let mapX = -100;
+let mapY = -50;
 
-    map=document.getElementById("farm-map");
+let dragging = false;
 
-    superiorGrid=document.getElementById("plantacao-superior");
+let dragStartX = 0;
+let dragStartY = 0;
 
-    inferiorGrid=document.getElementById("plantacao-inferior");
+
+
+/*==================================================
+= 6. CACHE DOS ELEMENTOS HTML
+==================================================*/
+
+function cacheElements() {
+
+    viewport = document.getElementById("game-viewport");
+
+    map = document.getElementById("farm-map");
+
+    superiorGrid = document.getElementById("plantacao-superior");
+
+    inferiorGrid = document.getElementById("plantacao-inferior");
 
 }
 
 
-
 /*==================================================
-= 4. CRIAÇÃO DAS TERRAS
+= 7. CRIAÇÃO DAS TERRAS
 ==================================================*/
 
-function createPlots(){
+function createPlots() {
 
-    let id=1;
+    let id = 1;
 
     createSuperiorPlots(id);
 
-    id+=GAME.TOTAL_SUPERIOR;
+    id += GAME.TOTAL_SUPERIOR;
 
     createInferiorPlots(id);
 
@@ -229,13 +210,15 @@ function createPlots(){
 = PLANTAÇÃO SUPERIOR
 ==================================================*/
 
-function createSuperiorPlots(initialId){
+function createSuperiorPlots(initialId) {
 
-    let id=initialId;
+    let id = initialId;
 
-    for(let i=0;i<GAME.TOTAL_SUPERIOR;i++){
+    for (let i = 0; i < GAME.TOTAL_SUPERIOR; i++) {
 
-        superiorGrid.appendChild(createSinglePlot(id));
+        superiorGrid.appendChild(
+            createSinglePlot(id)
+        );
 
         id++;
 
@@ -249,13 +232,15 @@ function createSuperiorPlots(initialId){
 = PLANTAÇÃO INFERIOR
 ==================================================*/
 
-function createInferiorPlots(initialId){
+function createInferiorPlots(initialId) {
 
-    let id=initialId;
+    let id = initialId;
 
-    for(let i=0;i<GAME.TOTAL_INFERIOR;i++){
+    for (let i = 0; i < GAME.TOTAL_INFERIOR; i++) {
 
-        inferiorGrid.appendChild(createSinglePlot(id));
+        inferiorGrid.appendChild(
+            createSinglePlot(id)
+        );
 
         id++;
 
@@ -266,32 +251,34 @@ function createInferiorPlots(initialId){
 
 
 /*==================================================
-= CRIA UMA TERRA
+= CRIA UMA ÚNICA TERRA
 ==================================================*/
 
-function createSinglePlot(id){
+function createSinglePlot(id) {
 
-    const plot=document.createElement("div");
+    const plot = document.createElement("div");
 
-    plot.className="plot";
+    plot.className = "plot";
 
-    plot.dataset.id=id;
+    plot.dataset.id = id;
 
-    gameState.plots[id]={
+    gameState.plots[id] = {
 
-        id:id,
+        id: id,
 
-        element:plot,
+        element: plot,
 
-        crop:null,
+        crop: null,
 
-        stage:0,
+        stage: 0,
 
-        timer:0,
+        timer: 0,
 
-        isWet:false,
+        isWet: false,
 
-        plantedAt:0
+        plantedAt: 0,
+
+        paused: false
 
     };
 
@@ -302,12 +289,12 @@ function createSinglePlot(id){
 
 
 /*==================================================
-= BUSCAR TERRA
+= BUSCAR DADOS DA TERRA
 ==================================================*/
 
-function getPlot(id){
+function getPlot(id) {
 
-    return gameState.plots[id];
+    return gameState.plots[id] || null;
 
 }
 
@@ -317,9 +304,25 @@ function getPlot(id){
 = BUSCAR ELEMENTO DA TERRA
 ==================================================*/
 
-function getPlotElement(id){
+function getPlotElement(id) {
 
-    return gameState.plots[id].element;
+    const plot = getPlot(id);
+
+    if (!plot) return null;
+
+    return plot.element;
+
+}
+
+
+
+/*==================================================
+= VERIFICA SE A TERRA EXISTE
+==================================================*/
+
+function plotExists(id) {
+
+    return !!gameState.plots[id];
 
 }
 
@@ -329,9 +332,13 @@ function getPlotElement(id){
 = VERIFICA SE A TERRA ESTÁ LIVRE
 ==================================================*/
 
-function plotIsEmpty(id){
+function plotIsEmpty(id) {
 
-    return gameState.plots[id].crop===null;
+    const plot = getPlot(id);
+
+    if (!plot) return false;
+
+    return plot.crop === null;
 
 }
 
@@ -341,473 +348,41 @@ function plotIsEmpty(id){
 = LIMPA UMA TERRA
 ==================================================*/
 
-function clearPlot(id){
+function clearPlot(id) {
 
-    const plot=getPlot(id);
+    const plot = getPlot(id);
 
-    plot.crop=null;
+    if (!plot) return;
 
-    plot.stage=0;
+    plot.crop = null;
 
-    plot.timer=0;
+    plot.stage = 0;
 
-    plot.isWet=false;
+    plot.timer = 0;
 
-    plot.plantedAt=0;
+    plot.isWet = false;
+
+    plot.plantedAt = 0;
+
+    plot.paused = false;
 
     plot.element.classList.remove("wet");
 
-    plot.element.innerHTML="";
+    plot.element.innerHTML = "";
 
 }
 
 
 
 /*==================================================
-= TEXTO FLUTUANTE
+= RESETA TODAS AS TERRAS
 ==================================================*/
 
-function createFloatingText(text,element){
+function clearAllPlots() {
 
-    const div=document.createElement("div");
+    for (const id in gameState.plots) {
 
-    div.className="floating-text";
-
-    div.innerText=text;
-
-    div.style.left=(element.offsetLeft+
-                    element.parentElement.offsetLeft+15)+"px";
-
-    div.style.top=(element.offsetTop+
-                   element.parentElement.offsetTop+15)+"px";
-
-    map.appendChild(div);
-
-    setTimeout(()=>{
-
-        div.remove();
-
-    },1200);
-
-}
-
-
-
-/*==================================================
-= MODOS
-==================================================*/
-
-function exitSpecialModes(){
-
-    gameState.currentMode="normal";
-
-    gameState.selectedCrop=null;
-
-}
-
-
-
-/*==================================================
-= ATUALIZA HUD
-==================================================*/
-
-function updateHUD(){
-
-    document.getElementById("hud-money").innerText=gameState.money;
-
-}
-
-
-
-/*==================================================
-= FIM DA PARTE 1
-==================================================*/
-
-/*==================================================
-=
-= PARTE 2
-=
-= ✔ Movimento do mapa
-= ✔ Zoom
-= ✔ Sistema de balões
-= ✔ Eventos das terras
-= ✔ Modo plantar
-= ✔ Modo colher
-=
-==================================================*/
-
-
-
-/*==================================================
-= RENDERIZA O MAPA
-==================================================*/
-
-function renderMap(){
-
-    map.style.transform=
-        `translate(${mapX}px, ${mapY}px) scale(${currentZoom})`;
-
-}
-
-
-
-/*==================================================
-= MOVIMENTO DO MAPA
-==================================================*/
-
-function initMapMovement(){
-
-    viewport.addEventListener("pointerdown",startDragging);
-
-    viewport.addEventListener("pointermove",dragMap);
-
-    viewport.addEventListener("pointerup",stopDragging);
-
-}
-
-
-
-/*==================================================
-= COMEÇAR A ARRASTAR
-==================================================*/
-
-function startDragging(e){
-
-    if(
-        e.target.closest(".plot") ||
-        e.target.closest(".wood-balloon") ||
-        e.target.closest(".modal-panel") ||
-        e.target.closest(".objeto")
-    ){
-        return;
-    }
-
-    dragging=true;
-
-    dragStartX=e.clientX-mapX;
-
-    dragStartY=e.clientY-mapY;
-
-    viewport.setPointerCapture(e.pointerId);
-
-}
-
-
-
-/*==================================================
-= ARRASTAR
-==================================================*/
-
-function dragMap(e){
-
-    if(!dragging) return;
-
-    mapX=e.clientX-dragStartX;
-
-    mapY=e.clientY-dragStartY;
-
-    mapX=Math.min(
-        0,
-        Math.max(window.innerWidth-(GAME.MAP_WIDTH*currentZoom),mapX)
-    );
-
-    mapY=Math.min(
-        0,
-        Math.max(window.innerHeight-(GAME.MAP_HEIGHT*currentZoom),mapY)
-    );
-
-    renderMap();
-
-}
-
-
-
-/*==================================================
-= PARAR ARRASTAR
-==================================================*/
-
-function stopDragging(e){
-
-    dragging=false;
-
-    viewport.releasePointerCapture(e.pointerId);
-
-}
-
-
-
-/*==================================================
-= ZOOM
-==================================================*/
-
-function changeZoom(value){
-
-    currentZoom+=value;
-
-    if(currentZoom<0.3){
-
-        currentZoom=0.3;
-
-    }
-
-    if(currentZoom>1.5){
-
-        currentZoom=1.5;
-
-    }
-
-    renderMap();
-
-}
-
-
-
-/*==================================================
-= SISTEMA DE BALÕES
-==================================================*/
-
-function closeActiveBalloon(){
-
-    const layer=document.getElementById("balloon-layer");
-
-    layer.innerHTML="";
-
-    gameState.activeBalloon=null;
-
-}
-
-
-
-/*==================================================
-= BALÃO DE SEMENTES
-==================================================*/
-
-function openPlantingBalloon(id){
-
-    closeActiveBalloon();
-
-    gameState.activeBalloon=id;
-
-    const layer=document.getElementById("balloon-layer");
-
-    const balloon=document.createElement("div");
-
-    balloon.className="wood-balloon";
-
-    for(const crop in CROPS){
-
-        const option=document.createElement("div");
-
-        option.className="crop-option";
-
-        option.innerHTML=`
-
-            <img src="${CROPS[crop].img_adulto}">
-
-            <div>${CROPS[crop].name}</div>
-
-        `;
-
-        option.onclick=()=>{
-
-            startPlantMode(crop);
-
-        };
-
-        balloon.appendChild(option);
-
-    }
-
-    const rect=getPlotElement(id).getBoundingClientRect();
-
-    balloon.style.left=(rect.left+40)+"px";
-
-    balloon.style.top=rect.top+"px";
-
-    layer.appendChild(balloon);
-
-}
-
-
-
-/*==================================================
-= BALÃO DA FOICE
-==================================================*/
-
-function openHarvestBalloon(id){
-
-    closeActiveBalloon();
-
-    gameState.activeBalloon=id;
-
-    const layer=document.getElementById("balloon-layer");
-
-    const balloon=document.createElement("div");
-
-    balloon.className="wood-balloon";
-
-    balloon.innerHTML=`
-
-        <div class="harvest-option">
-
-            <img src="/img/simulador/foice.png">
-
-            <div>Equipar Foice</div>
-
-        </div>
-
-    `;
-
-    balloon.onclick=()=>{
-
-        startHarvestMode();
-
-    };
-
-    const rect=getPlotElement(id).getBoundingClientRect();
-
-    balloon.style.left=(rect.left+40)+"px";
-
-    balloon.style.top=rect.top+"px";
-
-    layer.appendChild(balloon);
-
-}
-
-
-
-/*==================================================
-= MODO PLANTAR
-==================================================*/
-
-function startPlantMode(crop){
-
-    gameState.currentMode="planting";
-
-    gameState.selectedCrop=crop;
-
-    document.getElementById("active-mode-indicator").innerText=
-
-        "SEMEANDO : "+CROPS[crop].name;
-
-    executePlanting(gameState.activeBalloon);
-
-    closeActiveBalloon();
-
-}
-
-
-
-/*==================================================
-= MODO COLHER
-==================================================*/
-
-function startHarvestMode(){
-
-    gameState.currentMode="harvesting";
-
-    document.getElementById("active-mode-indicator").innerText=
-
-        "COLHENDO";
-
-    const cursor=document.getElementById("custom-cursor");
-
-    cursor.src="/img/simulador/foice.png";
-
-    cursor.style.display="block";
-
-    executeHarvest(gameState.activeBalloon);
-
-    closeActiveBalloon();
-
-}
-
-
-
-/*==================================================
-= CURSOR DA FOICE
-==================================================*/
-
-document.addEventListener("pointermove", (e) => {
-
-    const cursor = document.getElementById("custom-cursor");
-
-    if (!cursor) return;
-
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-
-});
-
-
-
-/*==================================================
-= EVENTOS DAS TERRAS
-==================================================*/
-
-function initPlotEvents(){
-
-    for(const id in gameState.plots){
-
-        const plot=getPlotElement(id);
-
-        plot.addEventListener("click",()=>{
-
-            const data=getPlot(id);
-
-            if(gameState.currentMode!=="normal") return;
-
-            if(!data.crop){
-
-                openPlantingBalloon(id);
-
-                return;
-
-            }
-
-            if(data.stage===3){
-
-                openHarvestBalloon(id);
-
-                return;
-
-            }
-
-            if(!data.isWet){
-
-                irrigatePlot(id);
-
-            }
-
-        });
-
-        plot.addEventListener("pointerenter",()=>{
-
-            if(
-
-                gameState.currentMode==="planting" &&
-
-                plotIsEmpty(id)
-
-            ){
-
-                executePlanting(id);
-
-            }
-
-            if(
-
-                gameState.currentMode==="harvesting" &&
-
-                getPlot(id).stage===3
-
-            ){
-
-                executeHarvest(id);
-
-            }
-
-        });
+        clearPlot(id);
 
     }
 
@@ -816,320 +391,28 @@ function initPlotEvents(){
 
 
 /*==================================================
-= SAIR DOS MODOS ESPECIAIS
+= CONTAGEM DAS TERRAS
 ==================================================*/
 
-document.addEventListener("click",(e)=>{
+function countPlots() {
 
-    if(
-
-        e.target.closest(".plot") ||
-
-        e.target.closest(".wood-balloon")
-
-    ){
-
-        return;
-
-    }
-
-    closeActiveBalloon();
-
-    exitSpecialModes();
-
-    document.getElementById("active-mode-indicator").innerText="";
-
-    document.getElementById("custom-cursor").style.display="none";
-
-});
-
-
-
-/*==================================================
-= FIM DA PARTE 2
-==================================================*/
-
-/*==================================================
-=
-= PARTE 3
-=
-= ✔ Plantio
-= ✔ Irrigação
-= ✔ Validações
-= ✔ Imagens do broto
-=
-==================================================*/
-
-
-/*==================================================
-= PLANTAR
-==================================================*/
-
-function executePlanting(id){
-
-    if(id==null) return;
-
-    const plot=getPlot(id);
-
-    if(!plot) return;
-
-    if(plot.crop!==null) return;
-
-    const cropKey=gameState.selectedCrop;
-
-    if(!cropKey) return;
-
-    if(gameState.seeds[cropKey]<=0){
-
-        alert("Você não possui mais sementes de "+CROPS[cropKey].name);
-
-        exitSpecialModes();
-
-        return;
-
-    }
-
-    gameState.seeds[cropKey]--;
-
-    plot.crop=cropKey;
-
-    plot.stage=1;
-
-    plot.timer=0;
-
-    plot.isWet=false;
-
-    plot.plantedAt=Date.now();
-
-    plot.element.innerHTML=`
-
-        <img
-            class="plot-plant-img"
-            src="${CROPS[cropKey].img_broto}"
-        >
-
-    `;
-
-    updateHUD();
+    return Object.keys(gameState.plots).length;
 
 }
 
 
 
 /*==================================================
-= IRRIGAR
+= TERRAS PLANTADAS
 ==================================================*/
 
-function irrigatePlot(id){
+function countPlantedPlots() {
 
-    const plot=getPlot(id);
+    let total = 0;
 
-    if(!plot) return;
+    for (const id in gameState.plots) {
 
-    if(!plot.crop) return;
-
-    if(plot.stage>=3) return;
-
-    if(plot.isWet) return;
-
-    if(gameState.water<GAME.WATER_PER_IRRIGATION){
-
-        alert("Água insuficiente.");
-
-        return;
-
-    }
-
-    gameState.water-=GAME.WATER_PER_IRRIGATION;
-
-    plot.isWet=true;
-
-    plot.element.classList.add("wet");
-
-    createFloatingText("💧 Regado",plot.element);
-
-    updateHUD();
-
-}
-
-
-
-/*==================================================
-= REMOVER IRRIGAÇÃO
-==================================================*/
-
-function dryPlot(id){
-
-    const plot=getPlot(id);
-
-    if(!plot) return;
-
-    plot.isWet=false;
-
-    plot.element.classList.remove("wet");
-
-}
-
-
-
-/*==================================================
-= ALTERAR IMAGEM DA PLANTA
-==================================================*/
-
-function updatePlantImage(id){
-
-    const plot=getPlot(id);
-
-    if(!plot.crop) return;
-
-    let image="";
-
-    switch(plot.stage){
-
-        case 1:
-
-            image=CROPS[plot.crop].img_broto;
-
-        break;
-
-        case 2:
-
-            image=CROPS[plot.crop].img_jovem;
-
-        break;
-
-        case 3:
-
-            image=CROPS[plot.crop].img_adulto;
-
-        break;
-
-    }
-
-    plot.element.innerHTML=`
-
-        <img
-            class="plot-plant-img"
-            src="${image}"
-        >
-
-    `;
-
-}
-
-
-
-/*==================================================
-= VERIFICA SE PODE PLANTAR
-==================================================*/
-
-function canPlant(id){
-
-    const plot=getPlot(id);
-
-    if(!plot) return false;
-
-    if(plot.crop!==null) return false;
-
-    if(!gameState.selectedCrop) return false;
-
-    if(gameState.seeds[gameState.selectedCrop]<=0) return false;
-
-    return true;
-
-}
-
-
-
-/*==================================================
-= VERIFICA SE PODE REGAR
-==================================================*/
-
-function canIrrigate(id){
-
-    const plot=getPlot(id);
-
-    if(!plot) return false;
-
-    if(!plot.crop) return false;
-
-    if(plot.stage>=3) return false;
-
-    if(plot.isWet) return false;
-
-    if(gameState.water<GAME.WATER_PER_IRRIGATION) return false;
-
-    return true;
-
-}
-
-
-
-/*==================================================
-= PLANTAR VÁRIAS TERRAS
-==================================================*/
-
-function plantArea(id){
-
-    if(!canPlant(id)) return;
-
-    executePlanting(id);
-
-}
-
-
-
-/*==================================================
-= REGAR VÁRIAS TERRAS
-==================================================*/
-
-function irrigateArea(id){
-
-    if(!canIrrigate(id)) return;
-
-    irrigatePlot(id);
-
-}
-
-
-
-/*==================================================
-= LIMPAR UMA TERRA
-==================================================*/
-
-function resetPlot(id){
-
-    const plot=getPlot(id);
-
-    plot.crop=null;
-
-    plot.stage=0;
-
-    plot.timer=0;
-
-    plot.isWet=false;
-
-    plot.plantedAt=0;
-
-    plot.element.classList.remove("wet");
-
-    plot.element.innerHTML="";
-
-}
-
-
-
-/*==================================================
-= CONTAGEM DE TERRAS PLANTADAS
-==================================================*/
-
-function countPlantedPlots(){
-
-    let total=0;
-
-    for(const id in gameState.plots){
-
-        if(gameState.plots[id].crop){
+        if (gameState.plots[id].crop) {
 
             total++;
 
@@ -1144,61 +427,102 @@ function countPlantedPlots(){
 
 
 /*==================================================
-= CONTAGEM DE TERRAS LIVRES
+= TERRAS LIVRES
 ==================================================*/
 
-function countEmptyPlots(){
+function countEmptyPlots() {
 
-    return GAME.TOTAL_PLOTS-countPlantedPlots();
+    return GAME.TOTAL_PLOTS - countPlantedPlots();
 
 }
 
 
 
 /*==================================================
-= FIM DA PARTE 3
+= LISTA DE TERRAS LIVRES
 ==================================================*/
 
-/*==================================================
-=
-= PARTE 4
-=
-= ✔ Crescimento automático
-= ✔ 3 fases
-= ✔ Irrigação acelera
-= ✔ Tempos individuais
-=
-==================================================*/
+function getEmptyPlots() {
 
+    const list = [];
 
-/*==================================================
-= INICIAR SISTEMA DE CRESCIMENTO
-==================================================*/
+    for (const id in gameState.plots) {
 
-function startGrowthSystem(){
+        if (plotIsEmpty(id)) {
 
-    setInterval(updatePlantGrowth,1000);
+            list.push(gameState.plots[id]);
+
+        }
+
+    }
+
+    return list;
 
 }
 
 
 
 /*==================================================
-= ATUALIZA TODAS AS PLANTAS
+= LISTA DE TERRAS PLANTADAS
 ==================================================*/
 
-function updatePlantGrowth(){
+function getPlantedPlots() {
 
-    for(const id in gameState.plots){
+    const list = [];
 
-        const plot=getPlot(id);
+    for (const id in gameState.plots) {
 
-        if(!plot.crop) continue;
+        if (!plotIsEmpty(id)) {
 
-        if(plot.stage>=3) continue;
+            list.push(gameState.plots[id]);
 
-        updateSinglePlant(plot);
+        }
 
+    }
+
+    return list;
+
+}
+
+
+
+/*==================================================
+= VERIFICA SE TODAS AS TERRAS ESTÃO OCUPADAS
+==================================================*/
+
+function allPlotsOccupied() {
+
+    return countPlantedPlots() === GAME.TOTAL_PLOTS;
+
+}
+
+
+
+/*==================================================
+= VERIFICA SE TODAS AS TERRAS ESTÃO VAZIAS
+==================================================*/
+
+function allPlotsEmpty() {
+
+    return countPlantedPlots() === 0;
+
+}
+
+
+/*==================================================
+= ATUALIZA A HUD
+==================================================*/
+
+function updateHUD() {
+
+    const money = document.getElementById("hud-money");
+    if (money) {
+        money.innerText = gameState.money;
+    }
+
+    const water = document.getElementById("hud-water");
+    if (water) {
+        water.innerText = gameState.water;
     }
 
 }
@@ -1206,58 +530,141 @@ function updatePlantGrowth(){
 
 
 /*==================================================
-= ATUALIZA UMA PLANTA
+= TEXTO FLUTUANTE
 ==================================================*/
 
-function updateSinglePlant(plot){
+function createFloatingText(text, element) {
 
-    const crop=CROPS[plot.crop];
+    if (!element || !map) return;
 
-    let speed=1;
+    const div = document.createElement("div");
 
-    // irrigada cresce 2x mais rápido
+    div.className = "floating-text";
 
-    if(plot.isWet){
+    div.innerText = text;
 
-        speed=2;
+    div.style.left =
+        (element.offsetLeft + 15) + "px";
 
-    }
+    div.style.top =
+        (element.offsetTop + 15) + "px";
 
-    plot.timer+=speed;
+    map.appendChild(div);
 
-    const t=crop.stageTime;
+    setTimeout(() => {
 
-    //==============================
-    // BROTO -> JOVEM
-    //==============================
+        div.remove();
 
-    if(plot.stage===1 && plot.timer>=t){
+    }, 1200);
 
-        plot.stage=2;
+}
 
-        updatePlantImage(plot.id);
 
-        createFloatingText("🌿 Cresceu",plot.element);
+
+/*==================================================
+= FECHA O BALÃO ATIVO
+==================================================*/
+
+function closeActiveBalloon() {
+
+    const layer =
+        document.getElementById("balloon-layer");
+
+    if (!layer) return;
+
+    layer.innerHTML = "";
+
+    gameState.activeBalloon = null;
+
+}
+
+
+
+/*==================================================
+= ABRE UM MODAL
+==================================================*/
+
+function openModal(id) {
+
+    closeModals();
+
+    const modal = document.getElementById(id);
+
+    if (!modal) {
+
+        console.warn("Modal não encontrado:", id);
 
         return;
 
     }
 
-    //==============================
-    // JOVEM -> ADULTA
-    //==============================
+    modal.classList.add("active");
 
-    if(plot.stage===2 && plot.timer>=t*2){
+}
 
-        plot.stage=3;
 
-        updatePlantImage(plot.id);
 
-        plot.isWet=false;
+/*==================================================
+= FECHA TODOS OS MODAIS
+==================================================*/
 
-        plot.element.classList.remove("wet");
+function closeModals() {
 
-        createFloatingText("🌾 Pronta",plot.element);
+    document
+        .querySelectorAll(".modal-panel")
+        .forEach(modal => {
+
+            modal.classList.remove("active");
+
+        });
+
+}
+
+
+
+/*==================================================
+= FECHA TODOS OS BALÕES E MODAIS
+==================================================*/
+
+function closeInterfaces() {
+
+    closeActiveBalloon();
+
+    closeModals();
+
+}
+
+
+
+/*==================================================
+= SAI DO MODO ESPECIAL
+==================================================*/
+
+function exitSpecialModes() {
+
+    gameState.currentMode = "normal";
+
+    gameState.selectedCrop = null;
+
+    const indicator =
+        document.getElementById(
+            "active-mode-indicator"
+        );
+
+    if (indicator) {
+
+        indicator.innerText = "";
+
+    }
+
+    const cursor =
+        document.getElementById(
+            "custom-cursor"
+        );
+
+    if (cursor) {
+
+        cursor.style.display = "none";
 
     }
 
@@ -1266,368 +673,684 @@ function updateSinglePlant(plot){
 
 
 /*==================================================
-= TEMPO TOTAL DA CULTURA
+= RESETA TODA A INTERFACE
 ==================================================*/
 
-function getCropTotalTime(cropKey){
+function resetInterface() {
 
-    return CROPS[cropKey].stageTime*3;
+    closeInterfaces();
+
+    exitSpecialModes();
 
 }
 
 
 
 /*==================================================
-= TEMPO RESTANTE
+= MOSTRA MENSAGEM
 ==================================================*/
 
-function getRemainingTime(id){
+function showMessage(message) {
 
-    const plot=getPlot(id);
+    alert(message);
 
-    if(!plot.crop){
+}
 
-        return 0;
+
+
+/*==================================================
+= VERIFICA SE EXISTE UM ELEMENTO HTML
+==================================================*/
+
+function elementExists(id) {
+
+    return document.getElementById(id) !== null;
+
+}
+
+
+
+/*==================================================
+= OBTÉM UM ELEMENTO HTML
+==================================================*/
+
+function getElement(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+
+/*==================================================
+= DEFINE TEXTO DE UM ELEMENTO
+==================================================*/
+
+function setText(id, value) {
+
+    const element = getElement(id);
+
+    if (!element) return;
+
+    element.innerText = value;
+
+}
+
+
+
+/*==================================================
+= DEFINE HTML DE UM ELEMENTO
+==================================================*/
+
+function setHTML(id, value) {
+
+    const element = getElement(id);
+
+    if (!element) return;
+
+    element.innerHTML = value;
+
+}
+
+
+
+/*==================================================
+= RENDERIZA O MAPA
+==================================================*/
+
+function renderMap() {
+
+    if (!map) return;
+
+    map.style.transform =
+        `translate(${mapX}px, ${mapY}px) scale(${currentZoom})`;
+
+}
+
+
+
+/*==================================================
+= INICIALIZA O MOVIMENTO
+==================================================*/
+
+function initMapMovement() {
+
+    if (!viewport) return;
+
+    viewport.addEventListener(
+        "pointerdown",
+        startDragging
+    );
+
+    viewport.addEventListener(
+        "pointermove",
+        dragMap
+    );
+
+    viewport.addEventListener(
+        "pointerup",
+        stopDragging
+    );
+
+    viewport.addEventListener(
+        "pointerleave",
+        stopDragging
+    );
+
+}
+
+
+
+/*==================================================
+= COMEÇA A ARRASTAR
+==================================================*/
+
+function startDragging(e) {
+
+    if (
+
+        e.target.closest(".plot") ||
+
+        e.target.closest(".wood-balloon") ||
+
+        e.target.closest(".modal-panel") ||
+
+        e.target.closest(".objeto")
+
+    ) {
+
+        return;
 
     }
 
-    const crop=CROPS[plot.crop];
+    dragging = true;
 
-    const total=crop.stageTime*3;
+    dragStartX = e.clientX - mapX;
 
-    return Math.max(
+    dragStartY = e.clientY - mapY;
 
+    if (viewport.setPointerCapture) {
+
+        viewport.setPointerCapture(e.pointerId);
+
+    }
+
+}
+
+
+
+/*==================================================
+= MOVE O MAPA
+==================================================*/
+
+function dragMap(e) {
+
+    if (!dragging) return;
+
+    mapX = e.clientX - dragStartX;
+
+    mapY = e.clientY - dragStartY;
+
+    const minX =
+        window.innerWidth -
+        (GAME.MAP_WIDTH * currentZoom);
+
+    const minY =
+        window.innerHeight -
+        (GAME.MAP_HEIGHT * currentZoom);
+
+    mapX = Math.min(
         0,
-
-        total-plot.timer
-
+        Math.max(minX, mapX)
     );
 
-}
-
-
-
-/*==================================================
-= PORCENTAGEM
-==================================================*/
-
-function getGrowthPercent(id){
-
-    const plot=getPlot(id);
-
-    if(!plot.crop){
-
-        return 0;
-
-    }
-
-    const crop=CROPS[plot.crop];
-
-    const total=crop.stageTime*3;
-
-    return Math.min(
-
-        100,
-
-        Math.floor((plot.timer/total)*100)
-
+    mapY = Math.min(
+        0,
+        Math.max(minY, mapY)
     );
 
+    renderMap();
+
 }
 
 
 
 /*==================================================
-= VERIFICA SE ESTÁ PRONTA
+= PARA DE ARRASTAR
 ==================================================*/
 
-function isReadyToHarvest(id){
+function stopDragging(e) {
 
-    const plot=getPlot(id);
+    if (!dragging) return;
 
-    if(!plot.crop){
+    dragging = false;
 
-        return false;
+    if (
+        viewport &&
+        viewport.releasePointerCapture
+    ) {
+
+        try {
+
+            viewport.releasePointerCapture(
+                e.pointerId
+            );
+
+        } catch {
+
+        }
 
     }
 
-    return plot.stage===3;
+}
+
+
+
+/*==================================================
+= CENTRALIZA O MAPA
+==================================================*/
+
+function centerMap() {
+
+    mapX = -100;
+
+    mapY = -50;
+
+    renderMap();
 
 }
 
 
 
 /*==================================================
-= REINICIAR CRESCIMENTO
+= DEFINE UMA POSIÇÃO DO MAPA
 ==================================================*/
 
-function resetGrowth(id){
+function setMapPosition(x, y) {
 
-    const plot=getPlot(id);
+    mapX = x;
 
-    plot.timer=0;
+    mapY = y;
 
-    plot.stage=1;
-
-    plot.isWet=false;
-
-    updatePlantImage(id);
+    renderMap();
 
 }
 
 
 
 /*==================================================
-= PAUSAR
+= OBTÉM A POSIÇÃO DO MAPA
 ==================================================*/
 
-function pauseGrowth(id){
+function getMapPosition() {
 
-    const plot=getPlot(id);
+    return {
 
-    plot.paused=true;
+        x: mapX,
 
-}
+        y: mapY,
 
-
-
-/*==================================================
-= CONTINUAR
-==================================================*/
-
-function resumeGrowth(id){
-
-    const plot=getPlot(id);
-
-    plot.paused=false;
-
-}
-
-
-
-/*==================================================
-= INFORMAÇÕES DA PLANTA
-==================================================*/
-
-function getCropInfo(id){
-
-    const plot=getPlot(id);
-
-    if(!plot.crop){
-
-        return null;
-
-    }
-
-    return{
-
-        cultura:CROPS[plot.crop].name,
-
-        fase:plot.stage,
-
-        tempo:plot.timer,
-
-        restante:getRemainingTime(id),
-
-        porcentagem:getGrowthPercent(id),
-
-        irrigada:plot.isWet
+        zoom: currentZoom
 
     };
 
 }
 
-
-
 /*==================================================
-= TEMPOS DAS CULTURAS
-==================================================
-
-Milho
-20s broto
-20s jovem
-20s adulta
-TOTAL = 60s
-
-Soja
-25s
-25s
-25s
-TOTAL = 75s
-
-Tomate
-15s
-15s
-15s
-TOTAL = 45s
-
-Alface
-15s
-15s
-15s
-TOTAL = 45s
-
-Cenoura
-18s
-18s
-18s
-TOTAL = 54s
-
-Se irrigada:
-cresce 2x mais rápido.
-
+= FECHAR BALÃO ATIVO
 ==================================================*/
 
+function closeActiveBalloon() {
 
-/*==================================================
-= FIM DA PARTE 4
-==================================================*/
+    const layer = document.getElementById("balloon-layer");
 
-/*==================================================
-=
-= PARTE 5
-=
-= ✔ Colheita
-= ✔ Estoque
-= ✔ Modo colher
-= ✔ Limpeza da terra
-=
-==================================================*/
+    if (!layer) return;
 
+    layer.innerHTML = "";
 
-/*==================================================
-= COLHER UMA TERRA
-==================================================*/
-
-function executeHarvest(id){
-
-    if(id==null) return;
-
-    const plot=getPlot(id);
-
-    if(!plot) return;
-
-    if(!plot.crop) return;
-
-    if(plot.stage!==3) return;
-
-    const cropKey=plot.crop;
-
-    const crop=CROPS[cropKey];
-
-    // quantidade produzida
-
-    const amount=3;
-
-    gameState.inventory[cropKey]+=amount;
-
-    createFloatingText(
-
-        "+"+amount+" "+crop.name,
-
-        plot.element
-
-    );
-
-    resetPlot(id);
-
-    updateHUD();
+    gameState.activeBalloon = null;
 
 }
 
-
-
 /*==================================================
-= COLHER VÁRIAS TERRAS
+= ABRIR BALÃO DE PLANTIO
 ==================================================*/
 
-function harvestArea(id){
+function openPlantingBalloon(plotId) {
 
-    if(!isReadyToHarvest(id)) return;
+    closeActiveBalloon();
 
-    executeHarvest(id);
+    gameState.activeBalloon = plotId;
+
+    const layer = document.getElementById("balloon-layer");
+
+    if (!layer) return;
+
+    const balloon = document.createElement("div");
+    balloon.className = "wood-balloon";
+
+    for (const cropKey in CROPS) {
+
+        const crop = CROPS[cropKey];
+
+        const option = document.createElement("div");
+        option.className = "crop-option";
+
+        option.innerHTML = `
+            <img src="${crop.img_adulto}">
+            <div>${crop.name}</div>
+        `;
+
+        option.addEventListener("click", () => {
+
+            startPlantMode(cropKey);
+
+        });
+
+        balloon.appendChild(option);
+
+    }
+
+    const rect = getPlotElement(plotId).getBoundingClientRect();
+
+    balloon.style.left = (rect.left + 40) + "px";
+    balloon.style.top = rect.top + "px";
+
+    layer.appendChild(balloon);
 
 }
 
+/*==================================================
+= ABRIR BALÃO DA FOICE
+==================================================*/
+
+function openHarvestBalloon(plotId) {
+
+    closeActiveBalloon();
+
+    gameState.activeBalloon = plotId;
+
+    const layer = document.getElementById("balloon-layer");
+
+    if (!layer) return;
+
+    const balloon = document.createElement("div");
+    balloon.className = "wood-balloon";
+
+    balloon.innerHTML = `
+        <div class="harvest-option">
+            <img src="/img/simulador/foice.png">
+            <div>Equipar Foice</div>
+        </div>
+    `;
+
+    balloon.addEventListener("click", () => {
+
+        startHarvestMode();
+
+    });
+
+    const rect = getPlotElement(plotId).getBoundingClientRect();
+
+    balloon.style.left = (rect.left + 40) + "px";
+    balloon.style.top = rect.top + "px";
+
+    layer.appendChild(balloon);
+
+}
+
+/*==================================================
+= FECHAR BALÃO AO CLICAR FORA
+==================================================*/
+
+document.addEventListener("click", (e) => {
+
+    if (
+        e.target.closest(".plot") ||
+        e.target.closest(".wood-balloon")
+    ) {
+        return;
+    }
+
+    closeActiveBalloon();
+
+});
 
 
 /*==================================================
-= ENTRAR NO MODO COLHER
+= ENTRAR NO MODO PLANTAR
 ==================================================*/
 
-function startHarvestMode(){
+function startPlantMode(cropKey) {
 
-    gameState.currentMode="harvesting";
+    gameState.currentMode = "planting";
+    gameState.selectedCrop = cropKey;
 
-    document.getElementById(
+    const indicator = document.getElementById("active-mode-indicator");
 
-        "active-mode-indicator"
+    if (indicator) {
+        indicator.innerText = "SEMEANDO: " + CROPS[cropKey].name;
+    }
 
-    ).innerText="COLHENDO";
-
-    const cursor=document.getElementById(
-
-        "custom-cursor"
-
-    );
-
-    cursor.src="/img/simulador/foice.png";
-
-    cursor.style.display="block";
-
-    executeHarvest(
-
-        gameState.activeBalloon
-
-    );
+    executePlanting(gameState.activeBalloon);
 
     closeActiveBalloon();
 
 }
 
-
-
 /*==================================================
-= SAIR DO MODO COLHER
+= ENTRAR NO MODO COLHER
 ==================================================*/
 
-function stopHarvestMode(){
+function startHarvestMode() {
 
-    if(gameState.currentMode!=="harvesting"){
+    gameState.currentMode = "harvesting";
 
-        return;
+    const indicator = document.getElementById("active-mode-indicator");
 
+    if (indicator) {
+        indicator.innerText = "COLHENDO";
     }
 
-    exitSpecialModes();
+    const cursor = document.getElementById("custom-cursor");
 
-    document.getElementById(
+    if (cursor) {
+        cursor.src = "/img/simulador/foice.png";
+        cursor.style.display = "block";
+    }
 
-        "active-mode-indicator"
+    executeHarvest(gameState.activeBalloon);
 
-    ).innerText="";
-
-    document.getElementById(
-
-        "custom-cursor"
-
-    ).style.display="none";
+    closeActiveBalloon();
 
 }
 
-
-
 /*==================================================
-= TOTAL DE ITENS DO ESTOQUE
+= SAIR DOS MODOS ESPECIAIS
 ==================================================*/
 
-function getInventoryTotal(){
+function exitSpecialModes() {
 
-    let total=0;
+    gameState.currentMode = "normal";
+    gameState.selectedCrop = null;
 
-    for(const crop in gameState.inventory){
+    const indicator = document.getElementById("active-mode-indicator");
 
-        total+=gameState.inventory[crop];
+    if (indicator) {
+        indicator.innerText = "";
+    }
+
+    const cursor = document.getElementById("custom-cursor");
+
+    if (cursor) {
+        cursor.style.display = "none";
+    }
+
+}
+
+/*==================================================
+= CURSOR DA FOICE
+==================================================*/
+
+document.addEventListener("pointermove", (e) => {
+
+    const cursor = document.getElementById("custom-cursor");
+
+    if (!cursor) return;
+
+    if (gameState.currentMode !== "harvesting") return;
+
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+});
+
+/*==================================================
+= CANCELAR MODOS AO CLICAR FORA
+==================================================*/
+
+document.addEventListener("click", (e) => {
+
+    if (
+        e.target.closest(".plot") ||
+        e.target.closest(".wood-balloon") ||
+        e.target.closest(".modal-panel")
+    ) {
+        return;
+    }
+
+    closeActiveBalloon();
+
+    exitSpecialModes();
+
+});
+
+/*==================================================
+= VERIFICA SE ESTÁ NO MODO PLANTAR
+==================================================*/
+
+function isPlantMode() {
+
+    return gameState.currentMode === "planting";
+
+}
+
+/*==================================================
+= VERIFICA SE ESTÁ NO MODO COLHER
+==================================================*/
+
+function isHarvestMode() {
+
+    return gameState.currentMode === "harvesting";
+
+}
+
+/*==================================================
+= ALTERA O CURSOR PARA A FOICE
+==================================================*/
+
+function showHarvestCursor() {
+
+    const cursor = document.getElementById("custom-cursor");
+
+    if (!cursor) return;
+
+    cursor.src = "/img/simulador/foice.png";
+    cursor.style.display = "block";
+
+}
+
+/*==================================================
+= ESCONDE O CURSOR PERSONALIZADO
+==================================================*/
+
+function hideHarvestCursor() {
+
+    const cursor = document.getElementById("custom-cursor");
+
+    if (!cursor) return;
+
+    cursor.style.display = "none";
+
+}
+
+/*==================================================
+= PODE PLANTAR?
+==================================================*/
+
+function canPlant(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    if (plot.crop !== null) return false;
+
+    if (!gameState.selectedCrop) return false;
+
+    if (gameState.seeds[gameState.selectedCrop] <= 0) return false;
+
+    return true;
+
+}
+
+/*==================================================
+= PLANTAR
+==================================================*/
+
+function executePlanting(plotId) {
+
+    if (!canPlant(plotId)) return;
+
+    const plot = getPlot(plotId);
+    const cropKey = gameState.selectedCrop;
+
+    gameState.seeds[cropKey]--;
+
+    plot.crop = cropKey;
+    plot.stage = 1;
+    plot.timer = 0;
+    plot.isWet = false;
+    plot.paused = false;
+    plot.plantedAt = Date.now();
+
+    plot.element.innerHTML = `
+        <img
+            class="plot-plant-img"
+            src="${CROPS[cropKey].img_broto}"
+        >
+    `;
+
+    createFloatingText(
+        "🌱 " + CROPS[cropKey].name,
+        plot.element
+    );
+
+    updateHUD();
+
+}
+
+/*==================================================
+= PLANTAR ÁREA
+==================================================*/
+
+function plantArea(plotId) {
+
+    executePlanting(plotId);
+
+}
+
+/*==================================================
+= REINICIAR TERRA
+==================================================*/
+
+function resetPlot(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    plot.crop = null;
+    plot.stage = 0;
+    plot.timer = 0;
+    plot.isWet = false;
+    plot.paused = false;
+    plot.plantedAt = 0;
+
+    plot.element.classList.remove("wet");
+    plot.element.innerHTML = "";
+
+}
+
+/*==================================================
+= TERRA ESTÁ VAZIA?
+==================================================*/
+
+function plotIsEmpty(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    return plot.crop === null;
+
+}
+
+/*==================================================
+= CONTAR TERRAS PLANTADAS
+==================================================*/
+
+function countPlantedPlots() {
+
+    let total = 0;
+
+    for (const id in gameState.plots) {
+
+        if (gameState.plots[id].crop !== null) {
+
+            total++;
+
+        }
 
     }
 
@@ -1635,348 +1358,1016 @@ function getInventoryTotal(){
 
 }
 
-
-
 /*==================================================
-= ESTOQUE DE UMA CULTURA
+= CONTAR TERRAS LIVRES
 ==================================================*/
 
-function getInventory(crop){
+function countEmptyPlots() {
 
-    return gameState.inventory[crop];
+    return GAME.TOTAL_PLOTS - countPlantedPlots();
 
 }
 
-
-
 /*==================================================
-= ADICIONA AO ESTOQUE
+= LIMPAR TODAS AS TERRAS
 ==================================================*/
 
-function addInventory(crop,amount){
+function clearAllPlots() {
 
-    gameState.inventory[crop]+=amount;
+    for (const id in gameState.plots) {
 
-}
-
-
-
-/*==================================================
-= REMOVE DO ESTOQUE
-==================================================*/
-
-function removeInventory(crop,amount){
-
-    if(gameState.inventory[crop]<amount){
-
-        return false;
+        resetPlot(id);
 
     }
 
-    gameState.inventory[crop]-=amount;
+}
+
+
+/*==================================================
+= PODE IRRIGAR?
+==================================================*/
+
+function canIrrigate(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    if (!plot.crop) return false;
+
+    if (plot.stage >= 3) return false;
+
+    if (plot.isWet) return false;
+
+    if (gameState.water < GAME.WATER_PER_IRRIGATION) return false;
 
     return true;
 
 }
 
-
-
 /*==================================================
-= LIMPA TODO O ESTOQUE
+= IRRIGAR
 ==================================================*/
 
-function clearInventory(){
+function irrigatePlot(plotId) {
 
-    for(const crop in gameState.inventory){
+    if (!canIrrigate(plotId)) return;
 
-        gameState.inventory[crop]=0;
+    const plot = getPlot(plotId);
+
+    gameState.water -= GAME.WATER_PER_IRRIGATION;
+
+    plot.isWet = true;
+
+    plot.element.classList.add("wet");
+
+    createFloatingText(
+        "💧 Regado",
+        plot.element
+    );
+
+    updateHUD();
+
+}
+
+/*==================================================
+= IRRIGAR ÁREA
+==================================================*/
+
+function irrigateArea(plotId) {
+
+    irrigatePlot(plotId);
+
+}
+
+/*==================================================
+= REMOVER IRRIGAÇÃO
+==================================================*/
+
+function dryPlot(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    plot.isWet = false;
+
+    plot.element.classList.remove("wet");
+
+}
+
+/*==================================================
+= SOLO ESTÁ MOLHADO?
+==================================================*/
+
+function plotIsWet(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    return plot.isWet;
+
+}
+
+/*==================================================
+= ADICIONAR ÁGUA À CISTERNA
+==================================================*/
+
+function addWater(amount) {
+
+    gameState.water = Math.min(
+        gameState.maxWater,
+        gameState.water + amount
+    );
+
+    updateHUD();
+
+}
+
+/*==================================================
+= REMOVER ÁGUA DA CISTERNA
+==================================================*/
+
+function removeWater(amount) {
+
+    if (gameState.water < amount) {
+
+        return false;
+
+    }
+
+    gameState.water -= amount;
+
+    updateHUD();
+
+    return true;
+
+}
+
+/*==================================================
+= CISTERNA ESTÁ CHEIA?
+==================================================*/
+
+function cisternaIsFull() {
+
+    return gameState.water >= gameState.maxWater;
+
+}
+
+/*==================================================
+= CISTERNA ESTÁ VAZIA?
+==================================================*/
+
+function cisternaIsEmpty() {
+
+    return gameState.water <= 0;
+
+}
+
+/*==================================================
+= ENCHER CISTERNA
+==================================================*/
+
+function refillWaterSystem() {
+
+    if (cisternaIsFull()) {
+
+        alert("Reservatório cheio!");
+
+        return;
+
+    }
+
+    addWater(GAME.RAIN_WATER_GAIN);
+
+}
+
+/*==================================================
+= INICIALIZAR EVENTOS DAS TERRAS
+==================================================*/
+
+function initPlotEvents() {
+
+    for (const id in gameState.plots) {
+
+        const plot = getPlotElement(id);
+
+        /*==========================================
+        = CLIQUE
+        ==========================================*/
+
+        plot.addEventListener("click", () => {
+
+            const data = getPlot(id);
+
+            if (!data) return;
+
+            if (gameState.currentMode !== "normal") return;
+
+            // Terra vazia
+            if (!data.crop) {
+
+                openPlantingBalloon(id);
+                return;
+
+            }
+
+            // Planta pronta
+            if (data.stage === 3) {
+
+                openHarvestBalloon(id);
+                return;
+
+            }
+
+            // Irrigar
+            if (!data.isWet) {
+
+                irrigatePlot(id);
+
+            }
+
+        });
+
+        /*==========================================
+        = PASSAR O MOUSE
+        ==========================================*/
+
+        plot.addEventListener("pointerenter", () => {
+
+            if (
+                gameState.currentMode === "planting" &&
+                canPlant(id)
+            ) {
+
+                executePlanting(id);
+
+            }
+
+            if (
+                gameState.currentMode === "harvesting" &&
+                isReadyToHarvest(id)
+            ) {
+
+                executeHarvest(id);
+
+            }
+
+        });
+
+    }
+
+}
+
+/*==================================================
+= REMOVER EVENTOS DAS TERRAS
+==================================================*/
+
+function destroyPlotEvents() {
+
+    for (const id in gameState.plots) {
+
+        const plot = getPlotElement(id);
+
+        const clone = plot.cloneNode(true);
+
+        plot.parentNode.replaceChild(clone, plot);
+
+        gameState.plots[id].element = clone;
+
+    }
+
+}
+
+/*==================================================
+= ATUALIZAR TODOS OS EVENTOS
+==================================================*/
+
+function reloadPlotEvents() {
+
+    destroyPlotEvents();
+
+    initPlotEvents();
+
+}
+
+/*==================================================
+= ABRIR BALÃO DA TERRA
+==================================================*/
+
+function openPlotBalloon(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    if (!plot.crop) {
+
+        openPlantingBalloon(plotId);
+        return;
+
+    }
+
+    if (plot.stage === 3) {
+
+        openHarvestBalloon(plotId);
+        return;
+
+    }
+
+    if (!plot.isWet) {
+
+        irrigatePlot(plotId);
 
     }
 
 }
 
 
+/*==================================================
+= INICIAR SISTEMA DE CRESCIMENTO
+==================================================*/
+
+function startGrowthSystem() {
+
+    setInterval(updatePlantGrowth, 1000);
+
+}
+
+/*==================================================
+= ATUALIZAR TODAS AS PLANTAS
+==================================================*/
+
+function updatePlantGrowth() {
+
+    for (const id in gameState.plots) {
+
+        const plot = getPlot(id);
+
+        if (!plot) continue;
+
+        if (!plot.crop) continue;
+
+        if (plot.stage >= 3) continue;
+
+        if (plot.paused) continue;
+
+        updateSinglePlant(plot);
+
+    }
+
+}
+
+/*==================================================
+= ATUALIZAR UMA PLANTA
+==================================================*/
+
+function updateSinglePlant(plot) {
+
+    const crop = CROPS[plot.crop];
+
+    let speed = 1;
+
+    // Planta irrigada cresce duas vezes mais rápido
+
+    if (plot.isWet) {
+
+        speed = 2;
+
+    }
+
+    plot.timer += speed;
+
+    const stageTime = crop.stageTime;
+
+    /*==========================================
+    = BROTO → JOVEM
+    ==========================================*/
+
+    if (
+
+        plot.stage === 1 &&
+        plot.timer >= stageTime
+
+    ) {
+
+        plot.stage = 2;
+
+        updatePlantImage(plot.id);
+
+        createFloatingText(
+            "🌿 Cresceu",
+            plot.element
+        );
+
+        return;
+
+    }
+
+    /*==========================================
+    = JOVEM → ADULTA
+    ==========================================*/
+
+    if (
+
+        plot.stage === 2 &&
+        plot.timer >= stageTime * 2
+
+    ) {
+
+        plot.stage = 3;
+
+        updatePlantImage(plot.id);
+
+        plot.isWet = false;
+
+        plot.element.classList.remove("wet");
+
+        createFloatingText(
+            "🌾 Pronta",
+            plot.element
+        );
+
+    }
+
+}
+
+/*==================================================
+= PAUSAR CRESCIMENTO
+==================================================*/
+
+function pauseGrowth(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    plot.paused = true;
+
+}
+
+/*==================================================
+= CONTINUAR CRESCIMENTO
+==================================================*/
+
+function resumeGrowth(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    plot.paused = false;
+
+}
+
+/*==================================================
+= REINICIAR CRESCIMENTO
+==================================================*/
+
+function resetGrowth(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    plot.timer = 0;
+    plot.stage = 1;
+    plot.isWet = false;
+    plot.paused = false;
+
+    updatePlantImage(plotId);
+
+}
+
+/*==================================================
+= ATUALIZAR IMAGEM DA PLANTA
+==================================================*/
+
+function updatePlantImage(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return;
+
+    if (!plot.crop) return;
+
+    let image = "";
+
+    switch (plot.stage) {
+
+        case 1:
+            image = CROPS[plot.crop].img_broto;
+            break;
+
+        case 2:
+            image = CROPS[plot.crop].img_jovem;
+            break;
+
+        case 3:
+            image = CROPS[plot.crop].img_adulto;
+            break;
+
+    }
+
+    plot.element.innerHTML = `
+        <img
+            class="plot-plant-img"
+            src="${image}"
+        >
+    `;
+
+}
+
+/*==================================================
+= TEMPO TOTAL DA CULTURA
+==================================================*/
+
+function getCropTotalTime(cropKey) {
+
+    if (!CROPS[cropKey]) return 0;
+
+    return CROPS[cropKey].stageTime * 3;
+
+}
+
+/*==================================================
+= TEMPO RESTANTE
+==================================================*/
+
+function getRemainingTime(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return 0;
+
+    if (!plot.crop) return 0;
+
+    const total = getCropTotalTime(plot.crop);
+
+    return Math.max(0, total - plot.timer);
+
+}
+
+/*==================================================
+= PORCENTAGEM DE CRESCIMENTO
+==================================================*/
+
+function getGrowthPercent(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return 0;
+
+    if (!plot.crop) return 0;
+
+    const total = getCropTotalTime(plot.crop);
+
+    return Math.min(
+        100,
+        Math.floor((plot.timer / total) * 100)
+    );
+
+}
+
+/*==================================================
+= PLANTA ESTÁ PRONTA?
+==================================================*/
+
+function isReadyToHarvest(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    return plot.crop !== null && plot.stage === 3;
+
+}
+
+/*==================================================
+= OBTER INFORMAÇÕES DA PLANTA
+==================================================*/
+
+function getCropInfo(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return null;
+
+    if (!plot.crop) return null;
+
+    return {
+
+        cultura: CROPS[plot.crop].name,
+
+        fase: plot.stage,
+
+        tempo: plot.timer,
+
+        restante: getRemainingTime(plotId),
+
+        porcentagem: getGrowthPercent(plotId),
+
+        irrigada: plot.isWet,
+
+        pronta: isReadyToHarvest(plotId)
+
+    };
+
+}
+/*==================================================
+= TEMPOS DAS CULTURAS
+==================================================
+
+Milho
+20 s por fase
+60 s total
+
+Soja
+25 s por fase
+75 s total
+
+Tomate
+15 s por fase
+45 s total
+
+Alface
+15 s por fase
+45 s total
+
+Cenoura
+18 s por fase
+54 s total
+
+Plantas irrigadas:
+crescem 2× mais rápido.
+
+==================================================*/
+
+/*==================================================
+= PODE COLHER?
+==================================================*/
+
+function canHarvest(plotId) {
+
+    const plot = getPlot(plotId);
+
+    if (!plot) return false;
+
+    if (!plot.crop) return false;
+
+    if (plot.stage !== 3) return false;
+
+    return true;
+
+}
+
+/*==================================================
+= COLHER
+==================================================*/
+
+function executeHarvest(plotId) {
+
+    if (!canHarvest(plotId)) return;
+
+    const plot = getPlot(plotId);
+
+    const cropKey = plot.crop;
+
+    const crop = CROPS[cropKey];
+
+    // produção base por planta
+    const amount = 3;
+
+    gameState.inventory[cropKey] += amount;
+
+    createFloatingText(
+        "+" + amount + " " + crop.name,
+        plot.element
+    );
+
+    resetPlot(plotId);
+
+    updateHUD();
+
+}
+
+/*==================================================
+= COLHER ÁREA
+==================================================*/
+
+function harvestArea(plotId) {
+
+    executeHarvest(plotId);
+
+}
+
+/*==================================================
+= TOTAL DE ESTOQUE
+==================================================*/
+
+function getInventoryTotal() {
+
+    let total = 0;
+
+    for (const k in gameState.inventory) {
+
+        total += gameState.inventory[k];
+
+    }
+
+    return total;
+
+}
+
+/*==================================================
+= VERIFICAR ESTOQUE VAZIO
+==================================================*/
+
+function inventoryIsEmpty() {
+
+    return getInventoryTotal() === 0;
+
+}
+
+/*==================================================
+= VERIFICAR ITEM NO ESTOQUE
+==================================================*/
+
+function hasInventory(cropKey) {
+
+    return gameState.inventory[cropKey] > 0;
+
+}
+
+/*==================================================
+= ADICIONAR AO ESTOQUE
+==================================================*/
+
+function addInventory(cropKey, amount) {
+
+    if (!gameState.inventory[cropKey]) {
+
+        gameState.inventory[cropKey] = 0;
+
+    }
+
+    gameState.inventory[cropKey] += amount;
+
+}
+
+/*==================================================
+= REMOVER DO ESTOQUE
+==================================================*/
+
+function removeInventory(cropKey, amount) {
+
+    if (gameState.inventory[cropKey] < amount) {
+
+        return false;
+
+    }
+
+    gameState.inventory[cropKey] -= amount;
+
+    return true;
+
+}
+
+/*==================================================
+= ENTRAR NO MODO COLHER
+==================================================*/
+
+function startHarvestMode() {
+
+    gameState.currentMode = "harvesting";
+
+    const indicator = document.getElementById("active-mode-indicator");
+
+    if (indicator) {
+        indicator.innerText = "COLHENDO";
+    }
+
+    const cursor = document.getElementById("custom-cursor");
+
+    if (cursor) {
+        cursor.src = "/img/simulador/foice.png";
+        cursor.style.display = "block";
+    }
+
+    executeHarvest(gameState.activeBalloon);
+
+    closeActiveBalloon();
+
+}
+
+/*==================================================
+= SAIR DO MODO COLHER
+==================================================*/
+
+function stopHarvestMode() {
+
+    if (gameState.currentMode !== "harvesting") return;
+
+    exitSpecialModes();
+
+    const indicator = document.getElementById("active-mode-indicator");
+    if (indicator) indicator.innerText = "";
+
+    const cursor = document.getElementById("custom-cursor");
+    if (cursor) cursor.style.display = "none";
+
+}
 
 /*==================================================
 = ESTATÍSTICAS DO ESTOQUE
 ==================================================*/
 
-function inventoryStats(){
+function inventoryStats() {
 
-    return{
-
-        milho:gameState.inventory.milho,
-
-        soja:gameState.inventory.soja,
-
-        tomate:gameState.inventory.tomate,
-
-        alface:gameState.inventory.alface,
-
-        cenoura:gameState.inventory.cenoura,
-
-        total:getInventoryTotal()
-
+    return {
+        milho: gameState.inventory.milho,
+        soja: gameState.inventory.soja,
+        tomate: gameState.inventory.tomate,
+        alface: gameState.inventory.alface,
+        cenoura: gameState.inventory.cenoura,
+        total: getInventoryTotal()
     };
 
 }
 
-
-
 /*==================================================
-= VERIFICA SE O ESTOQUE ESTÁ VAZIO
+= LIMPAR ESTOQUE
 ==================================================*/
 
-function inventoryIsEmpty(){
+function clearInventory() {
 
-    return getInventoryTotal()===0;
+    for (const k in gameState.inventory) {
+
+        gameState.inventory[k] = 0;
+
+    }
 
 }
-
-
 
 /*==================================================
-= VERIFICA SE EXISTE UM PRODUTO
+= VERIFICAR ESTOQUE POR ITEM
 ==================================================*/
 
-function hasInventory(crop){
+function getInventory(cropKey) {
 
-    return gameState.inventory[crop]>0;
+    return gameState.inventory[cropKey] || 0;
 
 }
-
-
 
 /*==================================================
-= FIM DA PARTE 5
+= GERAR SAVE
 ==================================================*/
-
-// 6. CISTERNA (ÁGUA / SISTEMA HÍDRICO)
-
-function openCisterna() {
-    closeActiveBalloon();
-    exitSpecialModes();
-    updateCisternaLabel();
-    openModal('modal-cisterna');
-}
-
-function updateCisternaLabel() {
-    const el = document.getElementById('modal-water-label');
-    el.innerText = `${gameState.water}L / ${gameState.maxWater}L`;
-}
-
-function irrigatePlot(id, plotElement) {
-    const plot = gameState.plots[id];
-    if (!plot || plot.isWet) return;
-
-    if (gameState.water < 10) {
-        alert("Água insuficiente.");
-        return;
-    }
-
-    gameState.water -= 10;
-    plot.isWet = true;
-    plotElement.classList.add('wet');
-
-    createFloatingText("💧 Regado!", plotElement);
-    updateCisternaLabel();
-}
-
-function refillWaterSystem() {
-    if (gameState.water >= gameState.maxWater) {
-        alert("Reservatório cheio!");
-        return;
-    }
-
-    gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
-    updateCisternaLabel();
-}
-
-// 7. COOPERATIVA (MERCADO)
-
-function openCooperativa() {
-    closeActiveBalloon();
-    exitSpecialModes();
-    renderCooperativa();
-    openModal('modal-cooperativa');
-}
-
-function renderCooperativa() {
-    const container = document.getElementById('market-list');
-    container.innerHTML = "";
-
-    container.innerHTML += `
-        <div class="item-row">
-            <button class="btn-action" onclick="sellWaterResource()">
-                Vender 10L de Água (+$20)
-            </button>
-        </div>
-    `;
-
-    for (let k in CROPS) {
-        container.innerHTML += `
-            <div class="item-row">
-                <strong>${CROPS[k].name}</strong>
-                <button onclick="buySeed('${k}')">Comprar (-$${CROPS[k].seedPrice})</button>
-                <button onclick="sellSeed('${k}')">Vender (+$${CROPS[k].seedSellPrice})</button>
-                <button onclick="sellCrop('${k}')">Liquidar Estoque</button>
-            </div>
-        `;
-    }
-}
-
-function buySeed(key) {
-    if (gameState.money < CROPS[key].seedPrice) return alert("Sem dinheiro.");
-
-    gameState.money -= CROPS[key].seedPrice;
-    gameState.seeds[key]++;
-    updateHUD();
-    renderCooperativa();
-}
-
-function sellSeed(key) {
-    if (gameState.seeds[key] <= 0) return alert("Sem sementes.");
-
-    gameState.seeds[key]--;
-    gameState.money += CROPS[key].seedSellPrice;
-    updateHUD();
-    renderCooperativa();
-}
-
-function sellCrop(key) {
-    if (gameState.inventory[key] <= 0) return alert("Sem estoque.");
-
-    gameState.money += gameState.inventory[key] * CROPS[key].sellPrice;
-    gameState.inventory[key] = 0;
-
-    updateHUD();
-    renderCooperativa();
-}
-
-function sellWaterResource() {
-    if (gameState.water < 10) return alert("Água insuficiente.");
-
-    gameState.water -= 10;
-    gameState.money += 20;
-
-    updateHUD();
-    updateCisternaLabel();
-    renderCooperativa();
-}
-
-// 8. GALPÃO + HUD
-
-function openGalpao() {
-    closeActiveBalloon();
-    exitSpecialModes();
-
-    const container = document.getElementById("stock-list");
-    container.innerHTML = "";
-
-    for (let k in gameState.inventory) {
-        container.innerHTML += `
-            <div class="item-row">
-                <span>${CROPS[k].name}</span>
-                <span>
-                    sementes: ${gameState.seeds[k]} |
-                    estoque: ${gameState.inventory[k]}
-                </span>
-            </div>
-        `;
-    }
-
-    openModal("modal-galpao");
-}
-
-function updateHUD() {
-
-    const money = document.getElementById("hud-money");
-    if (money) money.innerText = gameState.money;
-
-    const water = document.getElementById("hud-water");
-    if (water) water.innerText = gameState.water;
-
-}
-
-// 9. SAVE / LOAD
 
 function generateSaveCode() {
+
     const payload = {
+
         m: gameState.money,
         w: gameState.water,
         i: gameState.inventory,
         s: gameState.seeds,
         p: {}
+
     };
 
-    for (let id in gameState.plots) {
+    for (const id in gameState.plots) {
+
         const p = gameState.plots[id];
+
         payload.p[id] = {
+
             c: p.crop,
             s: p.stage,
             t: p.timer,
-            w: p.isWet
+            w: p.isWet,
+            pa: p.paused || false
+
         };
+
     }
 
-    const code = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-    document.getElementById("save-code-output").value = code;
+    const json = JSON.stringify(payload);
+    const code = btoa(unescape(encodeURIComponent(json)));
+
+    const output = document.getElementById("save-code-output");
+
+    if (output) {
+        output.value = code;
+    }
+
 }
 
+/*==================================================
+= CARREGAR SAVE
+==================================================*/
+
 function loadSaveCode() {
-    const input = document.getElementById("save-code-input").value.trim();
-    if (!input) return;
+
+    const input = document.getElementById("save-code-input");
+
+    if (!input || !input.value.trim()) return;
 
     try {
-        const data = JSON.parse(decodeURIComponent(escape(atob(input))));
+
+        const data = JSON.parse(
+            decodeURIComponent(escape(atob(input.value.trim())))
+        );
 
         gameState.money = data.m;
         gameState.water = data.w;
         gameState.inventory = data.i;
         gameState.seeds = data.s;
 
-        for (let id in data.p) {
+        for (const id in data.p) {
+
             if (!gameState.plots[id]) continue;
 
-            gameState.plots[id] = {
-                id: Number(id),
-                crop: data.p[id].c,
-                stage: data.p[id].s,
-                timer: data.p[id].t,
-                isWet: data.p[id].w
-            };
+            const saved = data.p[id];
+            const plot = gameState.plots[id];
 
-            const el = document.querySelector(`.plot[data-id="${id}"]`);
+            plot.crop = saved.c;
+            plot.stage = saved.s;
+            plot.timer = saved.t;
+            plot.isWet = saved.w;
+            plot.paused = saved.pa;
+
+            const el = plot.element;
+
             if (!el) continue;
 
-            const p = gameState.plots[id];
+            if (!plot.crop) {
 
-            if (!p.crop) {
                 el.innerHTML = "";
+                el.classList.remove("wet");
                 continue;
+
             }
 
-            const crop = CROPS[p.crop];
-            let img = crop.img_broto;
+            updatePlantImage(id);
+            el.classList.toggle("wet", plot.isWet);
 
-            if (p.stage === 2) img = crop.img_jovem;
-            if (p.stage === 3) img = crop.img_adulte;
-
-            el.innerHTML = `<img class="plot-plant-img" src="${img}">`;
-
-            el.classList.toggle("wet", p.isWet);
         }
 
         updateHUD();
-        alert("Partida restaurada.");
+
+        alert("Partida carregada com sucesso!");
+
         closeModals();
 
-    } catch {
-        alert("Código inválido.");
+    } catch (e) {
+
+        alert("Código inválido!");
+
     }
+
+}
+/*==================================================
+= CACHE DE ELEMENTOS
+==================================================*/
+
+function cacheElements() {
+
+    viewport = document.getElementById("game-viewport");
+    map = document.getElementById("farm-map");
+
+    superiorGrid = document.getElementById("plantacao-superior");
+    inferiorGrid = document.getElementById("plantacao-inferior");
+
 }
 
-// 10. INICIALIZAÇÃO + EVENTOS
+/*==================================================
+= CRIAR TODAS AS TERRAS
+==================================================*/
+
+function createPlots() {
+
+    let id = 1;
+
+    for (let i = 0; i < GAME.TOTAL_SUPERIOR; i++) {
+
+        const plot = createSinglePlot(id++);
+        superiorGrid.appendChild(plot);
+
+    }
+
+    for (let i = 0; i < GAME.TOTAL_INFERIOR; i++) {
+
+        const plot = createSinglePlot(id++);
+        inferiorGrid.appendChild(plot);
+
+    }
+
+}
+
+/*==================================================
+= INICIALIZAÇÃO DO JOGO
+==================================================*/
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -1994,24 +2385,28 @@ window.addEventListener("DOMContentLoaded", () => {
 
     renderMap();
 
+    // Botões principais
+
     const galpao = document.getElementById("galpao");
-    if (galpao) {
-        galpao.addEventListener("click", openGalpao);
-    }
+    if (galpao) galpao.addEventListener("click", openGalpao);
 
     const cooperativa = document.getElementById("cooperativa");
-    if (cooperativa) {
-        cooperativa.addEventListener("click", openCooperativa);
-    }
+    if (cooperativa) cooperativa.addEventListener("click", openCooperativa);
 
     const cisterna = document.getElementById("cisterna");
-    if (cisterna) {
-        cisterna.addEventListener("click", openCisterna);
+    if (cisterna) cisterna.addEventListener("click", openCisterna);
+
+    // Carregamento automático opcional
+    const autoLoad = document.getElementById("auto-load");
+    if (autoLoad && autoLoad.value) {
+        loadSaveCode();
     }
 
-    updateCisternaLabel();
-
 });
+
+/*==================================================
+= MODAIS
+==================================================*/
 
 function openModal(id) {
 
@@ -2028,25 +2423,35 @@ function openModal(id) {
 
 }
 
+/*==================================================
+= FECHAR MODAIS
+==================================================*/
+
 function closeModals() {
 
-    document.querySelectorAll(".modal-panel").forEach(modal => {
-        modal.classList.remove("active");
+    document.querySelectorAll(".modal-panel").forEach(m => {
+        m.classList.remove("active");
     });
 
 }
+
+/*==================================================
+= FECHAR BALÕES (FINAL SEGURA)
+==================================================*/
+
 function closeActiveBalloon() {
 
     const layer = document.getElementById("balloon-layer");
 
-    if (!layer) return;
-
-    layer.innerHTML = "";
+    if (layer) layer.innerHTML = "";
 
     gameState.activeBalloon = null;
 
 }
 
+/*==================================================
+= SAIR DE MODOS ESPECIAIS (FINAL SEGURA)
+==================================================*/
 
 function exitSpecialModes() {
 
@@ -2054,31 +2459,44 @@ function exitSpecialModes() {
     gameState.selectedCrop = null;
 
     const indicator = document.getElementById("active-mode-indicator");
-    if (indicator) {
-        indicator.innerText = "";
-    }
+    if (indicator) indicator.innerText = "";
 
     const cursor = document.getElementById("custom-cursor");
-    if (cursor) {
-        cursor.style.display = "none";
-    }
-
-    const viewport = document.getElementById("game-viewport");
-    if (viewport) {
-        viewport.className = "";
-    }
+    if (cursor) cursor.style.display = "none";
 
 }
 
-function createFloatingText(text, el) {
-    const div = document.createElement("div");
-    div.className = "floating-text";
-    div.innerText = text;
+/*==================================================
+= RENDER DO MAPA
+==================================================*/
 
-    div.style.left = el.offsetLeft + "px";
-    div.style.top = el.offsetTop + "px";
+function renderMap() {
 
-    document.getElementById("farm-map").appendChild(div);
+    map.style.transform =
+        `translate(${mapX}px, ${mapY}px) scale(${currentZoom})`;
 
-    setTimeout(() => div.remove(), 1200);
+}
+
+/*==================================================
+= ATUALIZA HUD
+==================================================*/
+
+function updateHUD() {
+
+    const money = document.getElementById("hud-money");
+    if (money) money.innerText = gameState.money;
+
+    const water = document.getElementById("hud-water");
+    if (water) water.innerText = gameState.water;
+
+}
+
+/*==================================================
+= UTILITÁRIO FINAL (DEBUG OPCIONAL)
+==================================================*/
+
+function debugGameState() {
+
+    console.log("STATE:", gameState);
+
 }
