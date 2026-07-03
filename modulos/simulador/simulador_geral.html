@@ -1030,7 +1030,6 @@ viewport.addEventListener('pointermove', (e) => {
           }
           gameState.currentMode = 'planting';
           gameState.selectedCrop = cropKey;
-          document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
           viewport.className = 'mode-planting';
       
 
@@ -1449,6 +1448,37 @@ document.getElementById("cisterna").addEventListener("click", openCisterna);
               updateHUD(); alert("Progresso carregado!"); closeModals();
           } catch (err) { alert("Código inválido."); }
       }
+
+      function generateShortCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+
+    for (let i = 0; i < 10; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    const payload = {
+        m: gameState.money,
+        w: gameState.water,
+        i: gameState.inventory,
+        s: gameState.seeds,
+        p: {}
+    };
+
+    for (let id in gameState.plots) {
+        payload.p[id] = {
+            c: gameState.plots[id].crop,
+            s: gameState.plots[id].stage,
+            t: gameState.plots[id].timer,
+            w: gameState.plots[id].isWet
+        };
+    }
+
+    const data = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+
+    document.getElementById('save-code-output').value =
+        code + "|" + data;
+}
 
 
 
