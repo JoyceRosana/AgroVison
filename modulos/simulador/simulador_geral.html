@@ -598,6 +598,8 @@
 
           <div class="config-content">
 
+            <div class="config-layout"> <div class="config-sidebar"> <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button> 
+                <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button> </div>
   <!-- CENTRAL -->
   <div id="tab-inicio" class="tab-pane active">
 
@@ -607,19 +609,6 @@
       O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
     </p>
 
-    <div id="tab-acessibilidade" class="tab-pane">
-
-    <h6>Acessibilidade</h6>
-    <div style="display:flex; gap:10px; margin-top:5px;">
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
-    </div>
-
-
-    <div class="acc-grid">
-      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
-      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
-    </div>
 
     <h4>Agro Vision Central</h4>
 
@@ -644,6 +633,32 @@
       Restaurar progresso
     </button>
 
+
+<!-- ACESSIBILIDADE -->
+  <div id="tab-acessibilidade" class="tab-pane">
+
+    <h3>Acessibilidade</h3>
+
+    <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">
+      Ajuste de Zoom
+    </span>
+
+    <div style="display:flex; gap:10px; margin-top:5px;">
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar</button>
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir</button>
+    </div>
+
+    <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">
+      Modo Visual
+    </span>
+
+    <div class="acc-grid">
+      <button class="btn-action" onclick="applyVisualMode('dark')">Escuro</button>
+      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+    </div>
+
+  </div>
   </div>
 
 
