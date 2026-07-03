@@ -785,6 +785,25 @@ function openSellMenu() {
 
     document.getElementById("balloon-layer").appendChild(container);
 }
+function buySeed(key) {
+    if (gameState.money >= CROPS[key].seedPrice) {
+        gameState.money -= CROPS[key].seedPrice;
+        gameState.seeds[key]++;
+        updateHUD();
+        renderCooperativa();
+    } else {
+        alert("Dinheiro insuficiente!");
+    }
+}
+function sellCrop(key) {
+    if (gameState.inventory[key] > 0) {
+        updateMoney(gameState.inventory[key] * CROPS[key].sellPrice);
+        gameState.inventory[key] = 0;
+        renderCooperativa();
+    } else {
+        alert("Estoque vazio.");
+    }
+}
 
 /* ==========================
   SUPERIOR
@@ -1372,10 +1391,6 @@ setInterval(() => {
       }
 
 
-document.getElementById("galpao").addEventListener("click", openGalpao);
-document.getElementById("cooperativa").addEventListener("click", openCooperativa);
-document.getElementById("cisterna").addEventListener("click", openCisterna);
-
 
       function buySeed(key) {
           if (gameState.money >= CROPS[key].seedPrice) {
@@ -1441,12 +1456,6 @@ document.getElementById("cisterna").addEventListener("click", openCisterna);
           } else { alert("Reservatório cheio!"); }
       }
 
-
-      window.addEventListener("DOMContentLoaded", () => {
-   document.getElementById("galpao").addEventListener("click", openGalpao);
-   document.getElementById("cooperativa").addEventListener("click", openCooperativa);
-   document.getElementById("cisterna").addEventListener("click", openCisterna);
-});
 
 
       /* CONFIGURAÇÕES E SALVAMENTO */
@@ -1546,7 +1555,10 @@ function closeModals() {
    });
 }       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
 
-
+function updateMoney(amount) {
+    gameState.money += amount;
+    updateHUD();
+}
 
 
       updateHUD();
