@@ -1,3 +1,306 @@
+</html> como esta o meu simulador_geral.html? vamos acrescentra no html quando clicar no galpão paracer menu do aramazenamento milho, soja, cenoura, tomate e alface na frente de cada um a quantidade de sementes e de estoque e quando clicar em cooperativa aparecer milho, soja, cenoura, tomate e alface na frente de cada um vender estoque, vender sementes comprar sementes quando clicar em cisterna aparece quantiddae de agua filtrada, para ser filtrada, o aramazenamento de agua e se é ou não filtrada ou se precisa filtrar. quando clicar em configuraçẽs(engrenagem )aparecer um menu retangular verticalmente sendo com botão acessibilidade(boneco com bracos e pernas abertos) aparecer modo leitura(regulavel) modo padrão, aumentar e diminuir fontes, já no central(logo que entra na engrenagem) aparecer gerar codigo(maximo com 10 caracteres sendo letras e numeros) e colar codigo(essa parte permite que continue a jogada anterior sem perder o progresso no jogo) bem no final aparecer seta de voltar/retornar e do lado início (isso faz voltar a pagina inicial de todo o site) . E em todos os menus incluir o botão de fechar, que é meio um x mas de multiplicar. quero acrescentar esses menus por favor
+                Ele guarda todas as informações da partida:
+
+dinheiro;
+água;
+sementes;
+estoque;
+o que existe em cada terra;
+modo atual (plantando, colhendo ou normal).                 cria automaticamente as 326 terras (102 superiores + 224 inferiores).              Detectar os cliques: Quando o jogador clica em uma terra, o script decide:
+
+abrir o menu de sementes;
+regar;
+abrir a foice;
+ou não fazer nada.                            4. Plantar
+
+Quando escolhe uma semente:
+
+executePlanting(...)
+
+O script:
+
+desconta uma semente;
+grava qual planta foi escolhida;
+coloca a imagem do broto.                                    5. Fazer as plantas crescerem
+
+Este trecho roda continuamente:
+
+setInterval(() => {
+
+},1000);
+
+A cada segundo ele:
+
+aumenta o tempo da planta;
+troca broto → jovem;
+troca jovem → adulta.            6. Colher
+
+Quando a planta chega na fase adulta:
+
+executeHarvest(...)
+
+O script:
+
+adiciona produtos ao estoque;
+limpa a terra;
+remove a planta.           7. Regar
+irrigatePlot(...)
+
+Ele:
+
+diminui a água;
+marca a terra como molhada;
+faz crescer mais rápido.                8. Controlar a chuva
+triggerRainCycle()
+
+A chuva:
+
+aumenta a água da cisterna;
+molha todas as plantações;
+mostra o efeito visual.                          9. Abrir os prédios
+
+Funções como:
+
+openGalpao()
+openCooperativa()
+openCisterna()
+
+Mostram as janelas de cada construção.         10. Comprar e vender: Atualizam: dinheiro;
+sementes;
+estoque.      Arrastar o mapa: Permite mover a fazenda com o dedo ou o mouse.                       Aumenta ou diminui o mapa.                           Converte todo o estado do jogo em um código para salvar a partida e restaurá-la depois.                         Resumindo
+
+O script controla toda a lógica do simulador:
+CEntral 
+milho   sementes estoque
+soja sementes estoque
+cenoura sementes estoque
+tomate sementes estoque
+alface sementes estoque
+
+🌱 plantar;
+🌿 crescer;
+💧 regar;
+🌧️ chuva;
+🌾 colher;
+💰 comprar e vender;
+🏢 abrir os prédios;
+🗺️ mover o mapa;
+🔍 zoom;
+💾 salvar e carregar o progresso.                                                                                                                                         vou crie um codigo para simulador.js  que faça todas essas funções
+
+A melhor forma é separar o projeto em módulos.
+Estrutura recomendada
+simulador.js
+
+// 1. Configuração do jogo
+const CROPS = ...
+let gameState = ...
+
+// 2. Criação automática das 326 terras
+
+// 3. Movimento do mapa
+
+// 4. Sistema de balões
+
+// 5. Plantio
+
+// 6. Colheita
+
+// 7. Irrigação
+
+// 8. Crescimento das plantas
+
+// 9. Sistema de chuva
+
+//10. Cooperativa
+
+//11. Galpão
+
+//12. Cisterna
+
+//13. HUD
+
+//14. Zoom
+
+//15. Salvamento
+
+//16. Carregamento
+
+//17. Eventos
+
+//18. Inicialização
+
+Esse arquivo incluirá exatamente estas funções:
+✅ guarda dinheiro
+✅ guarda sementes
+✅ guarda estoque
+✅ guarda água
+✅ guarda as 326 terras
+✅ cria automaticamente as terras
+✅ plantar
+✅ regar
+✅ crescimento automático
+✅ imagens mudando de broto → jovem → adulta
+✅ tempos individuais
+Milho: 20 s por fase (60 s total)
+Soja: 25 s por fase (75 s total)
+Tomate: 15 s por fase (45 s total)
+Alface: 15 s por fase (45 s total)
+Cenoura: 18 s por fase (54 s total)
+✅ se molhar reduz o tempo pela metade
+✅ chuva automática
+✅ colher
+✅ estoque
+✅ comprar sementes
+✅ vender sementes
+✅ vender produção
+✅ vender água
+✅ abrir galpão
+✅ abrir cooperativa
+✅ abrir cisterna
+✅ arrastar mapa
+✅ zoom
+✅ salvar partida
+✅ carregar partida
+✅ textos flutuantes
+✅ HUD
+✅ balão de sementes
+✅ balão da foice
+✅ modo plantar
+✅ modo colher
+✅ sair do modo especial
+Além disso, posso reorganizar tudo em código profissional, separando as responsabilidades em funções e eliminando duplicações.
+Como o arquivo é grande demais para uma única resposta, o ideal é montá-lo em partes.
+A sequência seria:
+Parte 1: configuração do jogo, criação das 326 terras, HUD e movimento do mapa.
+Parte 2: sistema completo de plantio, crescimento e irrigação.
+Parte 3: colheita, cooperativa, galpão e cisterna.
+Parte 4: chuva, zoom, salvar/carregar, eventos e inicialização.
+No final, as quatro partes formam um único simulador.js completo, organizado e pronto para substituir o seu código atual.
+
+
+
+
+ <div id="modal-config" class="modal-panel" style="max-width: 650px;">
+     <div class="modal-header">
+         <span>Painel de Gerenciamento Integrado</span>
+         <span class="close-btn" onclick="closeModals()">&times;</span>
+     </div>
+  
+     <div class="config-layout">
+         <div class="config-sidebar">
+             <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
+             <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
+         </div>
+
+
+
+
+
+
+
+
+         <div class="config-content">
+
+
+ <!-- CENTRAL -->
+ <div id="tab-inicio" class="tab-pane active">
+
+
+   <h3>Central</h3>
+
+
+   <p style="margin-top:10px; font-size:14px;">
+     O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
+   </p>
+
+
+   <h4>Agro Vision Central</h4>
+
+
+   <p style="font-size:13px; line-height:1.4; margin-top:8px;">
+     Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
+   </p>
+
+
+  
+<h3>continuidade de Dados</h3>
+
+
+   <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
+     Gerar código
+   </button>
+
+
+   <textarea id="save-code-output" class="code-box" readonly></textarea>
+
+
+   <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
+
+
+   <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
+     Restaurar progresso
+   </button>
+
+
+       <button class="btn-action" style="width:100%;"><a href="../../index.html">Voltar ao início</a></button>
+
+
+ </div>
+
+
+ <!-- ACESSIBILIDADE -->
+ <div id="tab-acessibilidade" class="tab-pane">
+
+
+   <h3>Acessibilidade: Ajuste de Zoom e Modo Visual</h3>
+
+
+
+
+   <div style="display:flex; gap:10px; margin-top:5px;">
+     <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
+     <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
+   </div>
+
+
+   <div class="acc-grid">
+     <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+     <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+   </div>
+
+
+ </div>
+
+
+
+
+ </div>
+
+
+</div>
+
+
+             <div id="tab-acessibilidade" class="tab-pane">
+                 <h3>Controle de Estímulos e Visão</h3>
+                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
+                 <div style="display:flex; gap:10px; margin-top:5px;">
+                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
+                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
+                 </div>
+                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
+                 <div class="acc-grid">
+                     <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
+                     <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
+                     <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -15,7 +318,10 @@
 
 
       /* ACESSIBILIDADE */
-
+      body.modo-escuro {
+          filter: grayscale(1) invert(0.9) !important;
+          background-color: #000 !important;
+      }
       body.modo-leitura::after {
           content: "";
           position: fixed;
@@ -330,14 +636,12 @@
           background-color: #dfb887;
           border: 4px solid var(--wood-dark);
           border-radius: 10px;
-          padding: -200px;
+          padding: 15px;
           z-index: 1000;
-          display: grid;
-          gap: 8px;
-          transform: translate(50%, -105%);
+          display: flex;
+          gap: 12px;
+          transform: translate(-50%, -105%);
           box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-          width: 80px;
-          height: 20px;
       }
 
 
@@ -512,7 +816,7 @@
           <span class="brand-title">AGRO VISION</span>
           <div id="rain-indicator">🌧️ CHOVENDO AGORA</div>
           <div class="hud-item" style="color: var(--gold); font-size: 20px; margin-left: 10px;">
-              💰 Saldo: $<span id="hud-money">150</span>
+              💰 Saldo: $<span id="hud-money">120</span>
           </div>
       </div>
 
@@ -569,15 +873,6 @@
   </div>
 
 
-  <div id="menu-galpao" class="modal-panel">
-    <div class="modal-header">
-        Galpão
-        <span onclick="closeMenus()">✖</span>
-    </div>
-
-    <div id="galpao-info"></div>
-</div>
-
 
 
   <div id="modal-cooperativa" class="modal-panel">
@@ -585,26 +880,6 @@
       <div id="market-list"></div>
   </div>
 
-  <div id="menu-cooperativa" class="modal-panel">
-    <div class="modal-header">
-        Cooperativa
-        <span onclick="closeMenus()">✖</span>
-    </div>
-
-    <div>
-        🌽 Milho<br>
-        <button onclick="buySeed('milho')">Comprar</button>
-        <button onclick="sellSeed('milho')">Vender</button>
-        <button onclick="sellCrop('milho')">Estoque</button>
-    </div>
-
-    <div>
-        🌱 Soja<br>
-        <button onclick="buySeed('soja')">Comprar</button>
-        <button onclick="sellSeed('soja')">Vender</button>
-        <button onclick="sellCrop('soja')">Estoque</button>
-    </div>
-</div>
 
 
 
@@ -618,132 +893,162 @@
       <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Ligar Bombas Hidráulicas (+50L)</button>
   </div>
 
-  <div id="menu-cisterna" class="modal-panel">
+
+
+
+<div id="modal-config" class="modal-panel" style="max-width: 650px;">
     <div class="modal-header">
-        Cisterna
-        <span onclick="closeMenus()">✖</span>
+        <span>Painel de Gerenciamento Integrado</span>
+        <span class="close-btn" onclick="closeModals()">&times;</span>
     </div>
-
-    <p id="agua-info"></p>
-
-    <button onclick="startFiltering()">Filtrar (2s por litro)</button>
-</div>
-
-
-
-  <div id="modal-config" class="modal-panel" style="max-width: 650px;">
-     <div class="modal-header">
-         <span>Painel de Gerenciamento Integrado</span>
-         <span class="close-btn" onclick="closeModals()">&times;</span>
-     </div>
-  
      <div class="config-layout">
-         <div class="config-sidebar">
-             <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
-             <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
-         </div>
-
-         <div class="config-content">
+        <div class="config-sidebar">
+            <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
+            <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
+        </div>
 
 
- <!-- CENTRAL -->
- <div id="tab-inicio" class="tab-pane active">
-
-
-   <h3>Central</h3>
-
-
-   <p style="margin-top:10px; font-size:14px;">
-     O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
-   </p>
-
-
-   <h4>Agro Vision Central</h4>
-
-
-   <p style="font-size:13px; line-height:1.4; margin-top:8px;">
-     Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
-   </p>
-
-
-  
-<h3>continuidade de Dados</h3>
-
-
-   <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
-     Gerar código
-   </button>
-
-
-   <textarea id="save-code-output" class="code-box" readonly></textarea>
-
-
-   <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
-
-
-   <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
-     Restaurar progresso
-   </button>
-
-
-       <button class="btn-action" style="width:100%;"><a href="../../index.html">Voltar ao início</a></button>
-
-
- </div>
-
-
- <!-- ACESSIBILIDADE -->
- <div id="tab-acessibilidade" class="tab-pane">
-
-
-   <h3>Acessibilidade: Ajuste de Zoom e Modo Visual</h3>
+        <div class="config-content">
 
 
 
 
-   <div style="display:flex; gap:10px; margin-top:5px;">
-     <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
-     <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
-   </div>
-
-
-   <div class="acc-grid">
-     <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
-     <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
-   </div>
-
-
- </div>
+<!-- CENTRAL -->
+<div id="tab-inicio" class="tab-pane active">
 
 
 
 
- </div>
+  <h3>Central</h3>
+
+
+
+
+  <p style="margin-top:10px; font-size:14px;">
+    O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
+  </p>
+
+
+
+
+  <h4>Agro Vision Central</h4>
+
+
+
+
+  <p style="font-size:13px; line-height:1.4; margin-top:8px;">
+    Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
+  </p>
+
+
+
+
+ <h3>continuidade de Dados</h3>
+
+
+
+
+  <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
+    Gerar código
+  </button>
+
+
+
+
+  <textarea id="save-code-output" class="code-box" readonly></textarea>
+
+
+
+
+  <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
+
+
+
+
+  <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
+    Restaurar progresso
+  </button>
+
+
+
+
+      <button class="btn-action" style="width:100%;"><a href="../../index.html">Voltar ao início</a></button>
+
+
 
 
 </div>
 
 
-             <div id="tab-acessibilidade" class="tab-pane">
-                 <h3>Controle de Estímulos e Visão</h3>
-                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
-                 <div style="display:flex; gap:10px; margin-top:5px;">
-                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
-                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
-                 </div>
-                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
-                 <div class="acc-grid">
-                     <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
-                     <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
-                     <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
+
+
+<!-- ACESSIBILIDADE -->
+<div id="tab-acessibilidade" class="tab-pane">
 
 
 
+
+  <h3>Acessibilidade: Ajuste de Zoom e Modo Visual</h3>
+
+
+
+
+
+
+
+
+  <div style="display:flex; gap:10px; margin-top:5px;">
+    <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
+    <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
+  </div>
+
+
+
+
+  <div class="acc-grid">
+    <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+    <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+  </div>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+            <div id="tab-acessibilidade" class="tab-pane">
+                <h3>Controle de Estímulos e Visão</h3>
+                <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
+                <div style="display:flex; gap:10px; margin-top:5px;">
+                    <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
+                    <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
+                </div>
+                <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
+                <div class="acc-grid">
+                    <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
+                    <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
+                    <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
   <script>
@@ -781,61 +1086,7 @@ const inferior = document.getElementById("plantacao-inferior");
 
 
 let id = 1;
-function openMainMenu(plotId = null) {
-    closeActiveBalloon();
 
-    const menu = document.createElement("div");
-    menu.className = "wood-balloon";
-
-    menu.innerHTML = `
-        <div class="menu-option" onclick="openCooperativa()">🏪 Cooperativa</div>
-        <div class="menu-option" onclick="openGalpao()">🌾 Galpão</div>
-        <div class="menu-option" onclick="openCisterna()">💧 Cisterna</div>
-        ${plotId ? `<div class="menu-option" onclick="openPlantingBalloon('${plotId}', document.querySelector('.plot[data-id=&quot;${plotId}&quot;]'))">🌱 Plantar</div>` : ""}
-        ${plotId ? `<div class="menu-option" onclick="startContinuousHarvest()">🔪 Colher</div>` : ""}
-    `;
-
-    document.getElementById("balloon-layer").appendChild(menu);
-}
-function openSellMenu() {
-    closeActiveBalloon();
-
-    const container = document.createElement("div");
-    container.className = "wood-balloon";
-
-    for (let k in gameState.inventory) {
-        const item = document.createElement("div");
-        item.className = "menu-option";
-
-        item.innerHTML = `
-            ${CROPS[k].name} - ${gameState.inventory[k]} un
-            <button onclick="sellCrop('${k}')">Vender</button>
-        `;
-
-        container.appendChild(item);
-    }
-
-    document.getElementById("balloon-layer").appendChild(container);
-}
-function buySeed(key) {
-    if (gameState.money >= CROPS[key].seedPrice) {
-        gameState.money -= CROPS[key].seedPrice;
-        gameState.seeds[key]++;
-        updateHUD();
-        renderCooperativa();
-    } else {
-        alert("Dinheiro insuficiente!");
-    }
-}
-function sellCrop(key) {
-    if (gameState.inventory[key] > 0) {
-        updateMoney(gameState.inventory[key] * CROPS[key].sellPrice);
-        gameState.inventory[key] = 0;
-        renderCooperativa();
-    } else {
-        alert("Estoque vazio.");
-    }
-}
 
 /* ==========================
   SUPERIOR
@@ -986,13 +1237,13 @@ viewport.addEventListener('pointermove', (e) => {
 
 
    if (!data.crop) {
-       openMainMenu(id);
+       openPlantingBalloon(id, plot);
    }
    else if (data.stage === 3) {
-       openMainMenu(id);
+       openHarvestBalloon(id, plot);
    }
    else if (data.stage < 3 && !data.isWet) {
-       openMainMenu(id);
+       irrigatePlot(id, plot);
    }
 });
 
@@ -1118,6 +1369,7 @@ viewport.addEventListener('pointermove', (e) => {
           }
           gameState.currentMode = 'planting';
           gameState.selectedCrop = cropKey;
+          document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
           viewport.className = 'mode-planting';
       
 
@@ -1164,69 +1416,50 @@ viewport.addEventListener('pointermove', (e) => {
 
 
 
-     function executeHarvest(id, plotElement) {
-    const plot = gameState.plots[id];
+      function executePlanting(id, plotElement) {
+   const cropKey = gameState.selectedCrop;
 
-    if (!plot.crop || plot.stage < 3) return;
 
-    const crop = CROPS[plot.crop];
+   if (!cropKey) return;
+   if (gameState.seeds[cropKey] <= 0) return;
 
-    gameState.inventory[plot.crop] += 3;
 
-    createFloatingText(`+3 ${crop.name}`, plotElement);
+   const plot = gameState.plots[id];
 
-    // limpa o terreno
-    gameState.plots[id] = {
-        id,
-        crop: null,
-        stage: 0,
-        timer: 0,
-        isWet: false
-    };
 
-    plotElement.innerHTML = "";
-    plotElement.classList.remove("wet");
-}
+   // 🔒 trava: só planta se estiver vazio
+   if (plot.crop) return;
 
-function harvestPlot(id, plotElement) {
-    const plot = gameState.plots[id];
 
-    if (!plot.crop) return;
+   gameState.seeds[cropKey]--;
 
-    if (plot.stage < 3) {
-        alert("Ainda não está pronto para colher.");
-        return;
-    }
 
-    executeHarvest(id, plotElement);
+   gameState.plots[id] = {
+       id: id,
+       crop: cropKey,
+       stage: 1,
+       timer: 0,
+       isWet: false
+   };
+
+
+   plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
 }
 
 
 
 
       function irrigatePlot(id, plotElement) {
-    const plot = gameState.plots[id];
-
-    if (plot.isWet) return; // evita spam
-
-    if (gameState.water < 10) {
-        alert("Sem água!");
-        return;
-    }
-
-    gameState.water -= 10;
-    plot.isWet = true;
-
-    plotElement.classList.add("wet");
-    createFloatingText("💧 Irrigado", plotElement);
-
-    updateCisternaLabel();
-
-    setTimeout(() => {
-        plot.isWet = false;
-        plotElement.classList.remove("wet");
-    }, 8000); // efeito temporário
-}
+          if (gameState.water >= 10) {
+              gameState.water -= 10;
+              gameState.plots[id].isWet = true;
+              plotElement.classList.add('wet');
+              createFloatingText("💧 Regado!", plotElement);
+              updateCisternaLabel();
+          } else {
+              alert("Cisterna vazia! Aguarde a chuva ou ligue as bombas.");
+          }
+      }
 
 
 
@@ -1275,33 +1508,47 @@ function executeHarvest(id, plotElement) {
 
 
              /* LOOP */
+
+
 setInterval(() => {
-    for (let id in gameState.plots) {
-        const p = gameState.plots[id];
-        if (!p.crop || p.stage >= 3) continue;
+   for (let id in gameState.plots) {
+       const p = gameState.plots[id];
+       if (!p.crop || p.stage >= 3) continue;
 
-        const crop = CROPS[p.crop];
-        const time = crop.stageTime || crop.growTime;
 
-        const speed = p.isWet ? 2 : 1;
-        p.timer += speed;
+       const crop = CROPS[p.crop];
 
-        const el = document.querySelector(`.plot[data-id="${id}"]`);
-        if (!el) continue;
 
-        if (p.stage === 1 && p.timer >= time) {
-            p.stage = 2;
-            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
-        }
+       // irrigado = cresce mais rápido
+       const speed = p.isWet ? 2 : 1;
 
-        if (p.stage === 2 && p.timer >= time * 2) {
-            p.stage = 3;
-            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
-            p.isWet = false;
-            el.classList.remove("wet");
-        }
-    }
+
+       p.timer += speed;
+
+
+       const el = document.querySelector(`.plot[data-id="${id}"]`);
+
+
+       const t = crop.stageTime;
+
+
+       // Fase 2
+       if (p.stage === 1 && p.timer >= t) {
+           p.stage = 2;
+           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
+       }
+
+
+       // Fase 3 (adulto)
+       else if (p.stage === 2 && p.timer >= t * 2) {
+           p.stage = 3;
+           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+           p.isWet = false;
+           el.classList.remove('wet');
+       }
+   }
 }, 1000);
+
 
 
 
@@ -1423,6 +1670,10 @@ setInterval(() => {
       }
 
 
+document.getElementById("galpao").addEventListener("click", openGalpao);
+document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+document.getElementById("cisterna").addEventListener("click", openCisterna);
+
 
       function buySeed(key) {
           if (gameState.money >= CROPS[key].seedPrice) {
@@ -1489,6 +1740,12 @@ setInterval(() => {
       }
 
 
+      window.addEventListener("DOMContentLoaded", () => {
+   document.getElementById("galpao").addEventListener("click", openGalpao);
+   document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+   document.getElementById("cisterna").addEventListener("click", openCisterna);
+});
+
 
       /* CONFIGURAÇÕES E SALVAMENTO */
       function generateSaveCode() {
@@ -1532,26 +1789,30 @@ setInterval(() => {
           } catch (err) { alert("Código inválido."); }
       }
 
+
 function generateShortCode() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let code = "";
+   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+   let code = "";
 
-    for (let i = 0; i < 10; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-    }
 
-    document.getElementById('save-code-output').value = code;
+   for (let i = 0; i < 10; i++) {
+       code += chars[Math.floor(Math.random() * chars.length)];
+   }
+
+
+   document.getElementById('save-code-output').value = code;
 }
 
-    const payload = {
-        m: gameState.money,
-        w: gameState.water,
-        i: gameState.inventory,
-        s: gameState.seeds,
-        p: gameState.plots
-    };
 
-    
+ const payload = {
+       m: gameState.money,
+       w: gameState.water,
+       i: gameState.inventory,
+       s: gameState.seeds,
+       p: gameState.plots
+   };
+
+
 
 
 
@@ -1587,10 +1848,7 @@ function closeModals() {
    });
 }       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
 
-function updateMoney(amount) {
-    gameState.money += amount;
-    updateHUD();
-}
+
 
 
       updateHUD();
