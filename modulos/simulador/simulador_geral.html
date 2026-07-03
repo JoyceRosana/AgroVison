@@ -1,8 +1,5 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-    <link rel="stylesheet" href="https://cloudflare.com">
-        <script src="/modulos/simulador/simulador.js"></script>
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -499,7 +496,6 @@
           .brand-title { font-size: 16px; }
           .hud-display { font-size: 14px; }
       }
-
   </style>
 </head>
 <body>
@@ -524,14 +520,16 @@
 
 
 
-      <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
+      <div style="display: flex; align-items: center; gap: 20px;">
+          <div id="active-mode-indicator" style="color: var(--gold); font-weight: bold; font-size: 14px;"></div>
+      </div>
+  </div>
 
 
 
 
-<button class="btn-config-gear" onclick="openConfigModal()" aria-label="Abrir configurações" title="Configurações">
-    
-</button>
+  <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
+
 
   <div id="game-viewport">
       <div id="farm-map">
@@ -596,97 +594,123 @@
 
 
   <div id="modal-config" class="modal-panel" style="max-width: 650px;">
-      <div class="modal-header">
-          <span>Painel de Gerenciamento Integrado</span>
-          <span class="close-btn" onclick="closeModals()">&times;</span>
-      </div>
-    
-      <div class="config-layout">
-          <div class="config-sidebar">
-              <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
-              <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
-          </div>
+     <div class="modal-header">
+         <span>Painel de Gerenciamento Integrado</span>
+         <span class="close-btn" onclick="closeModals()">&times;</span>
+     </div>
+  
+     <div class="config-layout">
+         <div class="config-sidebar">
+             <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
+             <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
+         </div>
 
 
 
 
-          <div class="config-content">
-
-  <!-- CENTRAL -->
-  <div id="tab-inicio" class="tab-pane active">
-
-    <h3>Central</h3>
-
-    <p style="margin-top:10px; font-size:14px;">
-      O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
-    </p>
-
-    <h4>Agro Vision Central</h4>
-
-    <p style="font-size:13px; line-height:1.4; margin-top:8px;">
-      Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
-    </p>
-
-    
-<h3>continuidade de Dados</h3>
-
-    <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
-      Gerar código
-    </button>
-
-    <textarea id="save-code-output" class="code-box" readonly></textarea>
-
-    <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
-
-    <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
-      Restaurar progresso
-    </button>
-
-        <button class="btn-action" style="width:100%;"><a href="../../index.html">Voltar ao início</a></button>
-
-  </div>
-
-  <!-- ACESSIBILIDADE -->
-  <div id="tab-acessibilidade" class="tab-pane">
-
-    <h3>Acessibilidade: Ajuste de Zoom e Modo Visual</h3>
 
 
-    <div style="display:flex; gap:10px; margin-top:5px;">
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
-    </div>
 
-    <div class="acc-grid">
-      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
-      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
-    </div>
 
-  </div>
+         <div class="config-content">
+
+
+ <!-- CENTRAL -->
+ <div id="tab-inicio" class="tab-pane active">
+
+
+   <h3>Central</h3>
+
+
+   <p style="margin-top:10px; font-size:14px;">
+     O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
+   </p>
+
+
+   <h4>Agro Vision Central</h4>
+
+
+   <p style="font-size:13px; line-height:1.4; margin-top:8px;">
+     Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
+   </p>
+
 
   
+<h3>continuidade de Dados</h3>
 
-  </div>
+
+   <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
+     Gerar código
+   </button>
+
+
+   <textarea id="save-code-output" class="code-box" readonly></textarea>
+
+
+   <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
+
+
+   <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
+     Restaurar progresso
+   </button>
+
+
+       <button class="btn-action" style="width:100%;"><a href="../../index.html">Voltar ao início</a></button>
+
+
+ </div>
+
+
+ <!-- ACESSIBILIDADE -->
+ <div id="tab-acessibilidade" class="tab-pane">
+
+
+   <h3>Acessibilidade: Ajuste de Zoom e Modo Visual</h3>
+
+
+
+
+   <div style="display:flex; gap:10px; margin-top:5px;">
+     <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
+     <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
+   </div>
+
+
+   <div class="acc-grid">
+     <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+     <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+   </div>
+
+
+ </div>
+
+
+
+
+ </div>
+
 
 </div>
 
-              <div id="tab-acessibilidade" class="tab-pane">
-                  <h3>Controle de Estímulos e Visão</h3>
-                  <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
-                  <div style="display:flex; gap:10px; margin-top:5px;">
-                      <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
-                      <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
-                  </div>
-                  <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
-                  <div class="acc-grid">
-                      <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
-                      <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
-                      <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
+
+             <div id="tab-acessibilidade" class="tab-pane">
+                 <h3>Controle de Estímulos e Visão</h3>
+                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
+                 <div style="display:flex; gap:10px; margin-top:5px;">
+                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
+                     <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
+                 </div>
+                 <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
+                 <div class="acc-grid">
+                     <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
+                     <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
+                     <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+
 
 
 
@@ -920,85 +944,6 @@ viewport.addEventListener('pointermove', (e) => {
       }
 
 
-      function generateShortCode() {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let code = "";
-
-    for (let i = 0; i < 10; i++) {
-        code += chars[Math.floor(Math.random() * chars.length)];
-    }
-
-    const payload = {
-        m: gameState.money,
-        w: gameState.water,
-        i: gameState.inventory,
-        s: gameState.seeds,
-        p: {}
-    };
-
-    for (let id in gameState.plots) {
-        payload.p[id] = {
-            c: gameState.plots[id].crop,
-            s: gameState.plots[id].stage,
-            t: gameState.plots[id].timer,
-            w: gameState.plots[id].isWet
-        };
-    }
-
-    localStorage.setItem("save_" + code, JSON.stringify(payload));
-    document.getElementById("save-code-output").value = code;
-}
-
-function loadShortSave() {
-    const code = document.getElementById("save-code-input").value.trim().toUpperCase();
-
-    const raw = localStorage.getItem("save_" + code);
-
-    if (!raw) {
-        alert("Código inválido!");
-        return;
-    }
-
-    const data = JSON.parse(raw);
-
-    gameState.money = data.m;
-    gameState.water = data.w;
-    gameState.inventory = data.i;
-    gameState.seeds = data.s;
-
-    for (let id in data.p) {
-        if (!gameState.plots[id]) continue;
-
-        gameState.plots[id] = {
-            id: parseInt(id),
-            crop: data.p[id].c,
-            stage: data.p[id].s,
-            timer: data.p[id].t,
-            isWet: data.p[id].w
-        };
-
-        const el = document.querySelector(`.plot[data-id="${id}"]`);
-        if (!el) continue;
-
-        el.classList.remove("wet");
-
-        if (data.p[id].c) {
-            const crop = data.p[id].c;
-            let img = CROPS[crop].img_broto;
-
-            if (data.p[id].s === 2) img = CROPS[crop].img_jovem;
-            if (data.p[id].s === 3) img = CROPS[crop].img_adulte;
-
-            el.innerHTML = `<img class="plot-plant-img" src="${img}">`;
-        } else {
-            el.innerHTML = "";
-        }
-    }
-
-    updateHUD();
-    alert("Progresso restaurado!");
-}
-
 
 
       function openPlantingBalloon(id, plotElement) {
@@ -1088,6 +1033,7 @@ function loadShortSave() {
           }
           gameState.currentMode = 'planting';
           gameState.selectedCrop = cropKey;
+          document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
           viewport.className = 'mode-planting';
       
 
@@ -1548,4 +1494,3 @@ function closeModals() {
   </script>
 </body>
 </html>
-
