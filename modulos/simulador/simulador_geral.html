@@ -595,54 +595,87 @@
 
   <div id="modal-config" class="modal-panel" style="max-width: 650px;">
       <div class="modal-header">
-          <span>Painel de Gerenciamento Integrado</span>
+          <span>Configurações</span>
           <span class="close-btn" onclick="closeModals()">&times;</span>
       </div>
     
       <div class="config-layout">
           <div class="config-sidebar">
-              <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">🏠 Início</button>
+              <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Início</button>
               <button class="btn-action" style="width:100%; text-align:left; background:#27ae60;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
               <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
               <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
           </div>
 
-
-
-
           <div class="config-content">
-              <div id="tab-inicio" class="tab-pane active">
-                  <h3>Retornar à Operação</h3>
-                  <p style="margin-top:10px; font-size:14px;">O simulador continua rodando em segundo plano. Clique no botão abaixo para voltar ao mapa.</p>
-                  <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">Voltar ao Mapa da Fazenda</button>
-              </div>
 
+  <!-- CENTRAL -->
+  <div id="tab-inicio" class="tab-pane active">
 
+    <h3>Central</h3>
 
+    <p style="margin-top:10px; font-size:14px;">
+      O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
+    </p>
 
-              <div id="tab-agrovision" class="tab-pane">
-                  <h3>Agro Vision Central v2.7</h3>
-                  <p style="margin-top:8px; font-size:13px; line-height:1.4;">Desenvolvido para simular com precisão a cadeia lógica do agronegócio sustentável e controle automatizado de recursos.</p>
-              </div>
+    <h4>Agro Vision Central</h4>
 
+    <p style="font-size:13px; line-height:1.4; margin-top:8px;">
+      Desenvolvido para simular a cadeia do agronegócio sustentável e controle de recursos.
+    </p>
 
+    <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">
+      Voltar ao Mapa da Fazenda
+    </button>
 
+  </div>
 
-              <div id="tab-save" class="tab-pane">
-                  <h3>Persistência de Dados (Save System)</h3>
-                  <div style="margin-top:12px;">
-                      <button class="btn-action" style="background:#8e44ad; width:100%;" onclick="generateSaveCode()">Gerar Código de Salvamento Único</button>
-                      <textarea id="save-code-output" class="code-box" readonly placeholder="Seu código aparecerá aqui..."></textarea>
-                  </div>
-                  <div style="margin-top:15px; border-top:1px dashed var(--wood-dark); padding-top:10px;">
-                      <span style="font-size:13px; font-weight:bold;">Restaurar Partida Existente:</span>
-                      <textarea id="save-code-input" class="code-box" placeholder="Cole o código gerado aqui..."></textarea>
-                      <button class="btn-action" style="background:#d35400; width:100%; margin-top:5px;" onclick="loadSaveCode()">Injetar Código e Reconstruir Estado</button>
-                  </div>
-              </div>
+  <!-- ACESSIBILIDADE -->
+  <div id="tab-acessibilidade" class="tab-pane">
 
+    <h3>Acessibilidade</h3>
 
+    <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">
+      Ajuste de Zoom
+    </span>
 
+    <div style="display:flex; gap:10px; margin-top:5px;">
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar</button>
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir</button>
+    </div>
+
+    <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">
+      Modo Visual
+    </span>
+
+    <div class="acc-grid">
+      <button class="btn-action" onclick="applyVisualMode('dark')">Escuro</button>
+      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+    </div>
+
+  </div>
+
+  <!-- SAVE -->
+  <div id="tab-save" class="tab-pane">
+
+    <h3>Persistência de Dados</h3>
+
+    <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
+      Gerar código (10 caracteres)
+    </button>
+
+    <textarea id="save-code-output" class="code-box" readonly></textarea>
+
+    <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
+
+    <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
+      Restaurar progresso
+    </button>
+
+  </div>
+
+</div>
 
               <div id="tab-acessibilidade" class="tab-pane">
                   <h3>Controle de Estímulos e Visão</h3>
