@@ -480,34 +480,57 @@
    </div>
 
 
-   <div id="modal-galpao" class="modal-panel">
-       <div class="modal-header"><span>Depósito Central</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
-       <div id="stock-list"></div>
-   </div>
+   <!-- GALPÃO -->
+<div id="modal-galpao" class="modal-panel">
+  <div class="modal-header">
+    <span>Galpão</span>
+    <button onclick="closeModals()">×</button>
+  </div>
+  <div id="galpao-content"></div>
+</div>
+
+<!-- COOPERATIVA -->
+<div id="modal-cooperativa" class="modal-panel">
+  <div class="modal-header">
+    <span>Cooperativa</span>
+    <button onclick="closeModals()">×</button>
+  </div>
+  <div id="coop-content"></div>
+</div>
+
+<!-- CISTERNA -->
+<div id="modal-cisterna" class="modal-panel">
+  <div class="modal-header">
+    <span>Cisterna</span>
+    <button onclick="closeModals()">×</button>
+  </div>
+  <div id="cisterna-content"></div>
+</div>
+
+<!-- CONFIGURAÇÕES -->
+<div id="modal-config" class="modal-panel">
+  <div class="modal-header">
+    <span>Configurações</span>
+    <button onclick="closeModals()">×</button>
+  </div>
+
+  <div style="display:flex; flex-direction:column; gap:10px;">
+    <button onclick="setFont('small')">Diminuir fonte</button>
+    <button onclick="setFont('big')">Aumentar fonte</button>
+    <button onclick="toggleReadingMode()">Modo leitura</button>
+
+    <hr>
+
+    <button onclick="saveGame()">Gerar código</button>
+    <button onclick="loadGame()">Colar código</button>
+
+    <hr>
+
+    <button onclick="location.reload()">Início</button>
+  </div>
+</div>
 
 
-   <div id="modal-cooperativa" class="modal-panel">
-       <div class="modal-header"><span>Cooperativa Agrícola</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
-       <div id="market-list"></div>
-   </div>
-
-
-   <div id="modal-cisterna" class="modal-panel">
-       <div class="modal-header"><span>Estação de Filtragem</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
-       <p style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: #2c3e50;">Ciclo Ecológico: Chuva/Rio → Captação → Filtro → Irrigação</p>
-       <div class="item-row" style="background: rgba(41, 128, 185, 0.2);">
-           <span>Reservatório de Água Filtrada:</span>
-           <span id="modal-water-label" style="color:#1f618d; font-size:20px;">100L</span>
-       </div>
-       <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Ligar Bombas Hidráulicas (+50L)</button>
-   </div>
-
-
-   <div id="modal-config" class="modal-panel" style="max-width: 650px;">
-       <div class="modal-header">
-           <span>Painel de Gerenciamento Integrado</span>
-           <span class="close-btn" onclick="closeModals()">&times;</span>
-       </div>
       
        <div class="config-layout">
            <div class="config-sidebar">
