@@ -512,7 +512,7 @@
           <span class="brand-title">AGRO VISION</span>
           <div id="rain-indicator">🌧️ CHOVENDO AGORA</div>
           <div class="hud-item" style="color: var(--gold); font-size: 20px; margin-left: 10px;">
-              💰 Saldo: $<span id="hud-money">120</span>
+              💰 Saldo: $<span id="hud-money">150</span>
           </div>
       </div>
 
@@ -569,6 +569,15 @@
   </div>
 
 
+  <div id="menu-galpao" class="modal-panel">
+    <div class="modal-header">
+        Galpão
+        <span onclick="closeMenus()">✖</span>
+    </div>
+
+    <div id="galpao-info"></div>
+</div>
+
 
 
   <div id="modal-cooperativa" class="modal-panel">
@@ -576,6 +585,26 @@
       <div id="market-list"></div>
   </div>
 
+  <div id="menu-cooperativa" class="modal-panel">
+    <div class="modal-header">
+        Cooperativa
+        <span onclick="closeMenus()">✖</span>
+    </div>
+
+    <div>
+        🌽 Milho<br>
+        <button onclick="buySeed('milho')">Comprar</button>
+        <button onclick="sellSeed('milho')">Vender</button>
+        <button onclick="sellCrop('milho')">Estoque</button>
+    </div>
+
+    <div>
+        🌱 Soja<br>
+        <button onclick="buySeed('soja')">Comprar</button>
+        <button onclick="sellSeed('soja')">Vender</button>
+        <button onclick="sellCrop('soja')">Estoque</button>
+    </div>
+</div>
 
 
 
@@ -589,6 +618,16 @@
       <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Ligar Bombas Hidráulicas (+50L)</button>
   </div>
 
+  <div id="menu-cisterna" class="modal-panel">
+    <div class="modal-header">
+        Cisterna
+        <span onclick="closeMenus()">✖</span>
+    </div>
+
+    <p id="agua-info"></p>
+
+    <button onclick="startFiltering()">Filtrar (2s por litro)</button>
+</div>
 
 
 
@@ -603,13 +642,6 @@
              <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Central</button>
              <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">Acessibilidade</button>
          </div>
-
-
-
-
-
-
-
 
          <div class="config-content">
 
