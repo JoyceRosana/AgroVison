@@ -1,592 +1,1447 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-            <script src="/modulos/simulador/simulador.js"></script>
-
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-   <title>Simulador Agro Vision - Grade Única 20x20</title>
-   <style>
-       :root {
-           --wood-dark: #5c3a21;
-           --wood-light: #cd853f;
-           --gold: #ffd700;
-       }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Simulador Agro Vision - Grade Única 20x20</title>
+  <style>
+      :root {
+          --wood-dark: #5c3a21;
+          --wood-light: #cd853f;
+          --gold: #ffd700;
+      }
 
 
-       /* ACESSIBILIDADE */
-       body.modo-escuro {
-           filter: grayscale(1) invert(0.9) !important;
-           background-color: #000 !important;
-       }
-       body.modo-leitura::after {
-           content: "";
-           position: fixed;
-           top: 0; left: 0; width: 100vw; height: 100vh;
-           background: rgba(243, 156, 18, 0.15);
-           pointer-events: none;
-           z-index: 99999;
-       }
 
 
-       * {
-           box-sizing: border-box;
-           user-select: none;
-           -webkit-user-select: none;
-           margin: 0;
-           padding: 0;
-           touch-action: none;
-       }
+      /* ACESSIBILIDADE */
+      body.modo-escuro {
+          filter: grayscale(1) invert(0.9) !important;
+          background-color: #000 !important;
+      }
+      body.modo-leitura::after {
+          content: "";
+          position: fixed;
+          top: 0; left: 0; width: 100vw; height: 100vh;
+          background: rgba(243, 156, 18, 0.15);
+          pointer-events: none;
+          z-index: 99999;
+      }
 
 
-       body, html {
-           width: 100%;
-           height: 100%;
-           overflow: hidden;
-           background-color: #1e1307;
-           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-       }
 
 
-       /* BARRA SUPERIOR INTEGRADA */
-       #top-bar {
-           position: fixed;
-           top: 0; left: 0; width: 100%; height: 65px;
-           background: rgba(12, 20, 10, 0.9);
-           border-bottom: 3px solid var(--wood-light);
-           z-index: 5000;
-           display: flex;
-           align-items: center;
-           justify-content: space-between;
-           padding: 0 25px;
-           color: white;
-           box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-       }
+      * {
+          box-sizing: border-box;
+          user-select: none;
+          -webkit-user-select: none;
+          margin: 0;
+          padding: 0;
+          touch-action: none;
+      }
 
 
-       .brand-group {
-           display: flex;
-           align-items: center;
-           gap: 15px;
-       }
 
 
-       .brand-title {
-           font-size: 20px;
-           font-weight: bold;
-           color: #5cb85c;
-           letter-spacing: 1px;
-       }
+      body, html {
+          width: 100%;
+          height: 100%;
+          overflow: hidden;
+          background-color: #1e1307;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
 
 
-       /* BOTÃO DE ENGRENAGEM CANTO SUPERIOR DIREITO */
-       .btn-config-gear {
-           position: fixed;
-           top: 22px;
-           right: 25px;
-           width: 40px;
-           height: 20px;
-           background: linear-gradient(135deg, #4a3329, #27140b);
-           border: 1px solid var(--wood-light);
-           color: white;
-           border-radius: 4px;
-           cursor: pointer;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           font-size: 12px;
-           z-index: 5100;
-           transition: all 0.2s;
-       }
-       .btn-config-gear:hover {
-           background: var(--wood-light);
-       }
 
 
-       .hud-display {
-           display: flex;
-           gap: 25px;
-           font-size: 18px;
-           font-weight: bold;
-           margin-right: 60px;
-       }
+      /* BARRA SUPERIOR INTEGRADA */
+      #top-bar {
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 65px;
+          background: rgba(12, 20, 10, 0.9);
+          border-bottom: 3px solid var(--wood-light);
+          z-index: 5000;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 25px;
+          color: white;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      }
 
 
-       /* ALERTA VISUAL DE CHUVA */
-       #rain-overlay {
-           position: fixed;
-           top: 0; left: 0; width: 100%; height: 100%;
-           background: rgba(41, 128, 185, 0.15);
-           pointer-events: none;
-           z-index: 4000;
-           display: none;
-       }
-       #rain-indicator {
-           background: #2980b9;
-           color: white;
-           padding: 4px 12px;
-           border-radius: 4px;
-           font-size: 12px;
-           font-weight: bold;
-           display: none;
-       }
 
 
-       /* VIEWPORT DO JOGO */
-       #game-viewport {
-           width: 100vw;
-           height: 100vh;
-           position: relative;
-           overflow: hidden;
-           cursor: grab;
-       }
-       #game-viewport:active { cursor: grabbing; }
-       #game-viewport.mode-planting, #game-viewport.mode-harvesting { cursor: none; }
+      .brand-group {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+      }
 
 
-       #custom-cursor {
-           position: fixed;
-           pointer-events: none;
-           z-index: 99999;
-           width: 45px;
-           height: 45px;
-           display: none;
-           transform: translate(-15px, -15px);
-       }
 
 
-       /* MAPA RURAL - APENAS CAMINHO HORIZONTAL MARROM */
-       #farm-map {
-           width: 3000px;
-           height: 2000px;
-           background-color: #27ae60;
-           background-image: linear-gradient(0deg, transparent 48%, #8e6239 48%, #8e6239 52%, transparent 52%);
-           background-size: 100% 100%;
-           position: absolute;
-           top: 0; left: 0;
-           transform-origin: 0 0;
-       }
+      .brand-title {
+          font-size: 20px;
+          font-weight: bold;
+          color: #5cb85c;
+          letter-spacing: 1px;
+      }
 
 
-       /* ESTRUTURAS FIXAS */
-       .objeto {
-           position: absolute;
-           z-index: 10;
-           cursor: pointer;
-           transition: transform 0.2s;
-       }
-       .objeto:hover { transform: scale(1.03); }
-       .objeto img { width: 100%; height: auto; pointer-events: none; }
-      
-       .galpao { width: 600px; top: 550px; left: 150px; }
-       .cooperativa { width: 700px; top: 500px; left: 2305px; }
-       .cisterna { width: 430px; top: 670px; left: -50px; }
+
+
+      /* BOTÃO DE ENGRENAGEM CANTO SUPERIOR DIREITO */
+      .btn-config-gear {
+          position: fixed;
+          top: 22px;
+          right: 25px;
+          width: 40px;
+          height: 20px;
+          background: linear-gradient(135deg, #4a3329, #27140b);
+          border: 1px solid var(--wood-light);
+          color: white;
+          border-radius: 4px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 12px;
+          z-index: 5100;
+          transition: all 0.2s;
+      }
+      .btn-config-gear:hover {
+          background: var(--wood-light);
+      }
+
+
+
+
+      .hud-display {
+          display: flex;
+          gap: 25px;
+          font-size: 18px;
+          font-weight: bold;
+          margin-right: 60px;
+      }
+
+
+
+
+      /* ALERTA VISUAL DE CHUVA */
+      #rain-overlay {
+          position: fixed;
+          top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(41, 128, 185, 0.15);
+          pointer-events: none;
+          z-index: 4000;
+          display: none;
+      }
+      #rain-indicator {
+          background: #2980b9;
+          color: white;
+          padding: 4px 12px;
+          border-radius: 4px;
+          font-size: 12px;
+          font-weight: bold;
+          display: none;
+      }
+
+
+
+
+      /* VIEWPORT DO JOGO */
+      #game-viewport {
+          width: 100vw;
+          height: 100vh;
+          position: relative;
+          overflow: hidden;
+          cursor: grab;
+      }
+      #game-viewport:active { cursor: grabbing; }
+      #game-viewport.mode-planting, #game-viewport.mode-harvesting { cursor: none; }
+
+
+
+
+      #custom-cursor {
+          position: fixed;
+          pointer-events: none;
+          z-index: 99999;
+          width: 45px;
+          height: 45px;
+          display: none;
+          transform: translate(-15px, -15px);
+      }
+
+
+
+
+      /* MAPA RURAL - APENAS CAMINHO HORIZONTAL MARROM */
+      #farm-map {
+          width: 3000px;
+          height: 2000px;
+          background-color: #27ae60;
+          background-image: linear-gradient(0deg, transparent 48%, #8e6239 48%, #8e6239 52%, transparent 52%);
+          background-size: 100% 100%;
+          position: absolute;
+          top: 0; left: 0;
+          transform-origin: 0 0;
+      }
+
+
+
+
+      /* ESTRUTURAS FIXAS */
+      .objeto {
+          position: absolute;
+          z-index: 10;
+          cursor: pointer;
+          transition: transform 0.2s;
+      }
+      .objeto:hover { transform: scale(1.03); }
+      .objeto img { width: 100%; height: auto; pointer-events: none; }
+    
+      .galpao { width: 600px; top: 550px; left: 150px; }
+      .cooperativa { width: 700px; top: 500px; left: 2305px; }
+      .cisterna { width: 430px; top: 670px; left: -50px; }
+
+
 
 
 /* ==========================
-   PLANTAÇÃO SUPERIOR
-   17 x 6 = 102 terras
-   10px acima da estrada
-   ========================== */
+  PLANTAÇÃO SUPERIOR
+  17 x 6 = 102 terras
+  10px acima da estrada
+  ========================== */
+
 
 .grid-superior{
-    position:absolute;
+   position:absolute;
 
-    top: calc(320px - 10px);
-    left:700px;
 
-    display:grid;
-    grid-template-columns:repeat(17,85px);
-    grid-template-rows:repeat(6,85px);
+   top: calc(320px - 10px);
+   left:700px;
 
-    gap:12px;
-    padding:15px;
 
-    background:rgba(40,26,13,.6);
-    border:3px solid var(--wood-dark);
-    border-radius:12px;
-    box-shadow:0 6px 12px rgba(0,0,0,.3);
-    z-index:20;
+   display:grid;
+   grid-template-columns:repeat(17,85px);
+   grid-template-rows:repeat(6,85px);
+
+
+   gap:12px;
+   padding:15px;
+
+
+   background:rgba(40,26,13,.6);
+   border:3px solid var(--wood-dark);
+   border-radius:12px;
+   box-shadow:0 6px 12px rgba(0,0,0,.3);
+   z-index:20;
 }
+
+
 
 
 /* ==========================
-   PLANTAÇÃO INFERIOR
-   28 x 8 = 224 terras
-   10px abaixo da estrada
-   ========================== */
+  PLANTAÇÃO INFERIOR
+  28 x 8 = 224 terras
+  10px abaixo da estrada
+  ========================== */
+
 
 .grid-inferior{
-    position:absolute;
+   position:absolute;
 
-    top:1080px;   /* 170px abaixo da superior */
 
-    left:120px;
+   top:1080px;   /* 170px abaixo da superior */
 
-    display:grid;
-    grid-template-columns:repeat(28,85px);
-    grid-template-rows:repeat(8,85px);
 
-    gap:12px;
-    padding:15px;
+   left:120px;
 
-    background:rgba(40,26,13,.6);
-    border:3px solid var(--wood-dark);
-    border-radius:12px;
-    box-shadow:0 6px 12px rgba(0,0,0,.3);
-    z-index:20;
+
+   display:grid;
+   grid-template-columns:repeat(28,85px);
+   grid-template-rows:repeat(8,85px);
+
+
+   gap:12px;
+   padding:15px;
+
+
+   background:rgba(40,26,13,.6);
+   border:3px solid var(--wood-dark);
+   border-radius:12px;
+   box-shadow:0 6px 12px rgba(0,0,0,.3);
+   z-index:20;
 }
+
+
 
 
 /* Terras */
 
+
 .plot{
-    width:85px;
-    height:85px;
+   width:85px;
+   height:85px;
 
-    background:#4a3319;
-    border:2px solid #3a220f;
-    border-radius:6px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+   background:#4a3319;
+   border:2px solid #3a220f;
+   border-radius:6px;
 
-    cursor:pointer;
 
-    transition:.2s;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+
+
+   cursor:pointer;
+
+
+   transition:.2s;
 }
+
 
 .plot:hover{
-    background:#5c3f21;
-    border-color:var(--wood-light);
+   background:#5c3f21;
+   border-color:var(--wood-light);
 }
+
 
 .plot.wet{
-    background:#224466 !important;
-    border-color:#3498db !important;
-    box-shadow:inset 0 0 10px rgba(0,0,0,.5);
+   background:#224466 !important;
+   border-color:#3498db !important;
+   box-shadow:inset 0 0 10px rgba(0,0,0,.5);
 }
+
 
 .plot-plant-img{
-    width:150%;     /* um pouco maior */
-    height:150%;
-    object-fit:contain;
-    pointer-events:none;
+   width:150%;     /* um pouco maior */
+   height:150%;
+   object-fit:contain;
+   pointer-events:none;
 }
 
 
-       /* BALÃO DE MADEIRA */
-       .wood-balloon {
-           position: absolute;
-           background-color: #dfb887;
-           border: 4px solid var(--wood-dark);
-           border-radius: 10px;
-           padding: 15px;
-           z-index: 1000;
-           display: flex;
-           gap: 12px;
-           transform: translate(-50%, -105%);
-           box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-       }
 
 
-       .crop-option, .harvest-option {
-           background: rgba(255, 248, 220, 0.9);
-           border: 2px solid var(--wood-dark);
-           border-radius: 8px;
-           padding: 6px;
-           cursor: pointer;
-           display: flex;
-           flex-direction: column;
-           align-items: center;
-           font-size: 11px;
-           font-weight: bold;
-           min-width: 70px;
-       }
-       .crop-option:hover, .harvest-option:hover { background: var(--gold); }
-       .crop-option img .harvest-option img { width: 20px; height: 20px; object-fit: contain; }
+      /* BALÃO DE MADEIRA */
+      .wood-balloon {
+          position: absolute;
+          background-color: #dfb887;
+          border: 4px solid var(--wood-dark);
+          border-radius: 10px;
+          padding: 15px;
+          z-index: 1000;
+          display: flex;
+          gap: 12px;
+          transform: translate(-50%, -105%);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      }
 
 
-       /* INTERFACES MODAIS */
-       .modal-panel {
-           position: fixed;
-           top: 50%; left: 50%;
-           transform: translate(-50%, -50%);
-           background: linear-gradient(135deg, #ecd1a9, #dfb887);
-           border: 6px solid var(--wood-dark);
-           border-radius: 14px;
-           padding: 25px;
-           z-index: 6000;
-           display: none;
-           width: 90%;
-           max-width: 520px;
-           color: #3a2210;
-           box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-       }
-       .modal-panel.active { display: block; }
-      
-       .modal-header {
-           display: flex;
-           justify-content: space-between;
-           align-items: center;
-           font-size: 22px;
-           font-weight: bold;
-           border-bottom: 3px solid var(--wood-dark);
-           padding-bottom: 10px;
-           margin-bottom: 15px;
-       }
-       .close-btn { cursor: pointer; background: #8b0000; color: white; padding: 2px 10px; border-radius: 5px; }
 
 
-       .item-row {
-           display: flex;
-           justify-content: space-between;
-           align-items: center;
-           background: rgba(255,255,255,0.5);
-           padding: 10px;
-           border-radius: 8px;
-           margin-bottom: 10px;
-           font-weight: bold;
-       }
+      .crop-option, .harvest-option {
+          background: rgba(255, 248, 220, 0.9);
+          border: 2px solid var(--wood-dark);
+          border-radius: 8px;
+          padding: 6px;
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 11px;
+          font-weight: bold;
+          min-width: 70px;
+      }
+      .crop-option:hover, .harvest-option:hover { background: var(--gold); }
+      .crop-option img .harvest-option img { width: 20px; height: 20px; object-fit: contain; }
 
 
-       .btn-action {
-           background: #27ae60; color: white; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: bold;
-       }
-       .btn-action:hover { background: #219653; }
+
+
+      /* INTERFACES MODAIS */
+      .modal-panel {
+          position: fixed;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          background: linear-gradient(135deg, #ecd1a9, #dfb887);
+          border: 6px solid var(--wood-dark);
+          border-radius: 14px;
+          padding: 25px;
+          z-index: 6000;
+          display: none;
+          width: 90%;
+          max-width: 520px;
+          color: #3a2210;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      }
+      .modal-panel.active { display: block; }
+    
+      .modal-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 22px;
+          font-weight: bold;
+          border-bottom: 3px solid var(--wood-dark);
+          padding-bottom: 10px;
+          margin-bottom: 15px;
+      }
+      .close-btn { cursor: pointer; background: #8b0000; color: white; padding: 2px 10px; border-radius: 5px; }
+
+
+
+
+      .item-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: rgba(255,255,255,0.5);
+          padding: 10px;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          font-weight: bold;
+      }
+
+
+
+
+      .btn-action {
+          background: #27ae60; color: white; border: none; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: bold;
+      }
+      .btn-action:hover { background: #219653; }
+
 
 .item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: monospace;
-    font-size: 14px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   font-family: monospace;
+   font-size: 14px;
 }
 
-       .floating-text {
-           position: absolute;
-           color: #fff;
-           font-weight: bold;
-           font-size: 22px;
-           text-shadow: 2px 2px 4px #000;
-           pointer-events: none;
-           animation: floatUp 1.2s forwards ease-out;
-           z-index: 2000;
-       }
-       @keyframes floatUp {
-           0% { opacity: 1; transform: translateY(0); }
-           100% { opacity: 0; transform: translateY(-90px); }
-       }
+
+      .floating-text {
+          position: absolute;
+          color: #fff;
+          font-weight: bold;
+          font-size: 22px;
+          text-shadow: 2px 2px 4px #000;
+          pointer-events: none;
+          animation: floatUp 1.2s forwards ease-out;
+          z-index: 2000;
+      }
+      @keyframes floatUp {
+          0% { opacity: 1; transform: translateY(0); }
+          100% { opacity: 0; transform: translateY(-90px); }
+      }
 
 
-       .config-layout {
-           display: flex;
-           gap: 15px;
-           height: 350px;
-       }
-       .config-sidebar {
-           width: 140px;
-           border-right: 2px solid var(--wood-dark);
-           display: flex;
-           flex-direction: column;
-           gap: 10px;
-           padding-right: 15px;
-       }
-       .config-content {
-           flex: 1;
-           overflow-y: auto;
-           padding-left: 5px;
-       }
-       .tab-pane { display: none; }
-       .tab-pane.active { display: block; }
-      
-       .code-box {
-           width: 100%;
-           height: 70px;
-           margin-top: 5px;
-           font-family: monospace;
-           font-size: 11px;
-           resize: none;
-           padding: 8px;
-           border: 2px solid var(--wood-dark);
-           border-radius: 4px;
-       }
 
 
-       .acc-grid {
-           display: grid;
-           grid-template-columns: 1fr 1fr;
-           grid-gap: 10px;
-           margin-top: 10px;
-       }
+      .config-layout {
+          display: flex;
+          gap: 15px;
+          height: 350px;
+      }
+      .config-sidebar {
+          width: 140px;
+          border-right: 2px solid var(--wood-dark);
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding-right: 15px;
+      }
+      .config-content {
+          flex: 1;
+          overflow-y: auto;
+          padding-left: 5px;
+      }
+      .tab-pane { display: none; }
+      .tab-pane.active { display: block; }
+    
+      .code-box {
+          width: 100%;
+          height: 70px;
+          margin-top: 5px;
+          font-family: monospace;
+          font-size: 11px;
+          resize: none;
+          padding: 8px;
+          border: 2px solid var(--wood-dark);
+          border-radius: 4px;
+      }
 
 
-       @media (max-width: 600px) {
-           .config-layout { flex-direction: column; height: 400px; }
-           .config-sidebar { width: 100%; border-right: none; border-bottom: 2px solid var(--wood-dark); flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
-           .modal-panel { max-width: 95%; padding: 15px; }
-           .brand-title { font-size: 16px; }
-           .hud-display { font-size: 14px; }
-       }
-   </style>
+
+
+      .acc-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 10px;
+          margin-top: 10px;
+      }
+
+
+
+
+      @media (max-width: 600px) {
+          .config-layout { flex-direction: column; height: 400px; }
+          .config-sidebar { width: 100%; border-right: none; border-bottom: 2px solid var(--wood-dark); flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+          .modal-panel { max-width: 95%; padding: 15px; }
+          .brand-title { font-size: 16px; }
+          .hud-display { font-size: 14px; }
+      }
+  </style>
 </head>
 <body>
 
 
-   <div id="rain-overlay"></div>
 
 
-   <div id="top-bar">
-       <div class="brand-group">
-           <span class="brand-title">AGRO VISION</span>
-           <div id="rain-indicator">🌧️ CHOVENDO AGORA</div>
-           <div class="hud-item" style="color: var(--gold); font-size: 20px; margin-left: 10px;">
-               💰 Saldo: $<span id="hud-money">120</span>
-           </div>
+  <div id="rain-overlay"></div>
+
+
+
+
+  <div id="top-bar">
+      <div class="brand-group">
+          <span class="brand-title">AGRO VISION</span>
+          <div id="rain-indicator">🌧️ CHOVENDO AGORA</div>
+          <div class="hud-item" style="color: var(--gold); font-size: 20px; margin-left: 10px;">
+              💰 Saldo: $<span id="hud-money">120</span>
+          </div>
+      </div>
+
+
+
+
+      <div style="display: flex; align-items: center; gap: 20px;">
+          <div id="active-mode-indicator" style="color: var(--gold); font-weight: bold; font-size: 14px;"></div>
+      </div>
+  </div>
+
+
+
+
+  <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
+
+
+  <div id="game-viewport">
+      <div id="farm-map">
+        
+          <div id="galpao" class="objeto galpao" onclick="openGalpao()">
+              <img src="/img/simulador/galpao.png" alt="Galpão">
+          </div>
+          <div id="cooperativa" class="objeto cooperativa" onclick="openCooperativa()">
+              <img src="/img/simulador/cooperativa.png" alt="Cooperativa">
+          </div>
+          <div id="cisterna" class="objeto cisterna" onclick="openCisterna()">
+              <img src="/img/simulador/cisterna.png" alt="Cisterna">
+          </div>
+
+
+
+
+          <div id="plantacao-superior" class="grid-superior"></div>
+          <div id="plantacao-inferior" class="grid-inferior"></div>
+
+
+
+
+          <div id="balloon-layer"></div>
+
+
+
+
+      </div>
+  </div>
+
+
+
+
+  <div id="modal-galpao" class="modal-panel">
+      <div class="modal-header"><span>Depósito Central</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
+      <div id="stock-list"></div>
+  </div>
+
+
+
+
+  <div id="modal-cooperativa" class="modal-panel">
+      <div class="modal-header"><span>Cooperativa Agrícola</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
+      <div id="market-list"></div>
+  </div>
+
+
+
+
+  <div id="modal-cisterna" class="modal-panel">
+      <div class="modal-header"><span>Estação de Filtragem</span><span class="close-btn" onclick="closeModals()">&times;</span></div>
+      <p style="font-size: 14px; margin-bottom: 12px; font-weight: bold; color: #2c3e50;">Ciclo Ecológico: Chuva/Rio → Captação → Filtro → Irrigação</p>
+      <div class="item-row" style="background: rgba(41, 128, 185, 0.2);">
+          <span>Reservatório de Água Filtrada:</span>
+          <span id="modal-water-label" style="color:#1f618d; font-size:20px;">100L</span>
+      </div>
+      <button class="btn-action" style="width:100%; margin-top:5px; background:#2980b9;" onclick="refillWaterSystem()">Ligar Bombas Hidráulicas (+50L)</button>
+  </div>
+
+
+
+
+  <div id="modal-config" class="modal-panel" style="max-width: 650px;">
+      <div class="modal-header">
+          <span>Painel de Gerenciamento Integrado</span>
+          <span class="close-btn" onclick="closeModals()">&times;</span>
+      </div>
+    
+      <div class="config-layout">
+          <div class="config-sidebar">
+              <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">🏠 Início</button>
+              <button class="btn-action" style="width:100%; text-align:left; background:#27ae60;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
+              <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
+              <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
+          </div>
+
+
+
+
+          <div class="config-content">
+              <div id="tab-inicio" class="tab-pane active">
+                  <h3>Retornar à Operação</h3>
+                  <p style="margin-top:10px; font-size:14px;">O simulador continua rodando em segundo plano. Clique no botão abaixo para voltar ao mapa.</p>
+                  <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">Voltar ao Mapa da Fazenda</button>
+              </div>
+
+
+
+
+              <div id="tab-agrovision" class="tab-pane">
+                  <h3>Agro Vision Central v2.7</h3>
+                  <p style="margin-top:8px; font-size:13px; line-height:1.4;">Desenvolvido para simular com precisão a cadeia lógica do agronegócio sustentável e controle automatizado de recursos.</p>
+              </div>
+
+
+
+
+              <div id="tab-save" class="tab-pane">
+                  <h3>Persistência de Dados (Save System)</h3>
+                  <div style="margin-top:12px;">
+                      <button class="btn-action" style="background:#8e44ad; width:100%;" onclick="generateSaveCode()">Gerar Código de Salvamento Único</button>
+                      <textarea id="save-code-output" class="code-box" readonly placeholder="Seu código aparecerá aqui..."></textarea>
+                  </div>
+                  <div style="margin-top:15px; border-top:1px dashed var(--wood-dark); padding-top:10px;">
+                      <span style="font-size:13px; font-weight:bold;">Restaurar Partida Existente:</span>
+                      <textarea id="save-code-input" class="code-box" placeholder="Cole o código gerado aqui..."></textarea>
+                      <button class="btn-action" style="background:#d35400; width:100%; margin-top:5px;" onclick="loadSaveCode()">Injetar Código e Reconstruir Estado</button>
+                  </div>
+              </div>
+
+
+
+
+              <div id="tab-acessibilidade" class="tab-pane">
+                  <h3>Controle de Estímulos e Visão</h3>
+                  <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
+                  <div style="display:flex; gap:10px; margin-top:5px;">
+                      <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
+                      <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
+                  </div>
+                  <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
+                  <div class="acc-grid">
+                      <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
+                      <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
+                      <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
+  <script>
+      const CROPS = {
+          milho:   { name: "Milho",   seedPrice: 5,  sellPrice: 15, seedSellPrice: 3, stageTime: 20, img_broto:"/img/simulador/milho_broto.png",   img_jovem: "/img/simulador/milho_jovem.png",   img_adulte: "/img/simulador/milho_adulto.png" },
+          soja:    { name: "Soja",    seedPrice: 8,  sellPrice: 22, seedSellPrice: 5, stageTime: 25,  img_broto: "/img/simulador/soja_broto.png",    img_jovem: "/img/simulador/soja_jovem.png",    img_adulte: "/img/simulador/soja_adulto.png" },
+          tomate:  { name: "Tomate",  seedPrice: 12, sellPrice: 35, seedSellPrice: 8, growTime: 15,  img_broto: "/img/simulador/tomate_broto.png",  img_jovem: "/img/simulador/tomate_jovem.png",  img_adulte: "/img/simulador/tomate_adulto.png" },
+          cenoura: { name: "Cenoura", seedPrice: 4,  sellPrice: 12, seedSellPrice: 2, growTime: 18,   img_broto: "/img/simulador/cenoura_broto.png", img_jovem: "/img/simulador/cenoura_jovem.png", img_adulte: "/img/simulador/cenoura_adulto.png" },
+          alface:  { name: "Alface",  seedPrice: 3,  sellPrice: 9,  seedSellPrice: 1, growTime: 8,   img_broto: "/img/simulador/alface_broto.png",  img_jovem: "/img/simulador/alface_jovem.png",  img_adulte: "/img/simulador/alface_adulto.png" }
+      };
+
+
+
+
+      let gameState = {
+          money: 120,
+          water: 100,
+          maxWater: 200,
+          inventory: { milho: 0, soja: 0, tomate: 0, cenoura: 0, alface: 0 },
+          seeds: { milho: 5, soja: 5, tomate: 5, cenoura: 5, alface: 5 },
+          plots: {},
+          currentMode: 'normal',
+          selectedCrop: null,
+          activeBalloonPlotId: null
+      };
+
+
+
+
+      let currentZoom = 0.7; // Começa um pouco mais afastado para ver toda a grande plantação
+     
+    
+      const superior = document.getElementById("plantacao-superior");
+const inferior = document.getElementById("plantacao-inferior");
+
+
+let id = 1;
+
+
+/* ==========================
+  SUPERIOR
+  17 x 6 = 102 terras
+  ========================== */
+
+
+for (let i = 0; i < 102; i++) {
+
+
+   const plot = document.createElement("div");
+
+
+   plot.className = "plot";
+   plot.dataset.id = id;
+
+
+   superior.appendChild(plot);
+
+
+   gameState.plots[id] = {
+       id: id,
+       crop: null,
+       stage: 0,
+       timer: 0,
+       isWet: false
+   };
+
+
+   id++;
+}
+
+
+
+
+/* ==========================
+  INFERIOR
+  28 x 8 = 224 terras
+  ========================== */
+
+
+for (let i = 0; i < 224; i++) {
+
+
+   const plot = document.createElement("div");
+
+
+   plot.className = "plot";
+   plot.dataset.id = id;
+
+
+   inferior.appendChild(plot);
+
+
+   gameState.plots[id] = {
+       id: id,
+       crop: null,
+       stage: 0,
+       timer: 0,
+       isWet: false
+   };
+
+
+   id++;
+}
+
+
+      /* MOTOR DE TOQUE E ARRRASTO (POINTER EVENTS) */
+      const viewport = document.getElementById('game-viewport');
+      const map = document.getElementById('farm-map');
+      let isDragging = false, startX, startY, mapPosX = -100, mapPosY = -50;
+
+
+
+
+      map.style.transform = `translate(${mapPosX}px, ${mapPosY}px) scale(${currentZoom})`;
+
+
+
+
+      viewport.addEventListener('pointerdown', (e) => {
+          if (e.target.closest('.wood-balloon') || e.target.closest('.modal-panel') || e.target.closest('.objeto') || e.target.closest('.plot') || e.target.closest('.btn-config-gear')) return;
+          isDragging = true;
+          viewport.style.cursor = 'grabbing';
+          startX = e.clientX - mapPosX;
+          startY = e.clientY - mapPosY;
+          viewport.setPointerCapture(e.pointerId);
+      });
+
+
+
+
+viewport.addEventListener('pointermove', (e) => {
+
+
+   if (!isDragging) return;
+
+
+   mapPosX = e.clientX - startX;
+   mapPosY = e.clientY - startY;
+
+
+   mapPosX = Math.min(0, Math.max(window.innerWidth - (3000 * currentZoom), mapPosX));
+   mapPosY = Math.min(0, Math.max(window.innerHeight - (2000 * currentZoom), mapPosY));
+
+
+   renderMapTransform();
+});
+
+
+
+
+      viewport.addEventListener('pointerup', (e) => {
+          isDragging = false;
+          if(gameState.currentMode === 'normal') viewport.style.cursor = 'grab';
+          viewport.releasePointerCapture(e.pointerId);
+      });
+
+
+
+
+      function renderMapTransform() {
+          map.style.transform = `translate(${mapPosX}px, ${mapPosY}px) scale(${currentZoom})`;
+      }
+
+
+
+
+      function switchTab(tabId) {
+          document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+          document.getElementById(tabId).classList.add('active');
+      }
+
+
+
+
+      /* MECÂNICA INTERATIVA DAS PLANTAÇÕES */
+      document.querySelectorAll('.plot').forEach(plot => {
+          const id = plot.dataset.id;
+          plot.addEventListener('click', (e) => {
+   e.stopPropagation();
+
+
+   const data = gameState.plots[id];
+
+
+   if (gameState.currentMode !== 'normal') return;
+
+
+   if (!data.crop) {
+       openPlantingBalloon(id, plot);
+   }
+   else if (data.stage === 3) {
+       openHarvestBalloon(id, plot);
+   }
+   else if (data.stage < 3 && !data.isWet) {
+       irrigatePlot(id, plot);
+   }
+});
+
+
+
+
+
+
+          plot.addEventListener('pointerenter', () => {
+              if (gameState.currentMode === 'planting' && !gameState.plots[id].crop) {
+                  executePlanting(id, plot);
+              } else if (gameState.currentMode === 'harvesting' && gameState.plots[id].crop && gameState.plots[id].stage === 3) {
+                  executeHarvest(id, plot);
+              }
+          });
+      });
+
+
+
+
+      map.addEventListener('click', (e) => {
+          if (!e.target.closest('.plot') && !e.target.closest('.wood-balloon')) {
+              closeActiveBalloon();
+              exitSpecialModes();
+          }
+      });
+
+
+
+
+      function closeActiveBalloon() {
+          document.getElementById('balloon-layer').innerHTML = '';
+          gameState.activeBalloonPlotId = null;
+      }
+
+
+
+
+      function openPlantingBalloon(id, plotElement) {
+   closeActiveBalloon();
+   gameState.activeBalloonPlotId = id;
+
+
+   const balloon = document.createElement('div');
+   balloon.className = 'wood-balloon';
+
+
+   const frag = document.createDocumentFragment();
+
+
+   for (const k in CROPS) {
+       const option = document.createElement('div');
+       option.className = 'crop-option';
+       option.onclick = () => startContinuousPlanting(k);
+
+
+       const img = document.createElement('img');
+       img.src = CROPS[k].img_adulte;
+
+
+       const label = document.createElement('div');
+       label.textContent = CROPS[k].name;
+
+
+       option.appendChild(img);
+       option.appendChild(label);
+
+
+       frag.appendChild(option);
+   }
+
+
+   balloon.appendChild(frag);
+
+
+   const rect = plotElement.getBoundingClientRect();
+
+
+   balloon.style.position = "absolute";
+   balloon.style.left = `${rect.left + window.scrollX + 40}px`;
+   balloon.style.top = `${rect.top + window.scrollY}px`;
+
+
+   document.getElementById('balloon-layer').appendChild(balloon);
+}
+
+
+      function openHarvestBalloon(id, plotElement) {
+   closeActiveBalloon();
+   gameState.activeBalloonPlotId = id;
+
+
+   const balloon = document.createElement('div');
+   balloon.className = 'wood-balloon';
+
+
+   balloon.innerHTML = `
+       <div class="harvest-option" onclick="startContinuousHarvest()">
+           <img src="/img/simulador/foice.png">
+           <div>Equipar Foice</div>
        </div>
+   `;
 
 
-       <div style="display: flex; align-items: center; gap: 20px;">
-           <div id="active-mode-indicator" style="color: var(--gold); font-weight: bold; font-size: 14px;"></div>
-       </div>
-   </div>
+   const rect = plotElement.getBoundingClientRect();
 
 
-   <button class="btn-config-gear" onclick="openConfigModal()">⚙️</button>
-
-   <div id="game-viewport">
-       <div id="farm-map">
-          
-           <div id="galpao" class="objeto galpao" onclick="openGalpao()">
-               <img src="/img/simulador/galpao.png" alt="Galpão">
-           </div>
-           <div id="cooperativa" class="objeto cooperativa" onclick="openCooperativa()">
-               <img src="/img/simulador/cooperativa.png" alt="Cooperativa">
-           </div>
-           <div id="cisterna" class="objeto cisterna" onclick="openCisterna()">
-               <img src="/img/simulador/cisterna.png" alt="Cisterna">
-           </div>
+   balloon.style.left = `${rect.left + window.scrollX + 40}px`;
+   balloon.style.top = `${rect.top + window.scrollY}px`;
 
 
-           <div id="plantacao-superior" class="grid-superior"></div>
-           <div id="plantacao-inferior" class="grid-inferior"></div>
+   document.getElementById('balloon-layer').appendChild(balloon);
+}
 
 
-           <div id="balloon-layer"></div>
 
 
-       </div>
-   </div>
-
-
-   <!-- GALPÃO -->
-<div id="modal-galpao" class="modal-panel">
-  <div class="modal-header">
-    <span>Galpão</span>
-    <button onclick="closeModals()">×</button>
-  </div>
-  <div id="galpao-content"></div>
-</div>
-
-<!-- COOPERATIVA -->
-<div id="modal-cooperativa" class="modal-panel">
-  <div class="modal-header">
-    <span>Cooperativa</span>
-    <button onclick="closeModals()">×</button>
-  </div>
-  <div id="coop-content"></div>
-</div>
-
-<!-- CISTERNA -->
-<div id="modal-cisterna" class="modal-panel">
-  <div class="modal-header">
-    <span>Cisterna</span>
-    <button onclick="closeModals()">×</button>
-  </div>
-  <div id="cisterna-content"></div>
-</div>
-
-<!-- CONFIGURAÇÕES -->
-<div id="modal-config" class="modal-panel">
-  <div class="modal-header">
-    <span>Configurações</span>
-    <button onclick="closeModals()">×</button>
-  </div>
-
-  <div style="display:flex; flex-direction:column; gap:10px;">
-    <button onclick="setFont('small')">Diminuir fonte</button>
-    <button onclick="setFont('big')">Aumentar fonte</button>
-    <button onclick="toggleReadingMode()">Modo leitura</button>
-
-    <hr>
-
-    <button onclick="saveGame()">Gerar código</button>
-    <button onclick="loadGame()">Colar código</button>
-
-    <hr>
-
-    <button onclick="location.reload()">Início</button>
-  </div>
-</div>
-
-
+      function startContinuousPlanting(cropKey) {
+          if (gameState.seeds[cropKey] <= 0) {
+              alert(`Sem sementes de ${CROPS[cropKey].name}! Compre na Cooperativa.`);
+              closeActiveBalloon();
+              return;
+          }
+          gameState.currentMode = 'planting';
+          gameState.selectedCrop = cropKey;
+          document.getElementById('active-mode-indicator').innerText = `SEMEANDO: ${CROPS[cropKey].name}`;
+          viewport.className = 'mode-planting';
       
-       <div class="config-layout">
-           <div class="config-sidebar">
-               <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">🏠 Início</button>
-               <button class="btn-action" style="width:100%; text-align:left; background:#27ae60;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
-               <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
-               <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
-           </div>
 
 
-           <div class="config-content">
-               <div id="tab-inicio" class="tab-pane active">
-                   <h3>Retornar à Operação</h3>
-                   <p style="margin-top:10px; font-size:14px;">O simulador continua rodando em segundo plano. Clique no botão abaixo para voltar ao mapa.</p>
-                   <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">Voltar ao Mapa da Fazenda</button>
-               </div>
 
 
-               <div id="tab-agrovision" class="tab-pane">
-                   <h3>Agro Vision Central v2.7</h3>
-                   <p style="margin-top:8px; font-size:13px; line-height:1.4;">Desenvolvido para simular com precisão a cadeia lógica do agronegócio sustentável e controle automatizado de recursos.</p>
-               </div>
+          executePlanting(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
+          closeActiveBalloon();
+      }
 
 
-               <div id="tab-save" class="tab-pane">
-                   <h3>Persistência de Dados (Save System)</h3>
-                   <div style="margin-top:12px;">
-                       <button class="btn-action" style="background:#8e44ad; width:100%;" onclick="generateSaveCode()">Gerar Código de Salvamento Único</button>
-                       <textarea id="save-code-output" class="code-box" readonly placeholder="Seu código aparecerá aqui..."></textarea>
-                   </div>
-                   <div style="margin-top:15px; border-top:1px dashed var(--wood-dark); padding-top:10px;">
-                       <span style="font-size:13px; font-weight:bold;">Restaurar Partida Existente:</span>
-                       <textarea id="save-code-input" class="code-box" placeholder="Cole o código gerado aqui..."></textarea>
-                       <button class="btn-action" style="background:#d35400; width:100%; margin-top:5px;" onclick="loadSaveCode()">Injetar Código e Reconstruir Estado</button>
-                   </div>
-               </div>
 
 
-               <div id="tab-acessibilidade" class="tab-pane">
-                   <h3>Controle de Estímulos e Visão</h3>
-                   <span style="font-size:13px; font-weight:bold; display:block; margin-top:10px;">Ajuste de Escala (Zoom):</span>
-                   <div style="display:flex; gap:10px; margin-top:5px;">
-                       <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(0.1)">Aumentar (+) </button>
-                       <button class="btn-action" style="flex:1; background:#4a3329;" onclick="changeZoom(-0.1)">Diminuir (-)</button>
-                   </div>
-                   <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
-                   <div class="acc-grid">
-                       <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
-                       <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
-                       <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </div>
+      function startContinuousHarvest() {
+          gameState.currentMode = 'harvesting';
+          document.getElementById('active-mode-indicator').innerText = "COLHENDO COM FOICE";
+          viewport.className = 'mode-harvesting';
 
+
+
+
+          const cursor = document.getElementById('custom-cursor');
+          cursor.src = '/img/simulador/foice.png';
+          cursor.style.display = 'block';
+
+
+
+
+          executeHarvest(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
+          closeActiveBalloon();
+      }
+
+
+
+
+      function exitSpecialModes() {
+          gameState.currentMode = 'normal';
+          gameState.selectedCrop = null;
+          document.getElementById('active-mode-indicator').innerText = "";
+          document.getElementById('custom-cursor').style.display = 'none';
+          viewport.className = '';
+      }
+
+
+
+
+      function executePlanting(id, plotElement) {
+   const cropKey = gameState.selectedCrop;
+
+
+   if (!cropKey) return;
+   if (gameState.seeds[cropKey] <= 0) return;
+
+
+   const plot = gameState.plots[id];
+
+
+   // 🔒 trava: só planta se estiver vazio
+   if (plot.crop) return;
+
+
+   gameState.seeds[cropKey]--;
+
+
+   gameState.plots[id] = {
+       id: id,
+       crop: cropKey,
+       stage: 1,
+       timer: 0,
+       isWet: false
+   };
+
+
+   plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
+}
+
+
+
+
+      function irrigatePlot(id, plotElement) {
+          if (gameState.water >= 10) {
+              gameState.water -= 10;
+              gameState.plots[id].isWet = true;
+              plotElement.classList.add('wet');
+              createFloatingText("💧 Regado!", plotElement);
+              updateCisternaLabel();
+          } else {
+              alert("Cisterna vazia! Aguarde a chuva ou ligue as bombas.");
+          }
+      }
+
+
+
+
+function executeHarvest(id, plotElement) {
+   const data = gameState.plots[id];
+   if (!data.crop || data.stage < 3) return;
+
+
+   const crop = CROPS[data.crop];
+
+
+   gameState.inventory[data.crop] += 3;
+
+
+   createFloatingText(`+3 ${crop.name}`, plotElement);
+
+
+   gameState.plots[id] = {
+       id,
+       crop: null,
+       stage: 0,
+       timer: 0,
+       isWet: false
+   };
+
+
+   plotElement.innerHTML = '';
+   plotElement.classList.remove('wet');
+}
+
+
+
+
+      function createFloatingText(text, plotElement) {
+          const el = document.createElement('div');
+          el.className = 'floating-text';
+          el.innerText = text;
+          el.style.left = (plotElement.offsetLeft + plotElement.parentElement.offsetLeft + 10) + 'px';
+          el.style.top = (plotElement.offsetTop + plotElement.parentElement.offsetTop + 10) + 'px';
+          map.appendChild(el);
+          setTimeout(() => el.remove(), 1200);
+      }
+
+
+
+
+             /* LOOP */
+
+
+setInterval(() => {
+   for (let id in gameState.plots) {
+       const p = gameState.plots[id];
+       if (!p.crop || p.stage >= 3) continue;
+
+
+       const crop = CROPS[p.crop];
+
+
+       // irrigado = cresce mais rápido
+       const speed = p.isWet ? 2 : 1;
+
+
+       p.timer += speed;
+
+
+       const el = document.querySelector(`.plot[data-id="${id}"]`);
+
+
+       const t = crop.stageTime;
+
+
+       // Fase 2
+       if (p.stage === 1 && p.timer >= t) {
+           p.stage = 2;
+           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
+       }
+
+
+       // Fase 3 (adulto)
+       else if (p.stage === 2 && p.timer >= t * 2) {
+           p.stage = 3;
+           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+           p.isWet = false;
+           el.classList.remove('wet');
+       }
+   }
+}, 1000);
+
+
+
+
+      setInterval(() => {
+          triggerRainCycle();
+      }, 600000); // 10 Minutos
+
+
+
+
+      function triggerRainCycle() {
+          document.getElementById('rain-overlay').style.display = 'block';
+          document.getElementById('rain-indicator').style.display = 'block';
+
+
+
+
+          gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
+          updateCisternaLabel();
+
+
+
+
+          for (let id in gameState.plots) {
+              if (gameState.plots[id].crop && gameState.plots[id].stage < 3) {
+                  gameState.plots[id].isWet = true;
+                  const el = document.querySelector(`.plot[data-id="${id}"]`);
+                  if(el) el.classList.add('wet');
+              }
+          }
+
+
+
+
+          setTimeout(() => {
+              document.getElementById('rain-overlay').style.display = 'none';
+              document.getElementById('rain-indicator').style.display = 'none';
+          }, 30000);
+      }
+
+
+
+
+      /* CONSTRUÇÕES E MERCADO */
+      function openGalpao() {
+   closeActiveBalloon();
+   exitSpecialModes();
+
+
+   const container = document.getElementById('stock-list');
+   container.innerHTML = '';
+
+
+   for (let k in gameState.inventory) {
+       const row = document.createElement('div');
+       row.className = 'item-row';
+
+
+       row.innerHTML = `
+           <span>${CROPS[k].name}</span>
+           <span>
+               sementes: ${gameState.seeds[k]} |
+               estoque: ${gameState.inventory[k]}
+           </span>
+       `;
+
+
+       container.appendChild(row);
+   }
+
+
+   openModal('modal-galpao');
+}
+
+
+
+
+      function openCooperativa() {
+          closeActiveBalloon(); exitSpecialModes();
+          renderCooperativa();
+          openModal('modal-cooperativa');
+      }
+
+
+
+
+      function renderCooperativa() {
+          const container = document.getElementById('market-list');
+          container.innerHTML = '';
+
+
+
+
+          container.innerHTML += `
+              <div class="item-row" style="background:#d4e6f1; border:2px solid #2980b9; flex-direction:column; align-items:stretch; gap:6px; margin-bottom:15px;">
+                  <div style="display:flex; justify-content:between; font-weight:bold; color:#1b4f72;">
+                      <span>🚰 Exportação Hídrica (Cisterna)</span>
+                  </div>
+                  <button class="btn-action" style="background:#2980b9; font-size:12px;" onclick="sellWaterResource()">Vender 10L de Água Filtrada (+$20)</button>
+              </div>
+          `;
+
+
+
+
+          for (let k in CROPS) {
+              container.innerHTML += `
+                  <div class="item-row" style="flex-direction: column; align-items: stretch; gap: 8px; font-size:13px;">
+                      <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(0,0,0,0.1); padding-bottom:3px;">
+                          <strong>${CROPS[k].name} (Sementes: ${gameState.seeds[k]})</strong>
+                      </div>
+                      <div style="display:flex; gap:6px;">
+                          <button class="btn-action" style="flex:1; font-size:11px; background:#2980b9;" onclick="buySeed('${k}')">Comprar Semente (-$${CROPS[k].seedPrice})</button>
+                          <button class="btn-action" style="flex:1; font-size:11px; background:#d35400;" onclick="sellSeed('${k}')">Vender Semente (+$${CROPS[k].seedSellPrice})</button>
+                      </div>
+                      <button class="btn-action" style="font-size:12px; width:100%;" onclick="sellCrop('${k}')">Liquidar Estoque do Galpão (+$${CROPS[k].sellPrice}/ud)</button>
+                  </div>`;
+          }
+      }
+
+
+document.getElementById("galpao").addEventListener("click", openGalpao);
+document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+document.getElementById("cisterna").addEventListener("click", openCisterna);
+
+
+      function buySeed(key) {
+          if (gameState.money >= CROPS[key].seedPrice) {
+              gameState.money -= CROPS[key].seedPrice; gameState.seeds[key]++;
+              updateHUD(); renderCooperativa();
+          } else { alert("Saldo insuficiente!"); }
+      }
+
+
+
+
+      function sellSeed(key) {
+          if (gameState.seeds[key] > 0) {
+              gameState.seeds[key]--; gameState.money += CROPS[key].seedSellPrice;
+              updateHUD(); renderCooperativa();
+          } else { alert("Sem sementes!"); }
+      }
+
+
+
+
+      function sellCrop(key) {
+          if (gameState.inventory[key] > 0) {
+              gameState.money += gameState.inventory[key] * CROPS[key].sellPrice;
+              gameState.inventory[key] = 0;
+              updateHUD(); renderCooperativa();
+          } else { alert("Estoque vazio."); }
+      }
+
+
+
+
+      function sellWaterResource() {
+          if (gameState.water >= 10) {
+              gameState.water -= 10;
+              gameState.money += 20;
+              updateHUD();
+              renderCooperativa();
+          } else { alert("Água insuficiente."); }
+      }
+
+
+
+
+      function openCisterna() {
+          closeActiveBalloon(); exitSpecialModes();
+          updateCisternaLabel();
+          openModal('modal-cisterna');
+      }
+
+
+      function updateCisternaLabel() {
+          document.getElementById('modal-water-label').innerText = gameState.water + "L / " + gameState.maxWater + "L";
+      }
+
+
+
+
+      function refillWaterSystem() {
+          if(gameState.water < gameState.maxWater) {
+              gameState.water = Math.min(gameState.maxWater, gameState.water + 50);
+              updateCisternaLabel();
+          } else { alert("Reservatório cheio!"); }
+      }
+
+
+      window.addEventListener("DOMContentLoaded", () => {
+   document.getElementById("galpao").addEventListener("click", openGalpao);
+   document.getElementById("cooperativa").addEventListener("click", openCooperativa);
+   document.getElementById("cisterna").addEventListener("click", openCisterna);
+});
+
+
+      /* CONFIGURAÇÕES E SALVAMENTO */
+      function generateSaveCode() {
+          const payload = { m: gameState.money, w: gameState.water, i: gameState.inventory, s: gameState.seeds, p: {} };
+          for(let id in gameState.plots) {
+              payload.p[id] = { c: gameState.plots[id].crop, s: gameState.plots[id].stage, t: gameState.plots[id].timer, w: gameState.plots[id].isWet };
+          }
+          document.getElementById('save-code-output').value = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+      }
+
+
+
+
+      function loadSaveCode() {
+          const rawInput = document.getElementById('save-code-input').value.trim();
+          if(!rawInput) return;
+          try {
+              const data = JSON.parse(decodeURIComponent(escape(atob(rawInput))));
+              gameState.money = data.m; gameState.water = data.w; gameState.inventory = data.i; gameState.seeds = data.s;
+
+
+
+
+              for(let id in data.p) {
+                  if(!gameState.plots[id]) continue;
+                  gameState.plots[id] = { id: parseInt(id), crop: data.p[id].c, stage: data.p[id].s, timer: data.p[id].t, isWet: data.p[id].w };
+                  const plotEl = document.querySelector(`.plot[data-id="${id}"]`);
+                  if(!plotEl) continue;
+                  plotEl.classList.remove('wet');
+                  if(data.p[id].c) {
+                      let cropKey = data.p[id].c;
+                      let stg = data.p[id].s;
+                      let imgUrl = CROPS[cropKey].img_broto;
+                      if(stg === 2) imgUrl = CROPS[cropKey].img_jovem;
+                      if(stg === 3) imgUrl = CROPS[cropKey].img_adulte;
+                      plotEl.innerHTML = `<img class="plot-plant-img" src="${imgUrl}">`;
+                      if(data.p[id].w) plotEl.classList.add('wet');
+                  } else { plotEl.innerHTML = ''; }
+              }
+              updateHUD(); alert("Progresso carregado!"); closeModals();
+          } catch (err) { alert("Código inválido."); }
+      }
+
+
+
+
+      function changeZoom(amount) {
+          currentZoom = Math.min(1.4, Math.max(0.3, currentZoom + amount));
+          renderMapTransform();
+      }
+
+
+
+
+      function applyVisualMode(mode) {
+          document.body.className = '';
+          if (mode === 'dark') document.body.classList.add('modo-escuro');
+          if (mode === 'reading') document.body.classList.add('modo-leitura');
+      }
+
+
+
+
+      function openConfigModal() { openModal('modal-config'); switchTab('tab-inicio'); }
+      function openModal(id) {
+   closeModals();
+   const el = document.getElementById(id);
+   if (el) el.classList.add('active');
+}
+
+
+function closeModals() {
+   document.querySelectorAll('.modal-panel').forEach(m => {
+       m.classList.remove('active');
+   });
+}       function updateHUD() { document.getElementById('hud-money').innerText = gameState.money; }
+
+
+
+
+      updateHUD();
+  </script>
 </body>
-<script src="/modulos/simulador/simulador.js"></script>
 </html>
+
