@@ -1457,6 +1457,9 @@ function generateShortCode() {
         code += chars[Math.floor(Math.random() * chars.length)];
     }
 
+    document.getElementById('save-code-output').value = code;
+}
+
     const payload = {
         m: gameState.money,
         w: gameState.water,
@@ -1465,12 +1468,7 @@ function generateShortCode() {
         p: gameState.plots
     };
 
-    const data = btoa(JSON.stringify(payload));
-
-    document.getElementById("save-code-output").value =
-        code + "|" + data;
-}
-
+    
 
 
 
