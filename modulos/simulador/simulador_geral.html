@@ -336,6 +336,8 @@
           gap: 8px;
           transform: translate(50%, -105%);
           box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+          width: 80px;
+          height: 20px;
       }
 
 
@@ -747,7 +749,42 @@ const inferior = document.getElementById("plantacao-inferior");
 
 
 let id = 1;
+function openMainMenu(plotId = null) {
+    closeActiveBalloon();
 
+    const menu = document.createElement("div");
+    menu.className = "wood-balloon";
+
+    menu.innerHTML = `
+        <div class="menu-option" onclick="openCooperativa()">🏪 Cooperativa</div>
+        <div class="menu-option" onclick="openGalpao()">🌾 Galpão</div>
+        <div class="menu-option" onclick="openCisterna()">💧 Cisterna</div>
+        ${plotId ? `<div class="menu-option" onclick="openPlantingBalloon('${plotId}', document.querySelector('.plot[data-id=&quot;${plotId}&quot;]'))">🌱 Plantar</div>` : ""}
+        ${plotId ? `<div class="menu-option" onclick="startContinuousHarvest()">🔪 Colher</div>` : ""}
+    `;
+
+    document.getElementById("balloon-layer").appendChild(menu);
+}
+function openSellMenu() {
+    closeActiveBalloon();
+
+    const container = document.createElement("div");
+    container.className = "wood-balloon";
+
+    for (let k in gameState.inventory) {
+        const item = document.createElement("div");
+        item.className = "menu-option";
+
+        item.innerHTML = `
+            ${CROPS[k].name} - ${gameState.inventory[k]} un
+            <button onclick="sellCrop('${k}')">Vender</button>
+        `;
+
+        container.appendChild(item);
+    }
+
+    document.getElementById("balloon-layer").appendChild(container);
+}
 
 /* ==========================
   SUPERIOR
@@ -1168,47 +1205,33 @@ function executeHarvest(id, plotElement) {
 
 
              /* LOOP */
-
-
 setInterval(() => {
-   for (let id in gameState.plots) {
-       const p = gameState.plots[id];
-       if (!p.crop || p.stage >= 3) continue;
+    for (let id in gameState.plots) {
+        const p = gameState.plots[id];
+        if (!p.crop || p.stage >= 3) continue;
 
+        const crop = CROPS[p.crop];
+        const time = crop.stageTime || crop.growTime;
 
-       const crop = CROPS[p.crop];
+        const speed = p.isWet ? 2 : 1;
+        p.timer += speed;
 
+        const el = document.querySelector(`.plot[data-id="${id}"]`);
+        if (!el) continue;
 
-       // irrigado = cresce mais rápido
-       const speed = p.isWet ? 2 : 1;
+        if (p.stage === 1 && p.timer >= time) {
+            p.stage = 2;
+            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
+        }
 
-
-       p.timer += speed;
-
-
-       const el = document.querySelector(`.plot[data-id="${id}"]`);
-
-
-       const t = crop.stageTime;
-
-
-       // Fase 2
-       if (p.stage === 1 && p.timer >= t) {
-           p.stage = 2;
-           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_jovem}">`;
-       }
-
-
-       // Fase 3 (adulto)
-       else if (p.stage === 2 && p.timer >= t * 2) {
-           p.stage = 3;
-           el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
-           p.isWet = false;
-           el.classList.remove('wet');
-       }
-   }
+        if (p.stage === 2 && p.timer >= time * 2) {
+            p.stage = 3;
+            el.innerHTML = `<img class="plot-plant-img" src="${crop.img_adulte}">`;
+            p.isWet = false;
+            el.classList.remove("wet");
+        }
+    }
 }, 1000);
-
 
 
 
