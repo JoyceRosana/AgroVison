@@ -602,8 +602,7 @@
       <div class="config-layout">
           <div class="config-sidebar">
               <button class="btn-action" style="width:100%; text-align:left; background:#4a3329;" onclick="switchTab('tab-inicio')">Início</button>
-              <button class="btn-action" style="width:100%; text-align:left; background:#27ae60;" onclick="switchTab('tab-agrovision')">🌱 Agro Vision</button>
-              <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
+                            <button class="btn-action" style="width:100%; text-align:left; background:#8e44ad;" onclick="switchTab('tab-save')">💾 Continuidade</button>
               <button class="btn-action" style="width:100%; text-align:left; background:#cd853f;" onclick="switchTab('tab-acessibilidade')">♿ Acessibilidade</button>
           </div>
 
@@ -626,6 +625,19 @@
 
     <button class="btn-action" style="margin-top:20px; width:100%;" onclick="closeModals()">
       Voltar ao Mapa da Fazenda
+    </button>
+    <h5>Persistência de Dados</h5>
+
+    <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
+      Gerar código
+    </button>
+
+    <textarea id="save-code-output" class="code-box" readonly></textarea>
+
+    <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
+
+    <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
+      Restaurar progresso
     </button>
 
   </div>
@@ -655,23 +667,6 @@
     </div>
 
   </div>
-
-  <!-- SAVE -->
-  <div id="tab-save" class="tab-pane">
-
-    <h3>Persistência de Dados</h3>
-
-    <button class="btn-action" style="width:100%;" onclick="generateShortCode()">
-      Gerar código (10 caracteres)
-    </button>
-
-    <textarea id="save-code-output" class="code-box" readonly></textarea>
-
-    <textarea id="save-code-input" class="code-box" placeholder="Cole o código aqui"></textarea>
-
-    <button class="btn-action" style="width:100%;" onclick="loadShortSave()">
-      Restaurar progresso
-    </button>
 
   </div>
 
