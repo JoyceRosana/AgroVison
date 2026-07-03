@@ -15,10 +15,7 @@
 
 
       /* ACESSIBILIDADE */
-      body.modo-escuro {
-          filter: grayscale(1) invert(0.9) !important;
-          background-color: #000 !important;
-      }
+      
       body.modo-leitura::after {
           content: "";
           position: fixed;
@@ -663,12 +660,7 @@
   </div>
 
 </div>
-                  <span style="font-size:13px; font-weight:bold; display:block; margin-top:15px;">Filtros Visuais de Conforto:</span>
-                  <div class="acc-grid">
-                      <button class="btn-action" style="background:#333;" onclick="applyVisualMode('dark')">Modo Escuro</button>
-                      <button class="btn-action" style="background:#f39c12;" onclick="applyVisualMode('reading')">Modo Leitura</button>
-                      <button class="btn-action" style="background:#fff; color:#000; border:1px solid #ccc;" onclick="applyVisualMode('clear')">Padrão</button>
-                  </div>
+
               </div>
           </div>
       </div>
