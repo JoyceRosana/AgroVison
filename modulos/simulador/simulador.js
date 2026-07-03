@@ -1,301 +1,324 @@
-
 /*==================================================
-= 1. CULTURAS (TEMPOS INDIVIDUAIS REAIS)
+= 1. CULTURAS
 ==================================================*/
 
 const CROPS = {
-    milho:   { name:"Milho",   stageTime:20, sellPrice:15 },
-    soja:    { name:"Soja",    stageTime:25, sellPrice:22 },
-    tomate:  { name:"Tomate",  stageTime:15, sellPrice:35 },
-    alface:  { name:"Alface",  stageTime:15, sellPrice:9  },
-    cenoura: { name:"Cenoura", stageTime:18, sellPrice:12 }
+    milho: { name:"Milho", time:20, seed:5, sell:15,
+        img:["/img/milho_broto.png","/img/milho_jovem.png","/img/milho_adulto.png"] },
+
+    soja: { name:"Soja", time:25, seed:8, sell:22,
+        img:["/img/soja_broto.png","/img/soja_jovem.png","/img/soja_adulto.png"] },
+
+    tomate: { name:"Tomate", time:15, seed:12, sell:35,
+        img:["/img/tomate_broto.png","/img/tomate_jovem.png","/img/tomate_adulto.png"] },
+
+    alface: { name:"Alface", time:15, seed:3, sell:9,
+        img:["/img/alface_broto.png","/img/alface_jovem.png","/img/alface_adulto.png"] },
+
+    cenoura: { name:"Cenoura", time:18, seed:4, sell:12,
+        img:["/img/cenoura_broto.png","/img/cenoura_jovem.png","/img/cenoura_adulto.png"] }
 };
 
 /*==================================================
-= 2. CONFIGURAÇÃO DO JOGO
+= 2. ESTADO GLOBAL
 ==================================================*/
 
 const GAME = {
-    TOTAL_PLOTS: 326,
-    INITIAL_MONEY: 120,
-    INITIAL_WATER: 100,
-    MAX_WATER: 200,
-    WATER_PER_IRRIGATION: 10,
+    TOTAL: 326,
+    WATER_MAX: 200,
+    IRRIGATE_COST: 10
+};
 
-    RAIN_INTERVAL: 180000, // chuva automática
-    RAIN_WATER_GAIN: 40
+let state = {
+    money:120,
+    water:100,
+    seeds:{ milho:5, soja:5, tomate:5, alface:5, cenoura:5 },
+    inventory:{ milho:0, soja:0, tomate:0, alface:0, cenoura:0 },
+    mode:"normal",
+    cropSelected:null,
+    plots:{},
+    cisterna:{ filtered:true, stored:100 }
 };
 
 /*==================================================
-= 3. ESTADO GLOBAL (TUDO AQUI)
-==================================================*/
-
-let gameState = {
-    money: GAME.INITIAL_MONEY,
-    water: GAME.INITIAL_WATER,
-
-    seeds: { milho:5, soja:5, tomate:5, alface:5, cenoura:5 },
-    inventory: { milho:0, soja:0, tomate:0, alface:0, cenoura:0 },
-
-    plots: {},
-
-    currentMode: "normal",
-    selectedCrop: null,
-    activeBalloon: null
-};
-
-/*==================================================
-= 4. MAPA
+= 3. MAPA
 ==================================================*/
 
 let viewport, map;
-let mapX = -100, mapY = -50, zoom = 0.7;
+let mapX=-100, mapY=-50;
+let zoom=0.7;
+let dragging=false, startX=0, startY=0;
 
 /*==================================================
-= 5. INICIALIZAÇÃO
+= 4. INIT
 ==================================================*/
 
 window.addEventListener("DOMContentLoaded", () => {
     cache();
     createPlots();
-    initEvents();
-    startGrowth();
-    startRain();
-    updateHUD();
+    events();
+    growthLoop();
+    hud();
+    mapRender();
 });
 
 /*==================================================
-= 6. CACHE HTML
+= 5. CACHE
 ==================================================*/
 
 function cache(){
-    viewport = document.getElementById("game-viewport");
-    map = document.getElementById("farm-map");
+    viewport=document.getElementById("game-viewport");
+    map=document.getElementById("farm-map");
 }
 
 /*==================================================
-= 7. CRIAÇÃO DAS 326 TERRAS
+= 6. 326 TERRAS
 ==================================================*/
 
 function createPlots(){
-    let id = 1;
+    let id=1;
 
-    for(let i=0;i<GAME.TOTAL_PLOTS;i++){
-        const el = document.createElement("div");
+    for(let i=0;i<GAME.TOTAL;i++){
+        const el=document.createElement("div");
         el.className="plot";
         el.dataset.id=id;
 
-        gameState.plots[id]={
+        state.plots[id]={
             id,
-            element:el,
+            el,
             crop:null,
             stage:0,
             timer:0,
-            isWet:false,
-            paused:false
+            wet:false
         };
 
-        el.onclick = ()=>handlePlot(id);
+        el.onclick=()=>plotClick(id);
 
-        document.getElementById(
-            id<=102 ? "plantacao-superior" : "plantacao-inferior"
-        ).appendChild(el);
+        if(id<=102)
+            document.getElementById("plantacao-superior").appendChild(el);
+        else
+            document.getElementById("plantacao-inferior").appendChild(el);
 
         id++;
     }
 }
 
 /*==================================================
-= 8. AÇÕES PRINCIPAIS
+= 7. CLIQUE NA TERRA
 ==================================================*/
 
-function handlePlot(id){
-    const p = gameState.plots[id];
+function plotClick(id){
+    const p=state.plots[id];
 
-    if(!p.crop) return openPlantBalloon(id);
-    if(p.stage===3) return openHarvestBalloon(id);
-    if(!p.isWet) irrigate(id);
-}
+    if(state.mode==="plant"){
+        plant(id);
+        return;
+    }
 
-function plant(id,crop){
-    const p=gameState.plots[id];
-    if(!p || p.crop || gameState.seeds[crop]<=0) return;
+    if(state.mode==="harvest"){
+        harvest(id);
+        return;
+    }
 
-    gameState.seeds[crop]--;
+    if(!p.crop){
+        openGalpao();
+        return;
+    }
 
-    p.crop=crop;
-    p.stage=1;
-    p.timer=0;
+    if(p.stage===3){
+        harvest(id);
+        return;
+    }
 
-    renderPlot(p);
-}
-
-function irrigate(id){
-    const p=gameState.plots[id];
-    if(gameState.water < GAME.WATER_PER_IRRIGATION) return;
-
-    gameState.water -= GAME.WATER_PER_IRRIGATION;
-    p.isWet = true;
-
-    p.element.classList.add("wet");
-    updateHUD();
-}
-
-function harvest(id){
-    const p=gameState.plots[id];
-    if(p.stage!==3) return;
-
-    gameState.inventory[p.crop] += 3;
-
-    resetPlot(p);
-    updateHUD();
+    irrigate(id);
 }
 
 /*==================================================
-= 9. CRESCIMENTO AUTOMÁTICO
+= 8. PLANTAR
 ==================================================*/
 
-function startGrowth(){
+function plant(id){
+    const p=state.plots[id];
+    const c=state.cropSelected;
+
+    if(!c || p.crop) return;
+    if(state.seeds[c]<=0) return;
+
+    state.seeds[c]--;
+
+    p.crop=c;
+    p.stage=1;
+    p.timer=0;
+
+    renderPlant(p);
+    hud();
+}
+
+/*==================================================
+= 9. REGAR
+==================================================*/
+
+function irrigate(id){
+    const p=state.plots[id];
+    if(!p.crop || p.wet) return;
+
+    p.wet=true;
+    state.water-=GAME.IRRIGATE_COST;
+    hud();
+}
+
+/*==================================================
+= 10. CRESCIMENTO
+==================================================*/
+
+function growthLoop(){
     setInterval(()=>{
-        for(const id in gameState.plots){
-            const p = gameState.plots[id];
-            if(!p.crop || p.stage===3 || p.paused) continue;
+        for(const id in state.plots){
+            const p=state.plots[id];
+            if(!p.crop || p.stage===3) continue;
 
-            const crop = CROPS[p.crop];
-            const speed = p.isWet ? 2 : 1;
+            let speed = p.wet ? 2 : 1;
+            p.timer+=speed;
 
-            p.timer += speed;
+            const crop=CROPS[p.crop];
 
-            if(p.stage===1 && p.timer>=crop.stageTime){
+            if(p.stage===1 && p.timer>=crop.time){
                 p.stage=2;
-                renderPlot(p);
-                floatText("🌿 Cresceu",p);
+                renderPlant(p);
             }
 
-            if(p.stage===2 && p.timer>=crop.stageTime*2){
+            if(p.stage===2 && p.timer>=crop.time*2){
                 p.stage=3;
-                p.isWet=false;
-                p.element.classList.remove("wet");
-                renderPlot(p);
-                floatText("🌾 Pronto",p);
+                p.wet=false;
+                renderPlant(p);
             }
         }
     },1000);
 }
 
 /*==================================================
-= 10. CHUVA AUTOMÁTICA
+= 11. COLHER
 ==================================================*/
 
-function startRain(){
-    setInterval(()=>{
-        gameState.water = Math.min(
-            GAME.MAX_WATER,
-            gameState.water + GAME.RAIN_WATER_GAIN
-        );
+function harvest(id){
+    const p=state.plots[id];
+    if(p.stage!==3) return;
 
-        updateHUD();
-        floatText("🌧️ Chuva!", {element:document.body});
-    }, GAME.RAIN_INTERVAL);
+    state.inventory[p.crop]+=3;
+
+    p.crop=null;
+    p.stage=0;
+    p.timer=0;
+    p.el.innerHTML="";
+
+    hud();
 }
 
 /*==================================================
-= 11. RENDER PLANTA
+= 12. IMAGEM PLANTA
 ==================================================*/
 
-function renderPlot(p){
-    if(!p.crop) return;
+function renderPlant(p){
+    const c=CROPS[p.crop];
 
-    let img="";
+    let img=c.img[0];
+    if(p.stage===2) img=c.img[1];
+    if(p.stage===3) img=c.img[2];
 
-    if(p.stage===1) img="/img/broto.png";
-    if(p.stage===2) img="/img/jovem.png";
-    if(p.stage===3) img="/img/adulto.png";
-
-    p.element.innerHTML = `<img class="plot-plant-img" src="${img}">`;
+    p.el.innerHTML=`<img src="${img}" class="plot-plant-img">`;
 }
 
 /*==================================================
-= 12. HUD COMPLETA
+= 13. MAPA
 ==================================================*/
 
-function updateHUD(){
-    document.getElementById("hud-money").innerText = gameState.money;
-    document.getElementById("hud-water").innerText = gameState.water;
+function events(){
+    viewport.addEventListener("pointerdown",(e)=>{
+        dragging=true;
+        startX=e.clientX-mapX;
+        startY=e.clientY-mapY;
+    });
+
+    window.addEventListener("pointermove",(e)=>{
+        if(!dragging) return;
+        mapX=e.clientX-startX;
+        mapY=e.clientY-startY;
+        mapRender();
+    });
+
+    window.addEventListener("pointerup",()=>dragging=false);
+}
+
+function mapRender(){
+    map.style.transform=`translate(${mapX}px,${mapY}px) scale(${zoom})`;
 }
 
 /*==================================================
-= 13. FLOATING TEXT
+= 14. HUD
 ==================================================*/
 
-function floatText(text,p){
-    const div=document.createElement("div");
-    div.className="floating-text";
-    div.innerText=text;
-
-    p.element.appendChild(div);
-
-    setTimeout(()=>div.remove(),1200);
+function hud(){
+    document.getElementById("hud-money").innerText=state.money;
 }
 
 /*==================================================
-= 14. MODOS
+= 15. MODAIS
 ==================================================*/
 
-function setPlantMode(crop){
-    gameState.currentMode="plant";
-    gameState.selectedCrop=crop;
+function openGalpao(){
+    closeAll();
+    document.getElementById("modal-galpao").classList.add("active");
+}
+
+function openCooperativa(){
+    closeAll();
+    document.getElementById("modal-cooperativa").classList.add("active");
+}
+
+function openCisterna(){
+    closeAll();
+    document.getElementById("modal-cisterna").classList.add("active");
+}
+
+function openConfigModal(){
+    closeAll();
+    document.getElementById("modal-config").classList.add("active");
+}
+
+function closeAll(){
+    document.querySelectorAll(".modal-panel")
+        .forEach(m=>m.classList.remove("active"));
+}
+
+/*==================================================
+= 16. MODO
+==================================================*/
+
+function setPlantMode(c){
+    state.mode="plant";
+    state.cropSelected=c;
 }
 
 function setHarvestMode(){
-    gameState.currentMode="harvest";
+    state.mode="harvest";
 }
 
 function exitMode(){
-    gameState.currentMode="normal";
-    gameState.selectedCrop=null;
+    state.mode="normal";
+    state.cropSelected=null;
 }
 
 /*==================================================
-= 15. BALÕES
+= 17. SAVE
 ==================================================*/
 
-function openPlantBalloon(id){
-    gameState.activeBalloon=id;
-    openModal("plant-modal");
+function save(){
+    localStorage.setItem("save",JSON.stringify(state));
 }
 
-function openHarvestBalloon(id){
-    gameState.activeBalloon=id;
-    openModal("harvest-modal");
-}
-
-/*==================================================
-= 16. GALPÃO / COOPERATIVA / CISTERNA
-==================================================*/
-
-function openGalpao(){ openModal("galpao"); }
-function openCooperativa(){ openModal("coop"); }
-function openCisterna(){ openModal("cisterna"); }
-
-/*==================================================
-= 17. SAVE / LOAD
-==================================================*/
-
-function saveGame(){
-    localStorage.setItem("save", JSON.stringify(gameState));
-}
-
-function loadGame(){
-    const data = JSON.parse(localStorage.getItem("save"));
-    if(data) gameState=data;
-}
-
-/*==================================================
-= 18. MAPA
-==================================================*/
-
-function renderMap(){
-    map.style.transform =
-        `translate(${mapX}px,${mapY}px) scale(${zoom})`;
+function load(){
+    const s=localStorage.getItem("save");
+    if(!s) return;
+    state=JSON.parse(s);
+    location.reload();
 }
