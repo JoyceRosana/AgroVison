@@ -607,6 +607,20 @@
       O simulador continua rodando em segundo plano. Clique abaixo para voltar ao mapa.
     </p>
 
+    <div id="tab-acessibilidade" class="tab-pane">
+
+    <h6>Acessibilidade</h6>
+    <div style="display:flex; gap:10px; margin-top:5px;">
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
+      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
+    </div>
+
+
+    <div class="acc-grid">
+      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
+      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
+    </div>
+
     <h4>Agro Vision Central</h4>
 
     <p style="font-size:13px; line-height:1.4; margin-top:8px;">
@@ -632,22 +646,6 @@
 
   </div>
 
-  <!-- ACESSIBILIDADE -->
-  <div id="tab-acessibilidade" class="tab-pane">
-
-    <h3>Acessibilidade</h3>
-
-
-    <div style="display:flex; gap:10px; margin-top:5px;">
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(0.1)">Aumentar+</button>
-      <button class="btn-action" style="flex:1;" onclick="changeZoom(-0.1)">Diminuir-</button>
-    </div>
-
-
-    <div class="acc-grid">
-      <button class="btn-action" onclick="applyVisualMode('reading')">Leitura</button>
-      <button class="btn-action" onclick="applyVisualMode('clear')">Padrão</button>
-    </div>
 
   </div>
 
