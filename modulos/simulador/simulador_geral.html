@@ -912,6 +912,85 @@ viewport.addEventListener('pointermove', (e) => {
       }
 
 
+      function generateShortCode() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+
+    for (let i = 0; i < 10; i++) {
+        code += chars[Math.floor(Math.random() * chars.length)];
+    }
+
+    const payload = {
+        m: gameState.money,
+        w: gameState.water,
+        i: gameState.inventory,
+        s: gameState.seeds,
+        p: {}
+    };
+
+    for (let id in gameState.plots) {
+        payload.p[id] = {
+            c: gameState.plots[id].crop,
+            s: gameState.plots[id].stage,
+            t: gameState.plots[id].timer,
+            w: gameState.plots[id].isWet
+        };
+    }
+
+    localStorage.setItem("save_" + code, JSON.stringify(payload));
+    document.getElementById("save-code-output").value = code;
+}
+
+function loadShortSave() {
+    const code = document.getElementById("save-code-input").value.trim().toUpperCase();
+
+    const raw = localStorage.getItem("save_" + code);
+
+    if (!raw) {
+        alert("Código inválido!");
+        return;
+    }
+
+    const data = JSON.parse(raw);
+
+    gameState.money = data.m;
+    gameState.water = data.w;
+    gameState.inventory = data.i;
+    gameState.seeds = data.s;
+
+    for (let id in data.p) {
+        if (!gameState.plots[id]) continue;
+
+        gameState.plots[id] = {
+            id: parseInt(id),
+            crop: data.p[id].c,
+            stage: data.p[id].s,
+            timer: data.p[id].t,
+            isWet: data.p[id].w
+        };
+
+        const el = document.querySelector(`.plot[data-id="${id}"]`);
+        if (!el) continue;
+
+        el.classList.remove("wet");
+
+        if (data.p[id].c) {
+            const crop = data.p[id].c;
+            let img = CROPS[crop].img_broto;
+
+            if (data.p[id].s === 2) img = CROPS[crop].img_jovem;
+            if (data.p[id].s === 3) img = CROPS[crop].img_adulte;
+
+            el.innerHTML = `<img class="plot-plant-img" src="${img}">`;
+        } else {
+            el.innerHTML = "";
+        }
+    }
+
+    updateHUD();
+    alert("Progresso restaurado!");
+}
+
 
 
       function openPlantingBalloon(id, plotElement) {
