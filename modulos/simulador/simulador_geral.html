@@ -18,7 +18,10 @@
 
 
       /* ACESSIBILIDADE */
-      
+      body.modo-escuro {
+          filter: grayscale(1) invert(0.9) !important;
+          background-color: #000 !important;
+      }
       body.modo-leitura::after {
           content: "";
           position: fixed;
@@ -40,12 +43,14 @@
           touch-action: none;
       }
 
+
+
+
       body, html {
           width: 100%;
           height: 100%;
           overflow: hidden;
-          margin: 0%;
-          background-color: #27ae60;
+          background-color: #1e1307;
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
 
@@ -92,10 +97,11 @@
       /* BOTÃO DE ENGRENAGEM CANTO SUPERIOR DIREITO */
       .btn-config-gear {
           position: fixed;
-          top: 15px;
-          right: 40px;
+          top: 22px;
+          right: 25px;
           width: 40px;
-          height: 50px;
+          height: 20px;
+          background: linear-gradient(135deg, #4a3329, #27140b);
           border: 1px solid var(--wood-light);
           color: white;
           border-radius: 4px;
@@ -148,10 +154,9 @@
 
 
       /* VIEWPORT DO JOGO */
-     #game-viewport {
-  width: 100vw;
-  height: calc(100vh - 65px);
-  margin-top: 65px;
+      #game-viewport {
+          width: 100vw;
+          height: 100vh;
           position: relative;
           overflow: hidden;
           cursor: grab;
@@ -326,7 +331,19 @@
 
 
       /* BALÃO DE MADEIRA */
-     .wood-balloon { position: absolute; background-color: #dfb887; border: 4px solid var(--wood-dark); border-radius: 10px; padding: 15px; z-index: 1000; display: flex; gap: 12px; transform: translate(-50%, -105%); box-shadow: 0 8px 20px rgba(0,0,0,0.5); }
+      .wood-balloon {
+          position: absolute;
+          background-color: #dfb887;
+          border: 4px solid var(--wood-dark);
+          border-radius: 10px;
+          padding: 15px;
+          z-index: 1000;
+          display: flex;
+          gap: 12px;
+          transform: translate(-50%, -105%);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      }
+
 
 
 
@@ -482,6 +499,7 @@
           .brand-title { font-size: 16px; }
           .hud-display { font-size: 14px; }
       }
+
   </style>
 </head>
 <body>
