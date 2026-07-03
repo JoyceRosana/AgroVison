@@ -728,13 +728,14 @@ function startHarvestMode(){
 = CURSOR DA FOICE
 ==================================================*/
 
-document.addEventListener("pointermove",(e)=>{
+document.addEventListener("pointermove", (e) => {
 
-    const cursor=document.getElementById("custom-cursor");
+    const cursor = document.getElementById("custom-cursor");
 
-    cursor.style.left=e.clientX+"px";
+    if (!cursor) return;
 
-    cursor.style.top=e.clientY+"px";
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
 
 });
 
@@ -1888,7 +1889,13 @@ function openGalpao() {
 }
 
 function updateHUD() {
-    document.getElementById("hud-money").innerText = gameState.money;
+
+    const money = document.getElementById("hud-money");
+    if (money) money.innerText = gameState.money;
+
+    const water = document.getElementById("hud-water");
+    if (water) water.innerText = gameState.water;
+
 }
 
 // 9. SAVE / LOAD
@@ -1972,37 +1979,95 @@ function loadSaveCode() {
 // 10. INICIALIZAÇÃO + EVENTOS
 
 window.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("galpao").addEventListener("click", openGalpao);
-    document.getElementById("cooperativa").addEventListener("click", openCooperativa);
-    document.getElementById("cisterna").addEventListener("click", openCisterna);
+
+    cacheElements();
+
+    createPlots();
+
+    initPlotEvents();
+
+    initMapMovement();
+
+    startGrowthSystem();
 
     updateHUD();
+
+    renderMap();
+
+    const galpao = document.getElementById("galpao");
+    if (galpao) {
+        galpao.addEventListener("click", openGalpao);
+    }
+
+    const cooperativa = document.getElementById("cooperativa");
+    if (cooperativa) {
+        cooperativa.addEventListener("click", openCooperativa);
+    }
+
+    const cisterna = document.getElementById("cisterna");
+    if (cisterna) {
+        cisterna.addEventListener("click", openCisterna);
+    }
+
     updateCisternaLabel();
+
 });
 
 function openModal(id) {
+
     closeModals();
-    const el = document.getElementById(id);
-    if (el) el.classList.add("active");
+
+    const modal = document.getElementById(id);
+
+    if (!modal) {
+        console.warn("Modal não encontrado:", id);
+        return;
+    }
+
+    modal.classList.add("active");
+
 }
 
 function closeModals() {
-    document.querySelectorAll(".modal-panel").forEach(m => m.classList.remove("active"));
+
+    document.querySelectorAll(".modal-panel").forEach(modal => {
+        modal.classList.remove("active");
+    });
+
+}
+function closeActiveBalloon() {
+
+    const layer = document.getElementById("balloon-layer");
+
+    if (!layer) return;
+
+    layer.innerHTML = "";
+
+    gameState.activeBalloon = null;
+
 }
 
-function closeActiveBalloon() {
-    document.getElementById("balloon-layer").innerHTML = "";
-    gameState.activeBalloonPlotId = null;
-}
 
 function exitSpecialModes() {
+
     gameState.currentMode = "normal";
     gameState.selectedCrop = null;
 
-    document.getElementById("active-mode-indicator").innerText = "";
-    document.getElementById("custom-cursor").style.display = "none";
+    const indicator = document.getElementById("active-mode-indicator");
+    if (indicator) {
+        indicator.innerText = "";
+    }
 
-    document.getElementById("game-viewport").className = "";
+    const cursor = document.getElementById("custom-cursor");
+    if (cursor) {
+        cursor.style.display = "none";
+    }
+
+    const viewport = document.getElementById("game-viewport");
+    if (viewport) {
+        viewport.className = "";
+    }
+
 }
 
 function createFloatingText(text, el) {
