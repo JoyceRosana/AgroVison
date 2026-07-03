@@ -265,19 +265,111 @@ function hud(){
 = 15. MODAIS
 ==================================================*/
 
-function openGalpao(){
-    closeAll();
-    document.getElementById("modal-galpao").classList.add("active");
+function openGalpao() {
+    closeActiveBalloon();
+    exitSpecialModes();
+
+    const c = document.getElementById("stock-list");
+    c.innerHTML = "";
+
+    for (let k in CROPS) {
+        c.innerHTML += `
+            <div class="item-row" style="flex-direction:column; align-items:stretch; gap:6px;">
+                <strong>${CROPS[k].name}</strong>
+
+                <div>
+                    🌱 Sementes: ${gameState.seeds[k]} <br>
+                    📦 Estoque: ${gameState.inventory[k]}
+                </div>
+            </div>
+        `;
+    }
+
+    openModal("modal-galpao");
 }
 
-function openCooperativa(){
-    closeAll();
-    document.getElementById("modal-cooperativa").classList.add("active");
+function renderCooperativa() {
+    const c = document.getElementById("market-list");
+    c.innerHTML = "";
+
+    for (let k in CROPS) {
+        c.innerHTML += `
+            <div class="item-row" style="flex-direction:column; gap:6px;">
+                <strong>${CROPS[k].name}</strong>
+
+                🌱 Sementes: ${gameState.seeds[k]}<br>
+                📦 Estoque: ${gameState.inventory[k]}
+
+                <div style="display:flex; gap:5px; margin-top:5px;">
+                    <button class="btn-action" onclick="buySeed('${k}')">Comprar</button>
+                    <button class="btn-action" onclick="sellSeed('${k}')">Vender Sementes</button>
+                    <button class="btn-action" onclick="sellCrop('${k}')">Vender Estoque</button>
+                </div>
+            </div>
+        `;
+    }
+
+    openModal("modal-cooperativa");
 }
 
-function openCisterna(){
-    closeAll();
-    document.getElementById("modal-cisterna").classList.add("active");
+let filterProgress = 0;
+let isFiltering = false;
+
+function openCisterna() {
+    closeActiveBalloon();
+    exitSpecialModes();
+    updateCisternaLabel();
+
+    document.getElementById("modal-cisterna").innerHTML = `
+        <div class="modal-header">
+            <span>Cisterna</span>
+            <span class="close-btn" onclick="closeModals()">&times;</span>
+        </div>
+
+        <div class="item-row">
+            💧 Água filtrada: <span id="water-label"></span>
+        </div>
+
+        <div class="item-row">
+            ⚙️ Água bruta: <span id="raw-water">200L</span>
+        </div>
+
+        <button class="btn-action" onclick="startFiltering()">
+            FILTRAR
+        </button>
+
+        <div id="filter-status" style="margin-top:10px;"></div>
+    `;
+
+    updateCisternaUI();
+    openModal("modal-cisterna");
+}
+function startFiltering() {
+    if (isFiltering) return;
+    isFiltering = true;
+
+    const status = document.getElementById("filter-status");
+
+    const interval = setInterval(() => {
+        if (gameState.water >= gameState.maxWater) {
+            clearInterval(interval);
+            isFiltering = false;
+            status.innerText = "Reservatório cheio.";
+            return;
+        }
+
+        gameState.water += 1;
+        filterProgress++;
+
+        updateCisternaUI();
+
+        status.innerText = `Filtrando... ${filterProgress}L`;
+
+    }, 2000);
+}
+function updateCisternaUI() {
+    document.getElementById("water-label").innerText =
+        gameState.water + "L / " + gameState.maxWater + "L";
 }
 
 function openConfigModal(){

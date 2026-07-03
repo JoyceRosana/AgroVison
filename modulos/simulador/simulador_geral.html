@@ -935,13 +935,13 @@ viewport.addEventListener('pointermove', (e) => {
 
 
    if (!data.crop) {
-       openPlantingBalloon(id, plot);
+       openMainMenu(id);
    }
    else if (data.stage === 3) {
-       openHarvestBalloon(id, plot);
+       openMainMenu(id);
    }
    else if (data.stage < 3 && !data.isWet) {
-       irrigatePlot(id, plot);
+       openMainMenu(id);
    }
 });
 
@@ -1113,50 +1113,69 @@ viewport.addEventListener('pointermove', (e) => {
 
 
 
-      function executePlanting(id, plotElement) {
-   const cropKey = gameState.selectedCrop;
+     function executeHarvest(id, plotElement) {
+    const plot = gameState.plots[id];
 
+    if (!plot.crop || plot.stage < 3) return;
 
-   if (!cropKey) return;
-   if (gameState.seeds[cropKey] <= 0) return;
+    const crop = CROPS[plot.crop];
 
+    gameState.inventory[plot.crop] += 3;
 
-   const plot = gameState.plots[id];
+    createFloatingText(`+3 ${crop.name}`, plotElement);
 
+    // limpa o terreno
+    gameState.plots[id] = {
+        id,
+        crop: null,
+        stage: 0,
+        timer: 0,
+        isWet: false
+    };
 
-   // 🔒 trava: só planta se estiver vazio
-   if (plot.crop) return;
+    plotElement.innerHTML = "";
+    plotElement.classList.remove("wet");
+}
 
+function harvestPlot(id, plotElement) {
+    const plot = gameState.plots[id];
 
-   gameState.seeds[cropKey]--;
+    if (!plot.crop) return;
 
+    if (plot.stage < 3) {
+        alert("Ainda não está pronto para colher.");
+        return;
+    }
 
-   gameState.plots[id] = {
-       id: id,
-       crop: cropKey,
-       stage: 1,
-       timer: 0,
-       isWet: false
-   };
-
-
-   plotElement.innerHTML = `<img class="plot-plant-img" src="${CROPS[cropKey].img_broto}">`;
+    executeHarvest(id, plotElement);
 }
 
 
 
 
       function irrigatePlot(id, plotElement) {
-          if (gameState.water >= 10) {
-              gameState.water -= 10;
-              gameState.plots[id].isWet = true;
-              plotElement.classList.add('wet');
-              createFloatingText("💧 Regado!", plotElement);
-              updateCisternaLabel();
-          } else {
-              alert("Cisterna vazia! Aguarde a chuva ou ligue as bombas.");
-          }
-      }
+    const plot = gameState.plots[id];
+
+    if (plot.isWet) return; // evita spam
+
+    if (gameState.water < 10) {
+        alert("Sem água!");
+        return;
+    }
+
+    gameState.water -= 10;
+    plot.isWet = true;
+
+    plotElement.classList.add("wet");
+    createFloatingText("💧 Irrigado", plotElement);
+
+    updateCisternaLabel();
+
+    setTimeout(() => {
+        plot.isWet = false;
+        plotElement.classList.remove("wet");
+    }, 8000); // efeito temporário
+}
 
 
 
