@@ -821,7 +821,7 @@ criarTerras();
             balloon.className = 'wood-balloon';
             balloon.innerHTML = `
                 <div class="harvest-option" onclick="startContinuousHarvest()">
-                    <img src="/img/foice.png">
+                    <img src="/img/simulador/foice.png">
                     <div>Equipar Foice</div>
                 </div>`;
             
@@ -852,7 +852,7 @@ criarTerras();
             viewport.className = 'mode-harvesting';
 
             const cursor = document.getElementById('custom-cursor');
-            cursor.src = '/img/foice.png';
+            cursor.src = '/img/simulador/foice.png';
             cursor.style.display = 'block';
 
             executeHarvest(gameState.activeBalloonPlotId, document.querySelector(`.plot[data-id="${gameState.activeBalloonPlotId}"]`));
