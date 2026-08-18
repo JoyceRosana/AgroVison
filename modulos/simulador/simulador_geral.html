@@ -25,14 +25,13 @@
             z-index: 99999;
         }
 
-        * {
-            box-sizing: border-box;
-            user-select: none;
-            -webkit-user-select: none;
-            margin: 0;
-            padding: 0;
-            touch-action: none;
-        }
+* {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+    margin: 0;
+    padding: 0;
+}
 
         body, html {
             width: 100%;
@@ -454,35 +453,113 @@
         }
 
 /* =========================================================
-   MENU DA COOPERATIVA
+   MENU DA COOPERATIVA - ARRASTÁVEL
    ========================================================= */
 
 #modal-cooperativa {
+    position: fixed;
+
+    width: 90%;
+    max-width: 700px;
+
     height: 75vh;
     max-height: 75vh;
+
+    padding: 20px;
+
+    /* IMPORTANTE: não usar translate aqui */
+    transform: none;
+
     overflow: hidden;
 
-    /* mantém centralizado horizontalmente */
-    left: 50%;
+    display: none;
+
+    z-index: 6000;
+
+    touch-action: auto;
 }
 
+#modal-cooperativa.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho usado para arrastar */
+
 #modal-cooperativa .modal-header {
+    flex-shrink: 0;
+
     cursor: grab;
+
     user-select: none;
+    -webkit-user-select: none;
+
     touch-action: none;
+
+    position: relative;
+    z-index: 10;
 }
 
 #modal-cooperativa .modal-header:active {
     cursor: grabbing;
 }
 
+/* Título */
+
+#modal-cooperativa .modal-header span:first-child {
+    cursor: grab;
+}
+
+/* Botão X */
+
 #modal-cooperativa .close-btn {
     cursor: pointer;
-    position: relative;
-    z-index: 20;
 
-    /* o X não participa do arraste */
+    position: relative;
+
+    z-index: 50;
+
     touch-action: auto;
+}
+
+/* =========================================================
+   LISTA DE PRODUTOS
+   ========================================================= */
+
+#modal-cooperativa #market-list {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 8px;
+
+    touch-action: pan-y;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Barra de rolagem */
+
+#modal-cooperativa #market-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#modal-cooperativa #market-list::-webkit-scrollbar-track {
+    background: rgba(92,58,33,0.25);
+    border-radius: 10px;
+}
+
+#modal-cooperativa #market-list::-webkit-scrollbar-thumb {
+    background: var(--wood-dark);
+    border-radius: 10px;
+}
+
+#modal-cooperativa #market-list::-webkit-scrollbar-thumb:hover {
+    background: var(--wood-light);
 }
     </style>
 </head>
@@ -569,6 +646,7 @@
    style="margin-top:20px; width:100%; display:block; text-align:center; text-decoration:none;">
     Voltar ao Início
 </a>
+
                 </div>
 
                 <div id="tab-agrovision" class="tab-pane">
@@ -1075,111 +1153,287 @@ criarTerras();
     }
 }
 
+
 /* =========================================================
-   ARRASTAR MENU DA COOPERATIVA
-   SOMENTE PARA CIMA E PARA BAIXO
+   ARRASTE PROFISSIONAL DA COOPERATIVA
+   MOUSE + TOUCH + CANETA
    ========================================================= */
 
 const cooperativaModal = document.getElementById('modal-cooperativa');
 const cooperativaHeader = cooperativaModal.querySelector('.modal-header');
 
-let arrastandoCooperativa = false;
-let inicioY = 0;
-let inicioTop = 0;
+let cooperativaArrastando = false;
+let cooperativaPointerId = null;
+
+let cooperativaInicioMouseX = 0;
+let cooperativaInicioMouseY = 0;
+
+let cooperativaInicioLeft = 0;
+let cooperativaInicioTop = 0;
 
 
-/* COMEÇA O ARRASTE */
+/* =========================================================
+   PREPARA A POSIÇÃO DO MENU
+   ========================================================= */
+
+function prepararPosicaoCooperativa() {
+
+    const rect = cooperativaModal.getBoundingClientRect();
+
+    cooperativaModal.style.left = rect.left + 'px';
+    cooperativaModal.style.top = rect.top + 'px';
+
+    /* elimina definitivamente a centralização */
+    cooperativaModal.style.transform = 'none';
+}
+
+
+/* =========================================================
+   ABRIR COOPERATIVA
+   ========================================================= */
+
+function openCooperativa() {
+
+    closeActiveBalloon();
+    exitSpecialModes();
+
+    const modal = document.getElementById('modal-cooperativa');
+
+    /* abre primeiro */
+    modal.classList.add('active');
+
+    /* centraliza somente na abertura */
+    const largura = modal.offsetWidth;
+    const altura = modal.offsetHeight;
+
+    const left = Math.max(
+        10,
+        (window.innerWidth - largura) / 2
+    );
+
+    const top = Math.max(
+        10,
+        (window.innerHeight - altura) / 2
+    );
+
+    modal.style.transform = 'none';
+    modal.style.left = left + 'px';
+    modal.style.top = top + 'px';
+
+    renderCooperativa();
+}
+
+
+/* =========================================================
+   COMEÇAR ARRASTE
+   ========================================================= */
 
 cooperativaHeader.addEventListener('pointerdown', function(e) {
 
-    // Se clicou no X, não arrasta
+    /* Se clicou no X, não arrasta */
     if (e.target.closest('.close-btn')) {
         return;
     }
 
-    arrastandoCooperativa = true;
+    e.preventDefault();
 
-    inicioY = e.clientY;
+    cooperativaArrastando = true;
+    cooperativaPointerId = e.pointerId;
 
-    inicioTop = cooperativaModal.offsetTop;
+    /* posição inicial do mouse */
+    cooperativaInicioMouseX = e.clientX;
+    cooperativaInicioMouseY = e.clientY;
 
+    /* posição atual do menu */
+    const rect = cooperativaModal.getBoundingClientRect();
+
+    cooperativaInicioLeft = rect.left;
+    cooperativaInicioTop = rect.top;
+
+    /* captura o mouse */
     cooperativaHeader.setPointerCapture(e.pointerId);
 
     cooperativaHeader.style.cursor = 'grabbing';
-
-    e.preventDefault();
 });
 
 
-/* MOVE O MENU */
+/* =========================================================
+   MOVIMENTAR
+   ========================================================= */
 
 cooperativaHeader.addEventListener('pointermove', function(e) {
 
-    if (!arrastandoCooperativa) {
+    if (!cooperativaArrastando) {
         return;
     }
 
-    const deslocamento = e.clientY - inicioY;
+    if (e.pointerId !== cooperativaPointerId) {
+        return;
+    }
 
-    let novoTop = inicioTop + deslocamento;
+    e.preventDefault();
 
-    const alturaTela = window.innerHeight;
-    const alturaMenu = cooperativaModal.offsetHeight;
+    const deslocamentoX =
+        e.clientX - cooperativaInicioMouseX;
+
+    const deslocamentoY =
+        e.clientY - cooperativaInicioMouseY;
+
+    let novaLeft =
+        cooperativaInicioLeft + deslocamentoX;
+
+    let novaTop =
+        cooperativaInicioTop + deslocamentoY;
+
+
+    /* =====================================================
+       LIMITES
+       ===================================================== */
+
+    const largura = cooperativaModal.offsetWidth;
+    const altura = cooperativaModal.offsetHeight;
+
+    const margem = 10;
 
     /*
-       12,5% de espaço livre em cada extremidade.
+       Permite colocar parte do menu fora da tela,
+       mas nunca perder completamente o menu.
     */
 
-    const margem = alturaTela * 0.125;
+    const limiteEsquerdo =
+        -largura + 80;
 
-    const limiteSuperior = margem;
+    const limiteDireito =
+        window.innerWidth - 80;
+
+    const limiteSuperior =
+        0;
 
     const limiteInferior =
-        alturaTela - alturaMenu - margem;
+        window.innerHeight - 80;
 
 
-    /* Impede o menu de sair da área permitida */
+    novaLeft = Math.max(
+        limiteEsquerdo,
+        Math.min(limiteDireito, novaLeft)
+    );
 
-    if (novoTop < limiteSuperior) {
-        novoTop = limiteSuperior;
-    }
-
-    if (novoTop > limiteInferior) {
-        novoTop = limiteInferior;
-    }
+    novaTop = Math.max(
+        limiteSuperior,
+        Math.min(limiteInferior, novaTop)
+    );
 
 
-    /* Aplica a nova posição */
+    /* =====================================================
+       APLICA MOVIMENTO
+       ===================================================== */
 
-    cooperativaModal.style.top = novoTop + 'px';
+    cooperativaModal.style.left =
+        novaLeft + 'px';
 
-    cooperativaModal.style.left = '50%';
+    cooperativaModal.style.top =
+        novaTop + 'px';
 
-    cooperativaModal.style.transform = 'translateX(-50%)';
+    cooperativaModal.style.transform =
+        'none';
 });
 
 
-/* TERMINA O ARRASTE */
+/* =========================================================
+   TERMINAR ARRASTE
+   ========================================================= */
 
-cooperativaHeader.addEventListener('pointerup', function(e) {
+function terminarArrasteCooperativa(e) {
 
-    arrastandoCooperativa = false;
+    if (!cooperativaArrastando) {
+        return;
+    }
+
+    if (
+        e &&
+        cooperativaPointerId !== null &&
+        e.pointerId !== cooperativaPointerId
+    ) {
+        return;
+    }
+
+    cooperativaArrastando = false;
 
     cooperativaHeader.style.cursor = 'grab';
 
     try {
-        cooperativaHeader.releasePointerCapture(e.pointerId);
+        if (
+            e &&
+            cooperativaHeader.hasPointerCapture(e.pointerId)
+        ) {
+            cooperativaHeader.releasePointerCapture(e.pointerId);
+        }
     } catch (erro) {}
+
+    cooperativaPointerId = null;
+}
+
+
+cooperativaHeader.addEventListener(
+    'pointerup',
+    terminarArrasteCooperativa
+);
+
+cooperativaHeader.addEventListener(
+    'pointercancel',
+    terminarArrasteCooperativa
+);
+
+
+/* =========================================================
+   GARANTE QUE O MENU CONTINUE VISÍVEL AO REDIMENSIONAR
+   ========================================================= */
+
+window.addEventListener('resize', function() {
+
+    if (!cooperativaModal.classList.contains('active')) {
+        return;
+    }
+
+    const rect =
+        cooperativaModal.getBoundingClientRect();
+
+    let left = rect.left;
+    let top = rect.top;
+
+    const largura =
+        cooperativaModal.offsetWidth;
+
+    const altura =
+        cooperativaModal.offsetHeight;
+
+    left = Math.max(
+        -largura + 80,
+        Math.min(
+            window.innerWidth - 80,
+            left
+        )
+    );
+
+    top = Math.max(
+        0,
+        Math.min(
+            window.innerHeight - 80,
+            top
+        )
+    );
+
+    cooperativaModal.style.left =
+        left + 'px';
+
+    cooperativaModal.style.top =
+        top + 'px';
+
+    cooperativaModal.style.transform =
+        'none';
 });
 
 
-cooperativaHeader.addEventListener('pointercancel', function() {
-
-    arrastandoCooperativa = false;
-
-    cooperativaHeader.style.cursor = 'grab';
-
-});
         function sellSeed(key) {
             if (gameState.seeds[key] > 0) {
                 gameState.seeds[key]--; gameState.money += CROPS[key].seedSellPrice;
